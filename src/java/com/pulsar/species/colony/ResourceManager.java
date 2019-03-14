@@ -1,6 +1,7 @@
 package species.colony;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -62,9 +63,7 @@ public class ResourceManager {
 		jobTypes = new HashMap<String, TypeJob>();
 		jobList = new HashMap<TypeJob, ArrayList<Job>>();
 		
-		districts = new District[1] ;
-		buildings = new Building[1] ;
-		
+		//TODO implement pop growth
 		for(int i = 0; i < 50; i++) {
 			
 			Pop p = new Pop(species.getDefaltPopCategory());
@@ -112,25 +111,11 @@ public class ResourceManager {
 	}
 
 	public ArrayList<District> getDistricts() {
-		
-		ArrayList<District> t = new ArrayList<District>();
-		
-		for(District d: districts)
-			t.add(d);
-		
-		return t;
-		
+		return new ArrayList<District>(Arrays.asList(districts));
 	}
 
 	public ArrayList<Building> getBuildings() {
-		
-		ArrayList<Building> t = new ArrayList<Building>();
-		
-		for(Building d: buildings)
-			t.add(d);
-		
-		return t;
-		
+		return new ArrayList<Building>(Arrays.asList(buildings));
 	}
 	
 	/**
@@ -167,6 +152,9 @@ public class ResourceManager {
 	}
 
 	public void updateIncome() {
+		
+		if(districts == null || buildings == null)
+			return;
 		
 		resourceIncome.clear(); //clears the current resorce list
 		
@@ -340,7 +328,8 @@ public class ResourceManager {
 	public BuildQueue getBuildQueue() {
 		return buildQueue;
 	}
-
+	
+	//prevent from adding directly to species
 	public ResourceManager createChildManager() {
 		ResourceManager child = new ResourceManager(species, colonyLoader, species.getResourceManagerMaster().getResourceTotal());
 		childManagers.add(child);

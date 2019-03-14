@@ -91,6 +91,7 @@ public class Ship {
 		Point t = new Point();
 		t.setLocation(tx, ty);
 		
+		//TODO better collision detection
 		if((t.distance(x, y)) < speed) {
 			x = tx;
 			y = ty;

@@ -70,6 +70,7 @@ public class Universe {
 		
 	}
 	
+	//TODO make update var a class to get total time and days
 	/**
 	 * tick meathod
 	 * @param m 

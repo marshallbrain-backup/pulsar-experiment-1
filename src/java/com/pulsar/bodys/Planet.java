@@ -8,6 +8,7 @@ import files.type.TypePlanet;
 import gfx.Draw;
 import universe.StarSystem;
 
+//TODO orbiting
 public class Planet extends Body {
 	
 //	private int orbitCenterX;
@@ -51,7 +52,8 @@ public class Planet extends Body {
 		y = (int)Math.round(r * Math.sin(Math.toRadians(a)));
 		
 	}
-
+	
+	//TODO move to sepret ui class
 	/**
 	 * generates planets
 	 * 

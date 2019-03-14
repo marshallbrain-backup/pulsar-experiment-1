@@ -33,8 +33,7 @@ public class StationUI extends Pane {
 		
 		init(s);
 		
-//		tabs.addTab(new Tab("Overview", new Overview(c), detail));
-//		tabs.addTab(new Tab("Population", new Population(c.getResourceManager()), detail));
+		tabs.addTab(new Tab("Overview", new Overview(s), detail));
 		
 	}
 	

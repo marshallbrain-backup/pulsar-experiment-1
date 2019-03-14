@@ -1,0 +1,29 @@
+technician = {
+	category = worker
+	resources = {
+		category = planet_technician
+		production = {
+			energy = 4
+		}
+	}
+}
+
+miner = {
+	category = worker
+	resources = {
+		category = planet_miners
+		production = {
+			minerals = 4
+		}
+	}
+}
+
+farmer = {
+	category = worker
+	resources = {
+		category = planet_farmers
+		production = {
+			food = 6
+		}
+	}
+}

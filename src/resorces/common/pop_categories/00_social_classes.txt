@@ -1,0 +1,24 @@
+worker = {
+	rank = 1
+
+	assign_to_pop = true
+	
+	pop_modifier = {
+		pop_housing = 1
+		pop_amenities = 1
+	}
+	
+	allow_resettlement = true
+
+	resettlement_cost = {
+		energy = 100
+	}
+	
+	resources = {
+		category = pop_workers
+		
+		upkeep = {
+			food = 1
+		}
+	}	
+}

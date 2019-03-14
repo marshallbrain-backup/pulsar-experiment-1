@@ -1,0 +1,25 @@
+building_capital = {
+
+	base_buildtime = 480
+	capital = yes
+	can_build = no
+	can_demolish = no
+	can_be_disabled = no
+	
+	potential = {
+	}
+
+	resources = {
+		category = planet_buildings
+		cost = {
+			minerals = 300
+		}
+		upkeep = {
+			energy = 2
+		}
+		production = {
+			planet_housing = 5
+		}
+	}
+
+}

@@ -1,0 +1,13 @@
+# Blue Stars
+sc_b  = {
+	star		= { key = sc_b_star }
+	spawn_odds 	= 10
+	num_planets 	= { min = 4, max = 10 }
+}
+
+# White or Blueish Stars
+sc_a = {
+	star		= { key = sc_a_star }
+	spawn_odds 	= 10
+	num_planets 	= { min = 4, max = 10 }
+}

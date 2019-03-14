@@ -1,0 +1,68 @@
+district_generator = {
+	base_buildtime = 240
+	
+	potential = {
+		is_planet_catagory = default
+	}
+	
+	resources = {
+		category = planet_districts
+		cost = {
+			minerals = 300
+		}
+		upkeep = {
+			energy = 1
+		}
+		production = {
+			housing = 2
+			job_technician = 2
+		}
+	}
+	
+}
+
+district_mine = {
+	base_buildtime = 240
+	
+	potential = {
+		is_planet_catagory = default
+	}
+	
+	resources = {
+		category = planet_districts
+		cost = {
+			minerals = 300
+		}
+		upkeep = {
+			energy = 1
+		}
+		production = {
+			housing = 2
+			job_miner = 2
+		}
+	}
+	
+}
+
+district_farming = {
+	base_buildtime = 240
+	
+	potential = {
+		is_planet_catagory = default
+	}
+	
+	resources = {
+		category = planet_districts
+		cost = {
+			minerals = 300
+		}
+		upkeep = {
+			energy = 1
+		}
+		production = {
+			housing = 2
+			job_farmer = 2
+		}
+	}
+	
+}

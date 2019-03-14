@@ -1,0 +1,21 @@
+district_city = {
+	base_buildtime = 480
+	
+	potential = {
+		is_planet_catagory = default
+	}
+	
+	resources = {
+		category = planet_districts
+		cost = {
+			minerals = 300
+		}
+		upkeep = {
+			energy = 1
+		}
+		production = {
+			housing = 5
+		}
+	}
+
+}

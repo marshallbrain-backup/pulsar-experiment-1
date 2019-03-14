@@ -1,0 +1,36 @@
+building_hydroponics_farm = {
+	base_buildtime = 360
+	
+	potential = {
+	}
+	
+	resources = {
+		category = planet_buildings
+		cost = {
+			minerals = 300
+		}
+		upkeep = {
+			energy = 2
+		}
+		production = {
+			job_farmer = 2
+		}
+	}
+}
+
+building_fission_generator = {
+	base_buildtime = 360
+	
+	potential = {
+	}
+	
+	resources = {
+		category = planet_buildings
+		cost = {
+			minerals = 300
+		}
+		production = {
+			job_technician = 2
+		}
+	}
+}

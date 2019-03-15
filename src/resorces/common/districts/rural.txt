@@ -6,7 +6,6 @@ district_generator = {
 	}
 	
 	resources = {
-		category = planet_districts
 		cost = {
 			minerals = 300
 		}
@@ -29,7 +28,6 @@ district_mine = {
 	}
 	
 	resources = {
-		category = planet_districts
 		cost = {
 			minerals = 300
 		}
@@ -52,7 +50,6 @@ district_farming = {
 	}
 	
 	resources = {
-		category = planet_districts
 		cost = {
 			minerals = 300
 		}

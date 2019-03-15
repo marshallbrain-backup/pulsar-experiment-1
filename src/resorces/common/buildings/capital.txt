@@ -1,5 +1,4 @@
 building_capital = {
-
 	base_buildtime = 480
 	capital = yes
 	can_build = no
@@ -10,7 +9,6 @@ building_capital = {
 	}
 
 	resources = {
-		category = planet_buildings
 		cost = {
 			minerals = 300
 		}

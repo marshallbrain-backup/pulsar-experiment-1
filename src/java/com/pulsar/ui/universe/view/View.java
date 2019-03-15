@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import input.Keyboard;
 import input.Mouse;
 
+//TODO convert all buffered images to be static for faster loading
 public class View {
 	
 	protected int x;

@@ -70,6 +70,8 @@ public class Pulsar extends Canvas implements Runnable {
 		gf = FileParser.readCommon(); //reads in all files in common
 		gf.replaceVars(); //replaces variables
 		
+		//TODO create class that loads all ui images
+		
 		//Create civ here
 		
 		mainMenu = new MainMenu(settings);

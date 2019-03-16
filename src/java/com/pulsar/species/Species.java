@@ -64,6 +64,10 @@ public class Species {
 
 	public Station createStation(Body b) {
 		
+		if(!b.tryAddStation()) {
+			return null;
+		}
+		
 		Colony c = b.getColony();
 		Station s = null;
 		

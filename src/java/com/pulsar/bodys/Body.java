@@ -24,6 +24,7 @@ public class Body {
 	protected double scale;
 	
 	protected boolean colonizable;
+	protected boolean reload;
 	
 	protected String type;
 	protected String colonyType;
@@ -40,6 +41,7 @@ public class Body {
 		starSystem = s;
 		
 		stationCount = 0;
+		reload = false;
 		
 		stations = new Station[2];
 		random = new Random();
@@ -131,6 +133,7 @@ public class Body {
 		if(stationCount < stations.length) {
 			stations[stationCount] = s;
 			stationCount++;
+			reload = true;
 			return true;
 		}
 		
@@ -160,6 +163,14 @@ public class Body {
 
 	public StarSystem getSystem() {
 		return starSystem;
+	}
+
+	public boolean shouldReload() {
+		if(reload == true) {
+			reload = false;
+			return true;
+		}
+		return false;
 	}
 
 }

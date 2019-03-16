@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import bodys.Body;
 import files.type.Type;
 import files.type.TypeBuilding;
 import files.type.TypeDistrict;
@@ -34,12 +35,12 @@ public class ResourceManager {
 	private HashMap<String, Double> resourceIncome;
 	private HashMap<String, Double> resource;
 	
+	private District[] districts;
+	private Building[] buildings;
+	
 	private TypeLoader colonyLoader;
 	private Species species;
 	private BuildQueue buildQueue;
-	
-	private District[] districts;
-	private Building[] buildings;
 	
 	/**
 	 * initalizes ResourceManager
@@ -344,6 +345,10 @@ public class ResourceManager {
 		ResourceManager child = new ResourceManager(species, colonyLoader, species.getResourceManagerMaster().getResourceTotal());
 		childManagers.add(child);
 		return child;
+	}
+
+	public Species getSpecies() {
+		return species;
 	}
 	
 }

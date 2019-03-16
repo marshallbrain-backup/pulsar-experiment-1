@@ -22,6 +22,7 @@ public class Colony {
 	private BuildingUI[] buildingsUI;
 	
 	private ResourceManager resource;
+	private Body body;
 	
 	/**
 	 * initalizes  colony
@@ -31,6 +32,8 @@ public class Colony {
 	 * @param gamefile the gamefile containing district info
 	 */
 	public Colony(Body b, Species s, TypeLoader colonyLoader) {
+		
+		body = b;
 		
 		resource = new ResourceManager(s, colonyLoader, s.getResourceManagerMaster().getResourceTotal());
 		
@@ -107,6 +110,10 @@ public class Colony {
 
 	public ResourceManager getResourceManager() {
 		return resource;
+	}
+
+	public Body getBody() {
+		return body;
 	}
 
 }

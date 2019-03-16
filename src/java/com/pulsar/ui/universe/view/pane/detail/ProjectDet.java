@@ -5,35 +5,26 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
-
+import bodys.Body;
 import files.type.Type;
-import files.type.TypeDistrict;
 import files.type.TypePlanetaryProjects;
 import input.Keyboard;
 import input.Mouse;
-import species.colony.build.District;
-import ui.universe.view.button.Button;
-import ui.universe.view.pane.DistrictUI;
 import ui.universe.view.pane.Pane;
-import ui.universe.view.pane.list.ListDistrictType;
-import ui.universe.view.pane.list.ListDistricts;
 import ui.universe.view.pane.list.ListProjectType;
 
 public class ProjectDet extends Pane {
 	
-	private int index;
-	
 	private ListProjectType projects;
 	private Detail parent;
+	private Body body;
 
-	public ProjectDet(Detail d) {
+	public ProjectDet(Detail d, Body b) {
 		
 		parent = d;
+		body = b;
 		
 		projects = new ListProjectType(parent.getResourceManager());
 		
@@ -55,7 +46,8 @@ public class ProjectDet extends Pane {
 		
 		TypePlanetaryProjects t = projects.clicked(x-12, y-57);
 		if(t != null) {
-			System.out.println("! - " + t.getName());
+			//TODO get build requects to planet
+			parent.getResourceManager().getSpecies().createStation(body);
 			return true;
 		}
 		

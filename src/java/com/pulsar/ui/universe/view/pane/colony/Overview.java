@@ -100,7 +100,7 @@ public class Overview extends Pane {
 		int y = (int)Math.round(m.getPosition().getY()-this.y);
 		
 		if(projects.action(m, k)) {
-			detail.setPane(new ProjectDet(detail), "Tool District");
+			detail.setPane(new ProjectDet(detail, colony.getBody()), "Tool District");
 		}
 		
 		int x1 = 0;

@@ -29,11 +29,14 @@ public class ViewBody extends View {
 	private TabLayout tabs;
 	private Button closeButton;
 	private Detail detail;
+	private Body body;
 	
 	public ViewBody(Body b) {
 		
-		init(b);
-		createTabs(b);
+		body = b;
+		
+		init(body);
+		createTabs(body);
 		
 	}
 	
@@ -69,9 +72,9 @@ public class ViewBody extends View {
 		
 	}
 	
-	public void reloadTabs(Body b) {
-		init(b);
-		createTabs(b);
+	public void reloadTabs() {
+		init(body);
+		createTabs(body);
 	}
 	
 	public boolean action(Mouse mo, Keyboard k) {
@@ -81,15 +84,14 @@ public class ViewBody extends View {
 		if(closeButton.action(m, k)) {
 			close = true;
 			return true;
+		} else if(detail.action(m, k)) {
+			if(body.shouldReload())
+				reloadTabs();
+			return true;
 		} else if(tabs.action(m, k))
 			return true;
 		else if(tabs.selectedAction(m, k))
 			return true;
-		else if(detail.action(m, k)) {
-			if(detail.shouldReload())
-				reloadTabs(detail.getBody());
-			return true;
-		}
 		
 		return false;
 		

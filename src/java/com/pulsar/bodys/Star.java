@@ -3,9 +3,9 @@ package bodys;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import Pulsar.Main;
 import files.type.TypeStar;
 import gfx.Draw;
+import pulsar.Main;
 import universe.StarSystem;
 
 public class Star extends Body {

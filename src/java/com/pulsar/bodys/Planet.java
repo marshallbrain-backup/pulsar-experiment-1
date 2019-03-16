@@ -3,9 +3,9 @@ package bodys;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import Pulsar.Main;
 import files.type.TypePlanet;
 import gfx.Draw;
+import pulsar.Main;
 import universe.StarSystem;
 
 //TODO orbiting

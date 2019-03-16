@@ -7,7 +7,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
-import Pulsar.Main;
+import pulsar.Main;
 
 public class Calender {
 	

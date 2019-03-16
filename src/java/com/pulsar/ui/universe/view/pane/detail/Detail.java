@@ -29,7 +29,6 @@ public class Detail {
 	
 	private ResourceManager resource;
 	private Pane pane;
-	private Body body;
 	
 	/**
 	 * creates a sepret view at the given cordanets
@@ -40,7 +39,6 @@ public class Detail {
 	 */
 	public Detail(Body b, int x1, int y1) {
 		
-		body = b;
 		resource = b.getColony().getResourceManager();
 		
 		x = x1+10;
@@ -116,14 +114,6 @@ public class Detail {
 	
 	public ResourceManager getResourceManager() {
 		return resource;
-	}
-
-	public Body getBody() {
-		return body;
-	}
-
-	public boolean shouldReload() {
-		return pane.shouldReload();
 	}
 
 }

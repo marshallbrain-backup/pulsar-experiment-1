@@ -17,8 +17,6 @@ import ui.universe.view.pane.list.ListProjectType;
 
 public class ProjectDet extends Pane {
 	
-	private boolean shouldReload;
-	
 	private ListProjectType projects;
 	private Detail parent;
 	private Body body;
@@ -27,8 +25,6 @@ public class ProjectDet extends Pane {
 		
 		parent = d;
 		body = b;
-		
-		shouldReload = false;
 		
 		projects = new ListProjectType(parent.getResourceManager());
 		
@@ -52,7 +48,6 @@ public class ProjectDet extends Pane {
 		if(t != null) {
 			//TODO get build requects to planet
 			if(parent.getResourceManager().getSpecies().createStation(body) != null) {
-				shouldReload = true;
 			}
 			return true;
 		}
@@ -78,12 +73,6 @@ public class ProjectDet extends Pane {
 		parent.setName("Planetary Projects");
 		projects.render(g, x+12, y+57);
 		
-	}
-
-	public boolean shouldReload() {
-		boolean r = shouldReload;
-		shouldReload = false;
-		return r;
 	}
 
 }

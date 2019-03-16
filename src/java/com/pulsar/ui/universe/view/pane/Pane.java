@@ -26,8 +26,4 @@ public class Pane {
 		detail = d;
 	}
 
-	public boolean shouldReload() {
-		return false;
-	}
-
 }

@@ -1,4 +1,5 @@
-package Pulsar;
+package pulsar;
+
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -12,7 +13,6 @@ import files.GameFile;
 import input.Keyboard;
 import input.Mouse;
 import settings.Settings;
-import ui.MainMenu;
 import universe.Universe;
 
 public class Pulsar extends Canvas implements Runnable {
@@ -31,7 +31,6 @@ public class Pulsar extends Canvas implements Runnable {
 	public JFrame frame; //the main frame
 	
 	private Settings settings; //settings
-	private MainMenu mainMenu; //main menu class
 	private Universe universe; //game logic class
 	private Keyboard keyboard; //keyboard manager
 	private Mouse mouse; //mouse manager
@@ -73,8 +72,6 @@ public class Pulsar extends Canvas implements Runnable {
 		//TODO create class that loads all ui images
 		
 		//Create civ here
-		
-		mainMenu = new MainMenu(settings);
 		
 	}
 	
@@ -201,12 +198,10 @@ public class Pulsar extends Canvas implements Runnable {
 		
 		//if a game world is loaded call the tick function for that world
 		if(worldLoaded) {
-			universe.tick(keyboard, mouse);
-		} else { //tick the main menu until a save has been selected
-			if(mainMenu.tick()) {
-				universe = new Universe(mainMenu.getSave(), gf);
-				worldLoaded = true;
-			}
+			universe.tick();
+		} else {
+			universe = new Universe(null, gf);
+			worldLoaded = true;
 		}
 		
 		tick++;
@@ -224,12 +219,6 @@ public class Pulsar extends Canvas implements Runnable {
 		g.setColor(Color.DARK_GRAY);
 		
 		g.fillRect(0, 0, Main.WIDTH, Main.HEIGHT);
-		
-		if(worldLoaded) {
-			universe.render(g);
-		} else {
-			mainMenu.render(g);
-		}
 		
 		//END RENDER
 		

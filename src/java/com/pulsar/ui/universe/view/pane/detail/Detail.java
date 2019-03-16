@@ -12,6 +12,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import bodys.Body;
 import input.Keyboard;
 import input.Mouse;
 import species.colony.ResourceManager;
@@ -28,6 +29,7 @@ public class Detail {
 	
 	private ResourceManager resource;
 	private Pane pane;
+	private Body body;
 	
 	/**
 	 * creates a sepret view at the given cordanets
@@ -36,9 +38,10 @@ public class Detail {
 	 * @param x the x cordenet of the view
 	 * @param y the y cordenet of the view
 	 */
-	public Detail(ResourceManager r, int x1, int y1) {
+	public Detail(Body b, int x1, int y1) {
 		
-		resource = r;
+		body = b;
+		resource = b.getColony().getResourceManager();
 		
 		x = x1+10;
 		y = y1;
@@ -113,6 +116,14 @@ public class Detail {
 	
 	public ResourceManager getResourceManager() {
 		return resource;
+	}
+
+	public Body getBody() {
+		return body;
+	}
+
+	public boolean shouldReload() {
+		return pane.shouldReload();
 	}
 
 }

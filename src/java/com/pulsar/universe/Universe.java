@@ -9,6 +9,7 @@ import files.type.TypeDistrict;
 import files.type.TypeJob;
 import files.type.TypeLoader;
 import files.type.TypePlanet;
+import files.type.TypePlanetaryProjects;
 import files.type.TypeStar;
 import files.type.TypeSystem;
 import input.Keyboard;
@@ -42,6 +43,7 @@ public class Universe {
 		speciesLoader.addTypes("building", gf.getFieldAll("buildings\\..*"), 2, TypeBuilding.class);
 		speciesLoader.addTypes("job", gf.getFieldAll("pop_job\\..*"), 2, TypeJob.class);
 		speciesLoader.addTypes("category", gf.getFieldAll("pop_categories\\..*"), 2, TypeCategory.class);
+		speciesLoader.addTypes("planetaryProjects", gf.getFieldAll("planetary_projects\\..*"), 2, TypePlanetaryProjects.class);
 		
 		species = new Species(speciesLoader);
 		

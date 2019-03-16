@@ -1,0 +1,21 @@
+build_station_basic = {
+	
+	resources = {
+		cost = {
+			minerals = 1000
+		}
+	}
+	
+	potential = {
+		is_owned = true
+	}
+	
+	allow = {
+		can_colony_suport = station
+	}
+	
+	effect = {
+		build_station = basic
+	}
+
+}

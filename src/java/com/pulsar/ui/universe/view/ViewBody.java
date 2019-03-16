@@ -22,17 +22,25 @@ public class ViewBody extends View {
 	private int width = 924;
 	private int height = 756;
 	
-	private TabLayout tabs;
-	private Button closeButton;
-	private Detail detail;
-	
 	private BufferedImage line;
 	private BufferedImage background;
 	private BufferedImage closeImage;
 	
+	private TabLayout tabs;
+	private Button closeButton;
+	private Detail detail;
+	private Body body;
+	
 	public ViewBody(Body b) {
 		
-		init(b);
+		body = b;
+		
+		init(body);
+		createTabs(body);
+		
+	}
+	
+	private void createTabs(Body b) {
 		
 		ArrayList<Pane> pList = b.getPanes(detail);
 		
@@ -49,7 +57,7 @@ public class ViewBody extends View {
 		x = 100;
 		y = 150;
 		
-		detail = new Detail(width, 0);
+		detail = new Detail(b, width, 0);
 		tabs = new TabLayout(0, 0, width, true);
 		
 		try {
@@ -64,6 +72,11 @@ public class ViewBody extends View {
 		
 	}
 	
+	public void reloadTabs() {
+		init(body);
+		createTabs(body);
+	}
+	
 	public boolean action(Mouse mo, Keyboard k) {
 		
 		Mouse m = new Mouse(mo, x, y);
@@ -71,11 +84,13 @@ public class ViewBody extends View {
 		if(closeButton.action(m, k)) {
 			close = true;
 			return true;
+		} else if(detail.action(m, k)) {
+			if(body.shouldReload())
+				reloadTabs();
+			return true;
 		} else if(tabs.action(m, k))
 			return true;
 		else if(tabs.selectedAction(m, k))
-			return true;
-		else if(detail.action(m, k))
 			return true;
 		
 		return false;

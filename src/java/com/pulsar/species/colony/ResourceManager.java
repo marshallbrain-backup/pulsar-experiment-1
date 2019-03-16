@@ -1,14 +1,17 @@
 package species.colony;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import bodys.Body;
 import files.type.Type;
 import files.type.TypeBuilding;
 import files.type.TypeDistrict;
 import files.type.TypeJob;
 import files.type.TypeLoader;
+import files.type.TypePlanetaryProjects;
 import species.Species;
 import species.colony.build.BuildQueue;
 import species.colony.build.BuildQueueEntry;
@@ -21,6 +24,7 @@ public class ResourceManager {
 	
 	private ArrayList<TypeDistrict> districtTypes;
 	private ArrayList<TypeBuilding> buildingTypes;
+	private ArrayList<TypePlanetaryProjects> projectTypes;
 	private ArrayList<Pop> popList;
 	private ArrayList<ResourceManager> childManagers;
 
@@ -31,12 +35,12 @@ public class ResourceManager {
 	private HashMap<String, Double> resourceIncome;
 	private HashMap<String, Double> resource;
 	
+	private District[] districts;
+	private Building[] buildings;
+	
 	private TypeLoader colonyLoader;
 	private Species species;
 	private BuildQueue buildQueue;
-	
-	private District[] districts;
-	private Building[] buildings;
 	
 	/**
 	 * initalizes ResourceManager
@@ -62,9 +66,7 @@ public class ResourceManager {
 		jobTypes = new HashMap<String, TypeJob>();
 		jobList = new HashMap<TypeJob, ArrayList<Job>>();
 		
-		districts = new District[1] ;
-		buildings = new Building[1] ;
-		
+		//TODO implement pop growth
 		for(int i = 0; i < 50; i++) {
 			
 			Pop p = new Pop(species.getDefaltPopCategory());
@@ -103,6 +105,10 @@ public class ResourceManager {
 		buildingTypes = d;
 	}
 
+	public void setProject(ArrayList<TypePlanetaryProjects> p) {
+		projectTypes = p;
+	}
+
 	public ArrayList<TypeDistrict> getDistrictTypes() {
 		return districtTypes;
 	}
@@ -111,26 +117,16 @@ public class ResourceManager {
 		return buildingTypes;
 	}
 
+	public ArrayList<TypePlanetaryProjects> getProjectTypes() {
+		return projectTypes;
+	}
+
 	public ArrayList<District> getDistricts() {
-		
-		ArrayList<District> t = new ArrayList<District>();
-		
-		for(District d: districts)
-			t.add(d);
-		
-		return t;
-		
+		return new ArrayList<District>(Arrays.asList(districts));
 	}
 
 	public ArrayList<Building> getBuildings() {
-		
-		ArrayList<Building> t = new ArrayList<Building>();
-		
-		for(Building d: buildings)
-			t.add(d);
-		
-		return t;
-		
+		return new ArrayList<Building>(Arrays.asList(buildings));
 	}
 	
 	/**
@@ -167,6 +163,9 @@ public class ResourceManager {
 	}
 
 	public void updateIncome() {
+		
+		if(districts == null || buildings == null)
+			return;
 		
 		resourceIncome.clear(); //clears the current resorce list
 		
@@ -340,11 +339,16 @@ public class ResourceManager {
 	public BuildQueue getBuildQueue() {
 		return buildQueue;
 	}
-
+	
+	//prevent from adding directly to species
 	public ResourceManager createChildManager() {
 		ResourceManager child = new ResourceManager(species, colonyLoader, species.getResourceManagerMaster().getResourceTotal());
 		childManagers.add(child);
 		return child;
+	}
+
+	public Species getSpecies() {
+		return species;
 	}
 	
 }

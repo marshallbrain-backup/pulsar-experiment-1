@@ -64,11 +64,9 @@ public class Species {
 
 	public Station createStation(Body b) {
 		
-		if(b.getColonyType() == null)
+		if(!b.tryAddStation()) {
 			return null;
-		
-		
-		
+		}
 		
 		Colony c = b.getColony();
 		Station s = null;
@@ -79,8 +77,10 @@ public class Species {
 			s = new Station(b, speciesLoader);
 		}
 		
-		b.addStation(s);
-		colonys.add(b);
+		if(s != null) {
+			b.addStation(s);
+			colonys.add(b);
+		}
 		
 		return s;
 		

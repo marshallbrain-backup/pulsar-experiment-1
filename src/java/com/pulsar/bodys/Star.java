@@ -30,7 +30,7 @@ public class Star extends Body {
 		x = 0;
 		y = 0;
 		scale = 0;
-		RenderRadius = 0;
+		renderRadius = 0;
 		
 		name = sc.getName();
 		color = sc.getColor();
@@ -53,10 +53,10 @@ public class Star extends Body {
 			
 			scale = s;
 					
-			RenderRadius = (int)Math.round((size*entityScale*scale)/80.0);
-			RenderRadius = (RenderRadius < 10) ? 10: RenderRadius;
+			renderRadius = (int)Math.round((size*entityScale*scale)/80.0);
+			renderRadius = (renderRadius < 10) ? 10: renderRadius;
 			
-			star = Draw.circle(RenderRadius, color, true);
+			star = Draw.circle(renderRadius, color, true);
 			
 		}//-offsetY*(scale-1)
 		

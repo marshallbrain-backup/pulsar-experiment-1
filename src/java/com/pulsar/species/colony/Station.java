@@ -13,6 +13,7 @@ import species.colony.build.District;
 import ui.universe.view.pane.BuildingUI;
 import ui.universe.view.pane.DistrictUI;
 
+//TODO make buildable via a planetary project
 public class Station {
 	
 	private District[] districts; //array for all posible district slots

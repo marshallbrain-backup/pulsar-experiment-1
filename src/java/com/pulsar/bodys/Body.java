@@ -18,11 +18,13 @@ public class Body {
 
 	protected int x;
 	protected int y;
-	protected int RenderRadius;
+	protected int renderRadius;
+	protected int stationCount;
 	
 	protected double scale;
 	
 	protected boolean colonizable;
+	protected boolean reload;
 	
 	protected String type;
 	protected String colonyType;
@@ -37,6 +39,9 @@ public class Body {
 	public Body(StarSystem s) {
 		
 		starSystem = s;
+		
+		stationCount = 0;
+		reload = false;
 		
 		stations = new Station[2];
 		random = new Random();
@@ -76,10 +81,10 @@ public class Body {
 	public boolean clicked(int mouseX, int mouseY, double screenX, double screenY) {
 		
 		if((
-				(mouseX > getX()+Main.WIDTH/2 - RenderRadius + screenX) && 
-						(mouseX < getX()+Main.WIDTH/2 + RenderRadius + screenX)) && 
-				((mouseY > getY()+Main.HEIGHT/2 - RenderRadius + screenY) && 
-						(mouseY < getY()+Main.HEIGHT/2 + RenderRadius + screenY))
+				(mouseX > getX()+Main.WIDTH/2 - renderRadius + screenX) && 
+						(mouseX < getX()+Main.WIDTH/2 + renderRadius + screenX)) && 
+				((mouseY > getY()+Main.HEIGHT/2 - renderRadius + screenY) && 
+						(mouseY < getY()+Main.HEIGHT/2 + renderRadius + screenY))
 			) return true;
 		
 		return false;
@@ -125,16 +130,19 @@ public class Body {
 	
 	public boolean addStation(Station s) {
 		
-		if(stations[0] == null) {
-			stations[0] = s;
-		} else if(stations[1] == null) {
-			stations[1] = s;
-		} else {
-			return false;
+		if(stationCount < stations.length) {
+			stations[stationCount] = s;
+			stationCount++;
+			reload = true;
+			return true;
 		}
 		
-		return true;
+		return false;
 		
+	}
+
+	public boolean tryAddStation() {
+		return stationCount < stations.length;
 	}
 
 	public boolean addColony(Colony c) {
@@ -155,6 +163,14 @@ public class Body {
 
 	public StarSystem getSystem() {
 		return starSystem;
+	}
+
+	public boolean shouldReload() {
+		if(reload == true) {
+			reload = false;
+			return true;
+		}
+		return false;
 	}
 
 }

@@ -6,7 +6,6 @@ district_city = {
 	}
 	
 	resources = {
-		category = planet_districts
 		cost = {
 			minerals = 300
 		}

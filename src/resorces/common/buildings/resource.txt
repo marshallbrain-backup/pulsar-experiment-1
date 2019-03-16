@@ -5,7 +5,6 @@ building_hydroponics_farm = {
 	}
 	
 	resources = {
-		category = planet_buildings
 		cost = {
 			minerals = 300
 		}
@@ -25,7 +24,6 @@ building_fission_generator = {
 	}
 	
 	resources = {
-		category = planet_buildings
 		cost = {
 			minerals = 300
 		}

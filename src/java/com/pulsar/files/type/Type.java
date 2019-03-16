@@ -5,6 +5,8 @@ import java.util.Random;
 import algorithms.Match;
 import files.GameFile;
 
+//TODO change to an interface
+//TODO add specific error with checkFile
 public class Type {
 	
 	protected String name;

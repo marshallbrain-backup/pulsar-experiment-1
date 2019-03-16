@@ -7,6 +7,7 @@ import files.type.Type;
 import files.type.TypeBuilding;
 import files.type.TypeDistrict;
 import files.type.TypeLoader;
+import files.type.TypePlanetaryProjects;
 import species.Species;
 import species.colony.build.Building;
 import species.colony.build.District;
@@ -21,6 +22,7 @@ public class Colony {
 	private BuildingUI[] buildingsUI;
 	
 	private ResourceManager resource;
+	private Body body;
 	
 	/**
 	 * initalizes  colony
@@ -30,6 +32,8 @@ public class Colony {
 	 * @param gamefile the gamefile containing district info
 	 */
 	public Colony(Body b, Species s, TypeLoader colonyLoader) {
+		
+		body = b;
 		
 		resource = new ResourceManager(s, colonyLoader, s.getResourceManagerMaster().getResourceTotal());
 		
@@ -82,6 +86,17 @@ public class Colony {
 		for(int i = 0; i < buildingsUI.length; i++) {
 			buildingsUI[i] = new BuildingUI(buildings[i]);
 		}
+
+		ArrayList<Type> pt = colonyLoader.getTypes("planetaryProjects");
+		ArrayList<TypePlanetaryProjects> projectTypes = new ArrayList<TypePlanetaryProjects>();
+		
+		for(int i = 0; i < pt.size(); i++) {
+			if(((TypePlanetaryProjects) pt.get(i)).isPotential(b)) {
+				projectTypes.add((TypePlanetaryProjects) pt.get(i));
+			}
+		}
+		
+		resource.setProject(projectTypes);
 		
 	}
 
@@ -95,6 +110,10 @@ public class Colony {
 
 	public ResourceManager getResourceManager() {
 		return resource;
+	}
+
+	public Body getBody() {
+		return body;
 	}
 
 }

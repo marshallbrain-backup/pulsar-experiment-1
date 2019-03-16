@@ -36,7 +36,7 @@ public class Planet extends Body {
 //		orbitCenterY = 0;
 //		radius = r;
 		scale = 0;
-		RenderRadius = 0;
+		renderRadius = 0;
 		statis = null;
 		
 		color = tp.getColor();
@@ -68,14 +68,14 @@ public class Planet extends Body {
 		if(scale != s || (statis == null && colony != null)) {
 			scale = s;
 			
-			RenderRadius = (int)Math.round((size*entityScale*scale)/(100.0));
-			RenderRadius = (RenderRadius < 8) ? 8: RenderRadius;
+			renderRadius = (int)Math.round((size*entityScale*scale)/(100.0));
+			renderRadius = (renderRadius < 8) ? 8: renderRadius;
 //			RenderRadius = (RenderRadius > 100) ? 100: RenderRadius;
 			
-			planet = Draw.circle(RenderRadius, color, true);
+			planet = Draw.circle(renderRadius, color, true);
 //			orbit = Draw.circle((int)Math.round(radius*scale), 0, false);
 			if(colony != null)
-				statis = Draw.circle(RenderRadius, 0, 1, false);
+				statis = Draw.circle(renderRadius, 0, 1, false);
 			
 		}
 		

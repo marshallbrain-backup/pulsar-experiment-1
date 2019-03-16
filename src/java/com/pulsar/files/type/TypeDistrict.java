@@ -84,25 +84,6 @@ public class TypeDistrict extends Type{
 		
 	}
 
-	/**
-	 * does the type of district start on the planet type
-	 * 
-	 * @param planet the planet being checked
-	 */
-	public boolean isStarting(Planet p) {
-		
-		HashMap<String, String> potential = gameFile.getFieldAll("starting");
-		for(String k: potential.keySet()) {
-			if(k.startsWith("starting.is_")) {
-				if(potential.get(k).equals(p.getColonyType())) {
-					return true;
-				}
-			}
-		}
-		
-		return false;
-	}
-
 	public BufferedImage getIcon() {
 		return icon;
 	}

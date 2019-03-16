@@ -10,6 +10,7 @@ import files.type.TypeBuilding;
 import files.type.TypeDistrict;
 import files.type.TypeJob;
 import files.type.TypeLoader;
+import files.type.TypePlanetaryProjects;
 import species.Species;
 import species.colony.build.BuildQueue;
 import species.colony.build.BuildQueueEntry;
@@ -22,6 +23,7 @@ public class ResourceManager {
 	
 	private ArrayList<TypeDistrict> districtTypes;
 	private ArrayList<TypeBuilding> buildingTypes;
+	private ArrayList<TypePlanetaryProjects> projectTypes;
 	private ArrayList<Pop> popList;
 	private ArrayList<ResourceManager> childManagers;
 
@@ -102,12 +104,20 @@ public class ResourceManager {
 		buildingTypes = d;
 	}
 
+	public void setProject(ArrayList<TypePlanetaryProjects> p) {
+		projectTypes = p;
+	}
+
 	public ArrayList<TypeDistrict> getDistrictTypes() {
 		return districtTypes;
 	}
 
 	public ArrayList<TypeBuilding> getBuildingTypes() {
 		return buildingTypes;
+	}
+
+	public ArrayList<TypePlanetaryProjects> getProjectTypes() {
+		return projectTypes;
 	}
 
 	public ArrayList<District> getDistricts() {

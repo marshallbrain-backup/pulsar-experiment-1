@@ -19,28 +19,31 @@ import javax.imageio.ImageIO;
 import input.Keyboard;
 import input.Mouse;
 import species.colony.Colony;
+import ui.universe.view.button.Button;
 import ui.universe.view.pane.BuildingUI;
 import ui.universe.view.pane.DistrictUI;
 import ui.universe.view.pane.Pane;
 import ui.universe.view.pane.Resorce;
 import ui.universe.view.pane.detail.BuildingDet;
 import ui.universe.view.pane.detail.DistrictDet;
+import ui.universe.view.pane.detail.ProjectDet;
 
-public class Overview extends Pane{
+public class Overview extends Pane {
 	
 	private int lastDistrictIndex;
 	private int lastBuildingIndex;
 	
-	private DistrictUI[] districts;
-	private BuildingUI[] buildings;
+	private ArrayList<String> resorcesDisplay;
 	
 	private BufferedImage district;
 	private BufferedImage building;
 	private BufferedImage resource;
 	
-	private ArrayList<String> resorcesDisplay;
-	
 	private Colony colony;
+	private Button projects;
+	
+	private DistrictUI[] districts;
+	private BuildingUI[] buildings;
 	
 	public Overview(Colony c) {
 		
@@ -59,9 +62,13 @@ public class Overview extends Pane{
 		lastBuildingIndex = -1;
 		
 		try {
+			
 			resource = ImageIO.read(new File("gfx\\ui\\view\\colony\\resorces.png"));
 			district = ImageIO.read(new File("gfx\\ui\\view\\colony\\district\\area.png"));
 			building = ImageIO.read(new File("gfx\\ui\\view\\colony\\building\\area.png"));
+
+			projects = new Button(ImageIO.read(new File("gfx\\ui\\view\\button2.png")), "Projects", 790, 53);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -92,6 +99,10 @@ public class Overview extends Pane{
 		int x = (int)Math.round(m.getPosition().getX()-this.x);
 		int y = (int)Math.round(m.getPosition().getY()-this.y);
 		
+		if(projects.action(m, k)) {
+			detail.setPane(new ProjectDet(detail), "Tool District");
+		}
+		
 		int x1 = 0;
 		int y1 = 0;
 		
@@ -118,7 +129,7 @@ public class Overview extends Pane{
 					if(districts[i].getDistrict().getType() == null && districts[i].getDistrict().getPendingType() == null) {
 						detail.setPane(new DistrictDet(districts, i, detail), "Tool District");
 					} else {
-						detail.setPane(new DistrictDet(districts[i].getDistrict(), detail, x, y), "District Details");
+						detail.setPane(new DistrictDet(districts[i].getDistrict(), detail), "District Details");
 					}
 					
 					return true;
@@ -222,6 +233,8 @@ public class Overview extends Pane{
 		
 		renderResorces(g, x+350, y+210, x+350+resource.getWidth(), colony.getResourceManager().getResourceIncome());
 		colony.getResourceManager().getBuildQueue().render(g, x+290+350, y+95+210);
+		
+		projects.render(g);
 		
 	}
 	

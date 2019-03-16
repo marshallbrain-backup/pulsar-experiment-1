@@ -77,6 +77,9 @@ public class Detail {
 				return true;
 			}
 		}
+
+		if(m.buttonClicked(1))
+			setPane(null);
 		
 		return false;
 		

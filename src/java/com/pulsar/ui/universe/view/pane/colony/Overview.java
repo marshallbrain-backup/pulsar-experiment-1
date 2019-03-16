@@ -166,9 +166,6 @@ public class Overview extends Pane {
 				}
 			}
 		}
-
-		if(m.buttonDownOnce(1))
-			detail.setPane(null);
 		
 //		x -= (i%4)*80;
 //		y -= (i/4)*100;

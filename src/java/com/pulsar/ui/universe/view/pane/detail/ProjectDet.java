@@ -47,8 +47,7 @@ public class ProjectDet extends Pane {
 		TypePlanetaryProjects t = projects.clicked(x-12, y-57);
 		if(t != null) {
 			//TODO get build requects to planet
-			if(parent.getResourceManager().getSpecies().createStation(body) != null) {
-			}
+			parent.getResourceManager().getSpecies().createStation(body);
 			return true;
 		}
 		

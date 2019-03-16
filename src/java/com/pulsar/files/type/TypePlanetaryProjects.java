@@ -1,5 +1,6 @@
 package files.type;
 
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 import bodys.Body;
@@ -65,6 +66,10 @@ public class TypePlanetaryProjects extends Type {
 	
 	public HashMap<String, String> getCost() {
 		return gameFile.getFieldAll("resources.cost");
+	}
+
+	public BufferedImage getIcon() {
+		return null;
 	}
 
 }

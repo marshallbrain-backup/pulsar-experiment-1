@@ -11,15 +11,11 @@ import files.type.TypePlanetaryProjects;
 import species.Species;
 import species.colony.build.Building;
 import species.colony.build.District;
-import ui.universe.view.pane.BuildingUI;
-import ui.universe.view.pane.DistrictUI;
 
 public class Colony {
 	
 	private District[] districts; //array for all posible district slots
 	private Building[] buildings;
-	private DistrictUI[] districtsUI; //the visual aspect of each district
-	private BuildingUI[] buildingsUI;
 	
 	private ResourceManager resource;
 	private Body body;
@@ -41,7 +37,6 @@ public class Colony {
 		ArrayList<Type> dt = colonyLoader.getTypes("district");
 		ArrayList<TypeDistrict> districtTypes = new ArrayList<TypeDistrict>();
 		districts = new District[8];
-		districtsUI = new DistrictUI[districts.length];
 		
 		resource.set(districts); //adds the district array to the resorcemanager
 		
@@ -59,15 +54,10 @@ public class Colony {
 		}
 		
 		resource.setDistricts(districtTypes);
-		
-		for(int i = 0; i < districtsUI.length; i++) {
-			districtsUI[i] = new DistrictUI(districts[i]);
-		}
 
 		ArrayList<Type> bt = colonyLoader.getTypes("building");
 		ArrayList<TypeBuilding> buildingTypes = new ArrayList<TypeBuilding>();
 		buildings = new Building[44];
-		buildingsUI = new BuildingUI[buildings.length];
 		
 		resource.set(buildings);
 		
@@ -82,10 +72,6 @@ public class Colony {
 		}
 		
 		resource.setBuildings(buildingTypes);
-		
-		for(int i = 0; i < buildingsUI.length; i++) {
-			buildingsUI[i] = new BuildingUI(buildings[i]);
-		}
 
 		ArrayList<Type> pt = colonyLoader.getTypes("planetaryProjects");
 		ArrayList<TypePlanetaryProjects> projectTypes = new ArrayList<TypePlanetaryProjects>();
@@ -98,14 +84,6 @@ public class Colony {
 		
 		resource.setProject(projectTypes);
 		
-	}
-
-	public DistrictUI[] getDistricts() {
-		return districtsUI;
-	}
-
-	public BuildingUI[] getBuildings() {
-		return buildingsUI;
 	}
 
 	public ResourceManager getResourceManager() {

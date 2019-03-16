@@ -50,17 +50,7 @@ public class Galaxy {
 	 * @param m 
 	 * @param k 
 	 */
-	public void tick(Keyboard k, Mouse m) {
-		s.tick(k, m);
-	}
-
-	/**
-	 * render
-	 * 
-	 * @param graphics the graphics class for the canvas
-	 */
-	public void render(Graphics g) {
-		s.render(g);
+	public void tick() {
 	}
 
 }

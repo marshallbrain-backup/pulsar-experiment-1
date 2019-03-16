@@ -1,7 +1,5 @@
 package universe;
 
-import java.awt.Graphics;
-
 import files.GameFile;
 import files.type.TypeBuilding;
 import files.type.TypeCategory;
@@ -15,9 +13,6 @@ import files.type.TypeSystem;
 import input.Keyboard;
 import input.Mouse;
 import species.Species;
-import ui.universe.TitleBar;
-import ui.universe.Tooltip;
-import ui.universe.view.pane.Resorce;
 
 public class Universe {
 	
@@ -25,7 +20,6 @@ public class Universe {
 	
 	private Species species;
 	private Clock clock;
-	private TitleBar titleBar;
 	
 	/**
 	 * initalizes Universe
@@ -65,10 +59,6 @@ public class Universe {
 		
 		galaxy = new Galaxy(species, systemLoader);
 		clock = new Clock();
-		titleBar = new TitleBar(species.getResourceManagerMaster(), clock);
-		
-		Resorce.init();
-		Tooltip.init();
 		
 	}
 	
@@ -78,24 +68,13 @@ public class Universe {
 	 * @param m 
 	 * @param k 
 	 */
-	public void tick(Keyboard k, Mouse m) {
+	public void tick() {
 		
 		long update = clock.tick();
 		
-		galaxy.tick(k, m);
+		galaxy.tick();
 		species.update(update);
 		
-	}
-	
-	/**
-	 * render meathod
-	 * 
-	 * @param graphics the graphics class for the canvas
-	 */
-	public void render(Graphics g) {
-		galaxy.render(g);
-		titleBar.render(g);
-		Tooltip.render(g);
 	}
 
 }

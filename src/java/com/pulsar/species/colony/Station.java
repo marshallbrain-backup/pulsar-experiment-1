@@ -4,20 +4,15 @@ import java.util.ArrayList;
 
 import bodys.Body;
 import files.type.Type;
-import files.type.TypeBuilding;
 import files.type.TypeDistrict;
 import files.type.TypeLoader;
 import species.Species;
-import species.colony.build.Building;
 import species.colony.build.District;
-import ui.universe.view.pane.BuildingUI;
-import ui.universe.view.pane.DistrictUI;
 
 //TODO make buildable via a planetary project
 public class Station {
 	
 	private District[] districts; //array for all posible district slots
-	private DistrictUI[] districtsUI; //the visual aspect of each district
 	
 	private ResourceManager resource;
 
@@ -37,7 +32,6 @@ public class Station {
 		ArrayList<Type> dt = colonyLoader.getTypes("district");
 		ArrayList<TypeDistrict> districtTypes = new ArrayList<TypeDistrict>();
 		districts = new District[8];
-		districtsUI = new DistrictUI[districts.length];
 		
 		resource.set(districts); //adds the district array to the resorcemanager
 		
@@ -56,14 +50,6 @@ public class Station {
 		
 		resource.setDistricts(districtTypes);
 		
-		for(int i = 0; i < districtsUI.length; i++) {
-			districtsUI[i] = new DistrictUI(districts[i]);
-		}
-		
-	}
-
-	public DistrictUI[] getDistricts() {
-		return districtsUI;
 	}
 
 	public ResourceManager getResourceManager() {

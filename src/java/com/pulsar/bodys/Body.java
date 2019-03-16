@@ -1,17 +1,10 @@
 package bodys;
 
-import java.util.ArrayList;
 import java.util.Random;
 
-import Pulsar.Main;
-import fleets.ActionType;
+import pulsar.Main;
 import species.colony.Colony;
 import species.colony.Station;
-import ui.universe.view.pane.Pane;
-import ui.universe.view.pane.colony.ColonyUI;
-import ui.universe.view.pane.detail.Detail;
-import ui.universe.view.pane.list.ListAction;
-import ui.universe.view.pane.station.StationUI;
 import universe.StarSystem;
 
 public class Body {
@@ -89,38 +82,6 @@ public class Body {
 		
 		return false;
 		
-	}
-
-	/**
-	 * gets a list of panes that the body has to desplay on screen
-	 * @param detail 
-	 * 
-	 * @return the list of panes
-	 */
-	public ArrayList<Pane> getPanes(Detail detail) {
-		
-		ArrayList<Pane> panes = new ArrayList<Pane>();
-		
-		if(colony != null) {
-			panes.add(new ColonyUI(colony, detail));
-			for(Station s: stations)
-				if(s != null)
-					panes.add(new StationUI(s, detail));
-		} else
-			panes.add(new Pane());
-		
-		return panes;
-		
-	}
-
-	public ArrayList<ListAction> getActions() {
-		
-		ArrayList<ListAction> a = new ArrayList<ListAction>();
-		
-		a.add(new ListAction(ActionType.MOVE_TO, this));
-		a.add(new ListAction(ActionType.COLONIZE, this));
-		
-		return a;
 	}
 	
 	//TODO make this an interface

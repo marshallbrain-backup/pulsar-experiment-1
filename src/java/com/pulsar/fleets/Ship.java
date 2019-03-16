@@ -1,19 +1,13 @@
 package fleets;
 
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import Pulsar.Main;
-import gfx.Draw;
 import species.Species;
 import universe.StarSystem;
 
 public class Ship {
 	
-	private int RenderRadius;
 	private int size;
 	private int speed;
 
@@ -21,8 +15,6 @@ public class Ship {
 	private double y;
 	private double entityScale;
 	private double scale;
-	
-	private BufferedImage shipImage;
 	
 	private ArrayList<Action> actionQueue;
 	
@@ -34,7 +26,6 @@ public class Ship {
 		x = 50;
 		y = 50;
 		scale = 0;
-		RenderRadius = 5;
 		entityScale = 8;
 		size = 10;
 		speed = 1;
@@ -123,37 +114,6 @@ public class Ship {
 		y = (y - my);
 		
 		return false;
-		
-	}
-	
-	public boolean clicked(int mouseX, int mouseY, double screenX, double screenY) {
-		
-		if(
-				((mouseX > getX()+Main.WIDTH/2 - RenderRadius + screenX) && 
-						(mouseX < getX()+Main.WIDTH/2 + RenderRadius + screenX)) && 
-				((mouseY > getY()+Main.HEIGHT/2 - RenderRadius + screenY) && 
-						(mouseY < getY()+Main.HEIGHT/2 + RenderRadius + screenY))
-			) return true;
-		
-		return false;
-		
-	}
-	
-	public void render(Graphics g, double screenX, double screenY, double s) {
-		
-		if(scale != s) {
-			scale = s;
-			
-			RenderRadius = (int)Math.round((size*entityScale*scale)/(100.0));
-			RenderRadius = (RenderRadius < 5) ? 5: RenderRadius;
-			
-			shipImage = Draw.circle(RenderRadius, Color.WHITE.getRGB(), true);
-		}
-		
-		int imageX = (int)Math.round((getX()+screenX) - shipImage.getWidth()/2 + Main.WIDTH/2);
-		int imageY = (int)Math.round((getY()+screenY) - shipImage.getHeight()/2 + Main.HEIGHT/2);
-		
-		g.drawImage(shipImage, imageX, imageY, null);
 		
 	}
 

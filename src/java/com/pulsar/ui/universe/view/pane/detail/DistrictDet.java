@@ -48,7 +48,7 @@ public class DistrictDet extends Pane {
 		RETOOL
 	}
 
-	public DistrictDet(District d, Detail de, int x1, int y1) {
+	public DistrictDet(District d, Detail de) {
 		
 		district = d;
 		parent = de;
@@ -109,7 +109,7 @@ public class DistrictDet extends Pane {
 
 	public boolean action(Mouse mo, Keyboard k) {
 		
-		if(!(mo.buttonDownOnce(1) || mo.buttonClicked(1)))
+		if(!(mo.buttonClicked(1)))
 			return false;
 		
 		Mouse m = new Mouse(mo, x, y);

@@ -113,7 +113,7 @@ public class Overview extends Pane{
 					if(districts[i].getDistrict().getType() == null && districts[i].getDistrict().getPendingType() == null) {
 						detail.setPane(new DistrictDet(districts, i, detail), "Tool District");
 					} else {
-						detail.setPane(new DistrictDet(districts[i].getDistrict(), detail, x, y), "District Details");
+						detail.setPane(new DistrictDet(districts[i].getDistrict(), detail), "District Details");
 					}
 					
 					return true;

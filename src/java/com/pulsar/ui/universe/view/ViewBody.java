@@ -49,7 +49,7 @@ public class ViewBody extends View {
 		x = 100;
 		y = 150;
 		
-		detail = new Detail(width, 0);
+		detail = new Detail(b.getColony().getResourceManager(), width, 0);
 		tabs = new TabLayout(0, 0, width, true);
 		
 		try {

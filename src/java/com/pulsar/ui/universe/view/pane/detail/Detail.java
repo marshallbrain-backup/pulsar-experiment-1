@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 
 import input.Keyboard;
 import input.Mouse;
+import species.colony.ResourceManager;
 import ui.universe.view.pane.Pane;
 
 public class Detail {
@@ -25,6 +26,7 @@ public class Detail {
 	
 	private BufferedImage tab;
 	
+	private ResourceManager resource;
 	private Pane pane;
 	
 	/**
@@ -34,7 +36,9 @@ public class Detail {
 	 * @param x the x cordenet of the view
 	 * @param y the y cordenet of the view
 	 */
-	public Detail(int x1, int y1) {
+	public Detail(ResourceManager r, int x1, int y1) {
+		
+		resource = r;
 		
 		x = x1+10;
 		y = y1;
@@ -105,6 +109,10 @@ public class Detail {
 
 	public void close() {
 		setPane(null);
+	}
+	
+	public ResourceManager getResourceManager() {
+		return resource;
 	}
 
 }

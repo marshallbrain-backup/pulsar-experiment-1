@@ -26,14 +26,14 @@ public class GameFile {
 		
 	}
 	
-	/**
-	 * Initalizes gamefile based on a hashmap
-	 * 
-	 * @param file hashmap containing fields
-	 */
-	public GameFile(HashMap<String, String> f) {
-		fields = f;
-	}
+//	/**
+//	 * Initalizes gamefile based on a hashmap
+//	 * 
+//	 * @param file hashmap containing fields
+//	 */
+//	public GameFile(HashMap<String, String> f) {
+//		fields = f;
+//	}
 
 	public void add(GameFile f) {
 		gameFiles.put(f.name, f);
@@ -160,6 +160,21 @@ public class GameFile {
 
 	public String getName() {
 		return name;
+	}
+
+	public static GameFile[] convertFiles(HashMap<String, String> fieldAll) {
+		
+		HashMap<String, GameFile> gf = new HashMap<String, GameFile>();
+		
+		for(Entry<String, String> e: fieldAll.entrySet()) {
+			String[] p = e.getKey().split("\\.");
+			GameFile g = gf.getOrDefault(p[1], new GameFile(p[1]));
+			g.add(e.getKey().substring(e.getKey().indexOf(p[2])), e.getValue());
+			gf.putIfAbsent(p[1], g);
+		}
+		
+		return (GameFile[]) gf.values().toArray();
+		
 	}
 
 }

@@ -129,7 +129,7 @@ public class Main {
 				
 				File n2 = new File(n.getPath() + "\\" + p.getFileName());
 				
-				if(!n2.exists())
+				if(!n2.exists() || true)
 					try {
 //						System.out.println(n2.toPath());
 						Files.copy(p, n2.toPath());

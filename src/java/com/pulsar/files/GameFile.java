@@ -118,20 +118,18 @@ public class GameFile {
 		return h.get(h.keySet().toArray()[0]);
 	}
 	
-	/**
-	 * Returns all the fields that fit the regular expretion
-	 * 
-	 * @param name name of the field
-	 * @return hashmap of the fields
-	 */
 	public HashMap<String, String> getFieldAll(String name) {
+		return getFieldAll(name, 0);
+	}
+	
+	public HashMap<String, String> getFieldAll(String name, int i) {
 		
 		HashMap<String, String> o = new HashMap<String, String>();
 		
 		for(Entry<String, String> e: fields.entrySet()) {
 			String f = e.getKey();
 			if(f.matches(name + ".*"))
-				o.put(f, e.getValue());
+				o.put(f.substring(f.indexOf(f.split("\\.")[i])), e.getValue());
 		}
 		
 		return o;

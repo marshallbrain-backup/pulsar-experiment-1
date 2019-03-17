@@ -1,118 +1,59 @@
 package universe;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
+import algorithms.RanAlg;
+import bodys.Body;
 import bodys.Planet;
 import bodys.Star;
-import files.type.Type;
-import files.type.TypeLoader;
-import files.type.TypePlanet;
-import files.type.TypeStar;
-import files.type.TypeSystem;
+import files.GameFile;
 import fleets.Ship;
 import species.Species;
 
 public class StarSystem {
 	
-	private int systemRadius;
+	private double systemRadius;
 	
-	private ArrayList<Star> starList;
-	private ArrayList<Planet> planetList;
-	private ArrayList<Ship> fleetList;
-//	private ArrayList<View> viewList;
+	private ArrayList<Body> starList;
+	private ArrayList<Body> planetList;
 	
-	protected Random random;
-	
-	private TypeSystem systemType;
-	private TypeLoader loader;
-	
-	/**
-	 * initalise starsystem
-	 * 
-	 * @param gamefile the gamefile
-	 * @param typeloader the typeloader with system
-	 * @param species
-	 * @param keyboard
-	 * @param mouse
-	 */
-	public StarSystem(TypeLoader tl, TypeSystem ts, Species s) {
+	public StarSystem(GameFile gf, Map<String, String> system, Species s) {
 		
-		loader = tl;
-		systemType = ts;
+		starList = new ArrayList<Body>();
+		planetList = new ArrayList<Body>();
 		
-		starList = new ArrayList<Star>();
-		planetList = new ArrayList<Planet>();
-		fleetList = new ArrayList<Ship>();
-//		viewList = new ArrayList<View>();
-		random = new Random();
-		
-		init();
-		
-		ArrayList<Planet> colonize = new ArrayList<Planet>();
-		
-		//adds all colonizable planets to a list
-		for(Planet p: planetList) {
-			if(p.isColonizable()) {
-				colonize.add(p);
-			}
-		}
-		
-		//picks one to colonize
-		int id = random.nextInt(colonize.size());
-		
-		s.createColony(colonize.get(id));
-		s.createStation(colonize.get(id));
-		//viewList.add(new ViewBody(colonize.get(id)));
+		init(gf, system);
 		
 	}
-
-	/**
-	 * initalises the star system
-	 */
-	private void init() {
+	
+	private void init(GameFile gf, Map<String, String> system) {
 		
-//		TODO: change distence to realistic distences
+		Map<String, String> star = gf.getFieldAll("body_classes\\." + system.get("star.key") + "\\..*", 0);
 		
-		//add all stars for the given system to the list
-		for(Type s: loader.getTypes("stars", systemType.getStarClasses().split(","))) {
-			starList.add(new Star((TypeStar) s, this));
-		}
+		starList.add(new Body(star, this, 0.0));
 		
-		generatePlanets(systemType.getPlanetNumber());
+		generatePlanets(gf, system.get("num_planets.min"), system.get("num_planets.max"));
 		
 	}
-
-	/**
-	 * generates planets
-	 * 
-	 * @param max max number of planets
-	 */
-	private void generatePlanets(int max) {
+	
+	private void generatePlanets(GameFile gf, String min, String max) {
 		
-		for(int i = 0; i < max; i++) {
-			int r = 10+i*50;
-			planetList.add(new Planet((TypePlanet) loader.getRandomType("planets"), this, r));
+		int n = RanAlg.randomInt(Integer.parseInt(min), Integer.parseInt(max));
+		double r = RanAlg.randomDouble(0.2, 0.7, 2);
+		
+		for(int i = 0; i < n; i++) {
+			//TODO this
+			planetList.add(new Body(gf, this, r));
+			System.out.println(r);
 			if(systemRadius < r)
 				systemRadius = r;
+			r += RanAlg.randomDouble(0.5, 1.5, 2);
 		}
 		
-	}
-
-	public ArrayList<Planet> getPlanets() {
-		return planetList;
-	}
-	
-	public void tick() {
-		
-	}
-	
-	public void shipEnter(Ship s) {
-		fleetList.add(s);
-	}
-	
-	public void shipExit(Ship s) {
-		fleetList.remove(s);
 	}
 
 }

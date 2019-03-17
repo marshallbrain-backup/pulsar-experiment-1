@@ -1,6 +1,9 @@
 package files;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 public class GameFile {
@@ -162,18 +165,21 @@ public class GameFile {
 		return name;
 	}
 
-	public static GameFile[] convertFiles(HashMap<String, String> fieldAll) {
+	public static List<Map<String, String>> convertFiles(HashMap<String, String> fieldAll) {
 		
-		HashMap<String, GameFile> gf = new HashMap<String, GameFile>();
+		HashMap<String, HashMap<String, String>> gf = new HashMap<String, HashMap<String, String>>();
 		
 		for(Entry<String, String> e: fieldAll.entrySet()) {
 			String[] p = e.getKey().split("\\.");
-			GameFile g = gf.getOrDefault(p[1], new GameFile(p[1]));
-			g.add(e.getKey().substring(e.getKey().indexOf(p[2])), e.getValue());
+			HashMap<String, String> g = gf.getOrDefault(p[1], new HashMap<String, String>());
+			if(g.isEmpty()) g.put("", p[1]);
+			g.put(e.getKey().substring(e.getKey().indexOf(p[2])), e.getValue());
 			gf.putIfAbsent(p[1], g);
 		}
 		
-		return (GameFile[]) gf.values().toArray();
+		List<Map<String, String>> a = new ArrayList<Map<String, String>>(gf.values());
+		
+		return a;
 		
 	}
 

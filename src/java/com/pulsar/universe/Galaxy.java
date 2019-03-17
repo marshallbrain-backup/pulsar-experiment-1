@@ -1,18 +1,15 @@
 package universe;
 
-import java.awt.Graphics;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
-import files.type.TypeLoader;
-import files.type.TypeSystem;
-import input.Keyboard;
-import input.Mouse;
+import files.GameFile;
 import species.Species;
 
 public class Galaxy {
 	
 	private StarSystem s;
-	
-	private TypeLoader systemLoader;
 
 	/**
 	 * initalizes Galaxy
@@ -22,25 +19,25 @@ public class Galaxy {
 	 * @param keyboard keyboard class
 	 * @param mouse mouse class
 	 */
-	public Galaxy(Species species, TypeLoader tl) {
+	public Galaxy(Species species, GameFile gf) {
 		
-		systemLoader = tl;
-		
-		init(species);
+		init(species, gf);
 		
 	}
 
 	/**
 	 * initalization for galaxy
 	 */
-	private void init(Species species) {
+	private void init(Species species, GameFile gf) {
 		
 		int totalSystems = 1; //max systems in galaxy
 		
+		Random r = new Random();
+		List<Map<String, String>> systems = GameFile.convertFiles(gf.getFieldAll("system_classes\\..*"));
+		
 		//loop for number of systems
 		for(int i = 0; i < totalSystems; i++) {
-			TypeSystem ts = (TypeSystem) systemLoader.getRandomType("systems"); //get a random system type
-			s = new StarSystem(systemLoader, ts, species); //make a new system based on the type
+			s = new StarSystem(gf, systems.get(r.nextInt(systems.size())), species); //make a new system based on the type
 		}
 		
 	}

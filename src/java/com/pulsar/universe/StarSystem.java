@@ -1,17 +1,10 @@
 package universe;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Random;
-
 import algorithms.RanAlg;
 import bodys.Body;
-import bodys.Planet;
-import bodys.Star;
 import files.GameFile;
-import fleets.Ship;
 import species.Species;
 
 public class StarSystem {

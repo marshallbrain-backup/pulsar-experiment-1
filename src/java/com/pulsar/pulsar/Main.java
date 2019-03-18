@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.CopyOption;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystemNotFoundException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.stream.Stream;
@@ -132,7 +134,7 @@ public class Main {
 				if(!n2.exists() || true)
 					try {
 //						System.out.println(n2.toPath());
-						Files.copy(p, n2.toPath());
+						Files.copy(p, n2.toPath(), StandardCopyOption.REPLACE_EXISTING);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}

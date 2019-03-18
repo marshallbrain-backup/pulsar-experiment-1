@@ -1,5 +1,8 @@
 package universe;
 
+import java.util.List;
+import java.util.Map;
+
 import files.GameFile;
 import species.Species;
 
@@ -30,7 +33,11 @@ public class Universe {
 	private void init(GameFile gf) {
 		
 //		species = new Species(gf);
-		galaxy = new Galaxy(species, gf);
+		
+		List<Map<String, String>> systems = GameFile.convertFiles(gf.getFieldAll("system_classes\\..*", 1));
+		GameFile bodyTypes = new GameFile(gf.getFieldAll("body_classes\\..*", 1));
+		
+		galaxy = new Galaxy(species, systems, bodyTypes);
 		clock = new Clock();
 		
 	}

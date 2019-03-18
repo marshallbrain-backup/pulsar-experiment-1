@@ -16,28 +16,28 @@ public class Galaxy {
 	 * 
 	 * @param gamefile gamefile
 	 * @param species all speties starting in the galaxy
+	 * @param systems 
 	 * @param keyboard keyboard class
 	 * @param mouse mouse class
 	 */
-	public Galaxy(Species species, GameFile gf) {
+	public Galaxy(Species sp, List<Map<String, String>> sy, GameFile b) {
 		
-		init(species, gf);
+		init(sp, sy, b);
 		
 	}
 
 	/**
 	 * initalization for galaxy
 	 */
-	private void init(Species species, GameFile gf) {
+	private void init(Species sp, List<Map<String, String>> sy, GameFile b) {
 		
 		int totalSystems = 1; //max systems in galaxy
 		
 		Random r = new Random();
-		List<Map<String, String>> systems = GameFile.convertFiles(gf.getFieldAll("system_classes\\..*"));
 		
 		//loop for number of systems
 		for(int i = 0; i < totalSystems; i++) {
-			s = new StarSystem(gf, systems.get(r.nextInt(systems.size())), species); //make a new system based on the type
+			s = new StarSystem(b, sy.get(r.nextInt(sy.size())), sp); //make a new system based on the type
 		}
 		
 	}

@@ -41,10 +41,9 @@ public class StarSystem {
 		for(int i = 0; i < n; i++) {
 			//TODO this
 			planetList.add(new Body(gf, this, r));
-			System.out.println(r);
 			if(systemRadius < r)
 				systemRadius = r;
-			r += RanAlg.randomDouble(0.5, 1.5, 2);
+			r = RanAlg.randomDouble(r, 0.5, 1.5, 2);
 		}
 		
 	}

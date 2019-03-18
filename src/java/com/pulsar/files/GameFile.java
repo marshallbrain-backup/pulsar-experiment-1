@@ -29,14 +29,14 @@ public class GameFile {
 		
 	}
 	
-//	/**
-//	 * Initalizes gamefile based on a hashmap
-//	 * 
-//	 * @param file hashmap containing fields
-//	 */
-//	public GameFile(HashMap<String, String> f) {
-//		fields = f;
-//	}
+	/**
+	 * Initalizes gamefile based on a hashmap
+	 * 
+	 * @param file hashmap containing fields
+	 */
+	public GameFile(HashMap<String, String> f) {
+		fields = f;
+	}
 
 	public void add(GameFile f) {
 		gameFiles.put(f.name, f);
@@ -169,10 +169,10 @@ public class GameFile {
 		
 		for(Entry<String, String> e: fieldAll.entrySet()) {
 			String[] p = e.getKey().split("\\.");
-			HashMap<String, String> g = gf.getOrDefault(p[1], new HashMap<String, String>());
-			if(g.isEmpty()) g.put("", p[1]);
-			g.put(e.getKey().substring(e.getKey().indexOf(p[2])), e.getValue());
-			gf.putIfAbsent(p[1], g);
+			HashMap<String, String> g = gf.getOrDefault(p[0], new HashMap<String, String>());
+			if(g.isEmpty()) g.put("", p[0]);
+			g.put(e.getKey().substring(e.getKey().indexOf(p[1])), e.getValue());
+			gf.putIfAbsent(p[0], g);
 		}
 		
 		List<Map<String, String>> a = new ArrayList<Map<String, String>>(gf.values());

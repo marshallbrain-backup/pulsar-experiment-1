@@ -2,15 +2,15 @@ package math;
 
 public class Unit {
 	
-	private int number;
-	private int exponent;
+	private long number;
+	private long exponent;
 	
 	public Unit(String n) {
 		
-		int e = Integer.parseInt(n.split("e")[1]);
+		long e = Integer.parseInt(n.split("e")[1]);
 		String i = n.split("e")[0];
 		
-		int d = i.indexOf(".");
+		long d = i.indexOf(".");
 		e += i.length()-d-1;
 		
 		number = Integer.parseInt(i.replace(".", ""));

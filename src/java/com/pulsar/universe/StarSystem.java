@@ -2,9 +2,10 @@ package universe;
 
 import java.util.ArrayList;
 import java.util.Map;
-import algorithms.RanAlg;
+
 import bodys.Body;
 import files.GameFile;
+import math.RanAlg;
 import species.Species;
 
 public class StarSystem {

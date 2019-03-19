@@ -25,21 +25,22 @@ public class StarSystem {
 	
 	private void init(GameFile gf, Map<String, String> system) {
 		
-		Map<String, String> star = gf.getFieldAll(system.get("star") + "\\..*", 0);
+		Map<String, String> s = gf.getFieldAll(system.get("star") + "\\..*", 0);
 		
-		starList.add(new Body(star, this, 0.0));
+		Body star = new Body(s, this, 0.0);
+		starList.add(star);
 		
-		generatePlanets(gf, system.get("num_planets.min"), system.get("num_planets.max"));
+		generatePlanets(gf, star, system.get("num_planets.min"), system.get("num_planets.max"));
 		
 	}
 	
-	private void generatePlanets(GameFile gf, String min, String max) {
+	private void generatePlanets(GameFile gf, Body star, String min, String max) {
 		
 		int n = RanAlg.randomInt(Integer.parseInt(min), Integer.parseInt(max));
 		double r = RanAlg.randomDouble(0.2, 0.7, 2);
 		
 		for(int i = 0; i < n; i++) {
-			planetList.add(new Body(gf, this, r));
+			planetList.add(new Body(gf, this, star, r, starList));
 			if(systemRadius < r)
 				systemRadius = r;
 			r = RanAlg.randomDouble(r, 0.5, 1.5, 2);

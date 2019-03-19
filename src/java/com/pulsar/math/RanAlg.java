@@ -21,5 +21,10 @@ public class RanAlg {
 	public static double randomDouble(double v, double min, double max, int d) {
 		return new BigDecimal((randomDouble(min, max, d)+v)*Math.pow(10, d)).movePointLeft(d).doubleValue();
 	}
+	
+	public static Unit randomUnit(Unit min, Unit max) {
+		double d = (r.nextDouble()*(max.doubleValue()-min.doubleValue()) + min.doubleValue());
+		return new Unit(d, UnitType.LONG);
+	}
 
 }

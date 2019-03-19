@@ -7,25 +7,45 @@ public class Unit {
 	
 	public Unit(String n) {
 		
-		long e = Integer.parseInt(n.split("e")[1]);
+		long e = Long.parseLong(n.split("e")[1]);
 		String i = n.split("e")[0];
 		
-		long d = i.indexOf(".");
-		e += i.length()-d-1;
-		
-		number = Integer.parseInt(i.replace(".", ""));
+		number = Long.parseLong(i);
 		exponent = e;
 		
+		removeZeros();
+		
 	}
 
-	public long getRawNum() {
-		return number;
+	public Unit(double d, UnitType l) {
+		
+		long n = 0;
+		long e = 0;
+		
+		switch(l) {
+		case LONG:
+			n = (long) Math.floor(d);
+			break;
+		}
+		
+		number = n;
+		exponent = e;
+		
+		removeZeros();
+		
 	}
-
-	public long getRawNum(Unit m) {
-		if(m.number > number)
-			return number*(long) Math.pow(10, m.exponent-exponent);
-		return number;
+	
+	private void removeZeros() {
+		String n = String.valueOf(number);
+		while(n.endsWith("0")) {
+			n = n.substring(0, n.length()-1);
+			exponent++;
+		}
+		number = Long.parseLong(n);
+	}
+	
+	public double doubleValue() {
+		return number*Math.pow(10, exponent);
 	}
 	
 }

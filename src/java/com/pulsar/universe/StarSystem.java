@@ -26,7 +26,7 @@ public class StarSystem {
 	
 	private void init(GameFile gf, Map<String, String> system) {
 		
-		Map<String, String> s = gf.getFieldAll(system.get("star") + "\\..*", 0);
+		Map<String, String> s = gf.getFieldAll(system.get("star") + "\\..*", 1);
 		
 		Body star = new Body(s, this, 0.0);
 		starList.add(star);

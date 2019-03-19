@@ -17,5 +17,15 @@ public class Unit {
 		exponent = e;
 		
 	}
+
+	public long getRawNum() {
+		return number;
+	}
+
+	public long getRawNum(Unit m) {
+		if(m.number > number)
+			return number*(long) Math.pow(10, m.exponent-exponent);
+		return number;
+	}
 	
 }

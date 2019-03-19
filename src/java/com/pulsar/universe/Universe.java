@@ -53,7 +53,7 @@ public class Universe {
 		long update = clock.tick();
 		
 		galaxy.tick();
-		species.update(update);
+//		species.update(update);
 		
 	}
 

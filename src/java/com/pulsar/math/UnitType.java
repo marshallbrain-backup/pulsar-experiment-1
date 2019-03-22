@@ -1,5 +1,6 @@
 package math;
 
 public enum UnitType {
-	LONG
+	ASTRONOMICAL_UNIT,
+	METER
 }

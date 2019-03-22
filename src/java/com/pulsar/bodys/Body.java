@@ -37,9 +37,8 @@ public class Body {
 			double r = star.radius.doubleValue();
 			
 			double bt = t * Math.sqrt(r/(2*rd));
-			long btLong = Math.round(bt);
 			
-			temperature = new Unit(btLong, UnitType.LONG);
+			temperature = new Unit(Math.round(bt));
 			
 		}
 		

@@ -24,7 +24,7 @@ public class RanAlg {
 	
 	public static Unit randomUnit(Unit min, Unit max) {
 		double d = (r.nextDouble()*(max.doubleValue()-min.doubleValue()) + min.doubleValue());
-		return new Unit(d, UnitType.LONG);
+		return new Unit(Math.round(d));
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 import files.GameFile;
 import math.RanAlg;
 import math.Unit;
+import math.UnitConverter;
 import math.UnitType;
 import universe.StarSystem;
 
@@ -30,6 +31,8 @@ public class Body {
 	}
 
 	public Body(GameFile f, StarSystem s, Body p, double rd, ArrayList<Body> starList) {
+		
+		rd = UnitConverter.convert(rd, UnitType.ASTRONOMICAL_UNIT, UnitType.METER);
 		
 		for(Body star: starList) {
 			

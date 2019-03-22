@@ -5,11 +5,13 @@ import java.util.Map;
 import files.GameFile;
 import math.RanAlg;
 import math.Unit;
+import math.UnitType;
 import universe.StarSystem;
 
 public class Body {
 	
 	private Unit temperature;
+	private Unit radius;
 	
 	private StarSystem starSystem;
 
@@ -17,14 +19,29 @@ public class Body {
 		
 		Unit minT = new Unit(f.get("star_temp.min"));
 		Unit maxT = new Unit(f.get("star_temp.max"));
+		Unit minS = new Unit(f.get("star_size.min"));
+		Unit maxS = new Unit(f.get("star_size.max"));
 		
 		temperature = RanAlg.randomUnit(minT, maxT);
+		radius = RanAlg.randomUnit(minS, maxS);
 		
 		starSystem = s;
 		
 	}
 
-	public Body(GameFile f, StarSystem s, Body p, double r, ArrayList<Body> starList) {
+	public Body(GameFile f, StarSystem s, Body p, double rd, ArrayList<Body> starList) {
+		
+		for(Body star: starList) {
+			
+			double t = star.temperature.doubleValue();
+			double r = star.radius.doubleValue();
+			
+			double bt = t * Math.sqrt(r/(2*rd));
+			long btLong = Math.round(bt);
+			
+			temperature = new Unit(btLong, UnitType.LONG);
+			
+		}
 		
 		starSystem = s;
 		

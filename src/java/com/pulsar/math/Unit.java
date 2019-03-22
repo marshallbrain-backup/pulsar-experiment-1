@@ -17,14 +17,22 @@ public class Unit {
 		
 	}
 
-	public Unit(double d, UnitType l) {
+	public Unit(double i) {
+		convert(i, 3);
+	}
+
+	public Unit(long i) {
+		convert(i, 1);
+	}
+	
+	private void convert(double i, int type) {
 		
 		long n = 0;
 		long e = 0;
 		
-		switch(l) {
-		case LONG:
-			n = (long) Math.floor(d);
+		switch(type) {
+		case 1:
+			n = (long) Math.floor(i);
 			break;
 		}
 		
@@ -34,7 +42,7 @@ public class Unit {
 		removeZeros();
 		
 	}
-	
+
 	private void removeZeros() {
 		String n = String.valueOf(number);
 		while(n.endsWith("0")) {

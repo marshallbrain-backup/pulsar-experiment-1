@@ -2,50 +2,51 @@ package bodys;
 
 import java.util.ArrayList;
 import java.util.Map;
+
 import files.GameFile;
 import math.RanAlg;
-import math.Unit;
-import math.UnitConverter;
-import math.UnitType;
 import universe.StarSystem;
 
 public class Body {
 	
-	private Unit temperature;
-	private Unit radius;
+	private double temperature;
+	private double radius;
 	
 	private StarSystem starSystem;
 
 	public Body(Map<String, String> f, StarSystem s, double r) {
 		
-		Unit minT = new Unit(f.get("star_temp.min"));
-		Unit maxT = new Unit(f.get("star_temp.max"));
-		Unit minS = new Unit(f.get("star_size.min"));
-		Unit maxS = new Unit(f.get("star_size.max"));
+		double minT = convert(f.get("temp.min"));
+		double maxT = convert(f.get("temp.max"));
+		double minS = convert(f.get("size.min"));
+		double maxS = convert(f.get("size.max"));
 		
-		temperature = RanAlg.randomUnit(minT, maxT);
-		radius = RanAlg.randomUnit(minS, maxS);
+		temperature = RanAlg.randomDouble(minT, maxT, 0);
+		radius = RanAlg.randomDouble(minS, maxS, 0);
 		
 		starSystem = s;
 		
 	}
 
-	public Body(GameFile f, StarSystem s, Body p, double rd, ArrayList<Body> starList) {
+	public Body(GameFile f, StarSystem s, Body p, double rd, Body star) {
+			
+		double t = star.temperature;
+		double r = star.radius;
 		
-		rd = UnitConverter.convert(rd, UnitType.ASTRONOMICAL_UNIT, UnitType.METER);
-		
-		for(Body star: starList) {
-			
-			double t = star.temperature.doubleValue();
-			double r = star.radius.doubleValue();
-			
-			double bt = t * Math.sqrt(r/(2*rd));
-			
-			temperature = new Unit(Math.round(bt));
-			
-		}
+		double temperature = t * Math.sqrt(r/(2*rd));
 		
 		starSystem = s;
+		
+	}
+	
+	private double convert(String n) {
+		
+		long e = Long.parseLong(n.split("e")[1]);
+		String i = n.split("e")[0];
+		
+		double d = Double.parseDouble(i);
+		
+		return d * Math.pow(10, e);
 		
 	}
 

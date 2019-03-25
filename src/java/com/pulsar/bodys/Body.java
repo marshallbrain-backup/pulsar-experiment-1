@@ -16,10 +16,12 @@ public class Body {
 
 	public Body(Map<String, String> f, StarSystem s, double r) {
 		
+		double sr = convert("6.95700e8");
+		
 		double minT = convert(f.get("temp.min"));
 		double maxT = convert(f.get("temp.max"));
-		double minS = convert(f.get("size.min"));
-		double maxS = convert(f.get("size.max"));
+		double minS = convert(f.get("size.min"))*sr;
+		double maxS = convert(f.get("size.max"))*sr;
 		
 		temperature = RanAlg.randomDouble(minT, maxT, 0);
 		radius = RanAlg.randomDouble(minS, maxS, 0);
@@ -41,8 +43,13 @@ public class Body {
 	
 	private double convert(String n) {
 		
-		long e = Long.parseLong(n.split("e")[1]);
-		String i = n.split("e")[0];
+		String[] s = n.split("e");
+		
+		if(s.length == 1)
+			return Double.parseDouble(n);
+		
+		long e = Long.parseLong(s[1]);
+		String i = s[0];
 		
 		double d = Double.parseDouble(i);
 		

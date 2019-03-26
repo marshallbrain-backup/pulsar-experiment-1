@@ -1,28 +1,23 @@
-@planet_standard_scale = 11
-@habitable_planet_max_size = 25
-@habitable_planet_min_size = 12
-@habitable_moon_max_size = 15
-@habitable_moon_min_size = 10
-@habitable_min_distance = 60
-@habitable_max_distance = 100
-@habitable_spawn_odds = 1
+@habitable_planet_max_size	= 25
+@habitable_planet_min_size	= 12
+@habitable_moon_max_size	= 15
+@habitable_moon_min_size	= 10
+@habitable_min_temp		= 0
+@habitable_max_temp		= 10000
+@habitable_spawn_odds		= 1
 
 pc_continental = {
+	
+	color		= @blue
+	
+	climate		= wet
+	
+	spawn_odds	= @habitable_spawn_odds
+	
+	chance_of_ring	= 0.2
 
-	entity_scale = @planet_standard_scale
-	color = @blue
-	
-	climate = wet
-	planet_catagory = default
-	
-	spawn_odds = @habitable_spawn_odds
-	
-	chance_of_ring = 0.2
-
-	distance_from_sun = { min = @habitable_min_distance, max = @habitable_max_distance }
-	planet_size = { min = @habitable_planet_min_size, max = @habitable_planet_max_size }
-	moon_size = { min = @habitable_moon_min_size, max = @habitable_moon_max_size }
-	
-	colonizable = true
+	range_temp	= { min = @habitable_min_temp, max = @habitable_max_temp }
+	planet_size	= { min = @habitable_planet_min_size, max = @habitable_planet_max_size }
+	moon_size	= { min = @habitable_moon_min_size, max = @habitable_moon_max_size }
 
 }

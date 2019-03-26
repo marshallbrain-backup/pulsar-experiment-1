@@ -48,7 +48,7 @@ public class StarSystem {
 		}
 		
 		for(double r: radiusList) {
-			planetList.add(new Body(gf, this, star, r*149597870700.0, star));
+			planetList.add(new Body(gf, gf.getFieldAll(".*\\.range_temp\\..*", 0), this, star, r*149597870700.0, star));
 		}
 		
 	}

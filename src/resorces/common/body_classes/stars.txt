@@ -1,19 +1,19 @@
 sc_b_star = {
-	color 		= @purple
-	entity_scale 	= 20.0
+	color		= @purple
+	entity_scale	= 20.0
 	
-	size 	= { min = 6,  max = 3 }
-	temp	= { min = 10e3, max = 20e3 }
+	size		= { min = 6,  max = 3 }
+	set_temp	= { min = 10e3, max = 20e3 }
 	
-	colonizable 	= no
+	colonizable	= no
 }
 
 sc_a_star = {
 	color		= @blue
-	entity_scale 	= 20.0
+	entity_scale	= 20.0
 	
-	size 	= { min = 2,  max = 1.5 }
-	temp	= { min = 7e3, max = 10e3 }
+	size		= { min = 2,  max = 1.5 }
+	set_temp	= { min = 7e3, max = 10e3 }
 	
-	colonizable 	= no
+	colonizable	= no
 }

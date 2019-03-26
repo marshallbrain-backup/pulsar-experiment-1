@@ -18,8 +18,8 @@ public class Body {
 		
 		double sr = convert("6.95700e8");
 		
-		double minT = convert(f.get("temp.min"));
-		double maxT = convert(f.get("temp.max"));
+		double minT = convert(f.get("set_temp.min"));
+		double maxT = convert(f.get("set_temp.max"));
 		double minS = convert(f.get("size.min"))*sr;
 		double maxS = convert(f.get("size.max"))*sr;
 		
@@ -30,7 +30,7 @@ public class Body {
 		
 	}
 
-	public Body(GameFile f, StarSystem s, Body p, double rd, Body star) {
+	public Body(GameFile f, Map<String, String> temps, StarSystem s, Body p, double rd, Body star) {
 			
 		double t = star.temperature;
 		double r = star.radius;

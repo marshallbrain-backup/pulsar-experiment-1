@@ -1,7 +1,10 @@
 package bodys;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
 
 import files.GameFile;
 import math.RanAlg;
@@ -9,8 +12,8 @@ import universe.StarSystem;
 
 public class Body {
 	
-	private double temperature;
-	private double radius;
+	private long temperature;
+	private long radius;
 	
 	private StarSystem starSystem;
 
@@ -23,19 +26,53 @@ public class Body {
 		double minS = convert(f.get("size.min"))*sr;
 		double maxS = convert(f.get("size.max"))*sr;
 		
-		temperature = RanAlg.randomDouble(minT, maxT, 0);
-		radius = RanAlg.randomDouble(minS, maxS, 0);
+		double tem = RanAlg.randomDouble(minT, maxT, 0);
+		double rad = RanAlg.randomDouble(minS, maxS, 0);
+		
+		temperature = Math.round(tem);
+		radius = Math.round(rad);
 		
 		starSystem = s;
 		
 	}
 
-	public Body(GameFile f, Map<String, String> temps, StarSystem s, Body p, double rd, Body star) {
+	public Body(GameFile f, Map<String, String> temps, Map<String, String> prob, StarSystem s, Body parent, double rad, Body star) {
 			
 		double t = star.temperature;
 		double r = star.radius;
 		
-		double temperature = t * Math.sqrt(r/(2*rd));
+		double tem = t * Math.sqrt(r/(2*rad));
+		
+		temperature = Math.round(tem);
+		
+		String[] k = new String[temps.size()];
+		k = temps.keySet().toArray(k);
+		List<String> planetPosibilitys = new ArrayList<String>();
+		
+		for(int i = 0; i < k.length; i+=2) {
+			
+			long min = Long.parseLong(temps.get(k[i]));
+			long max = Long.parseLong(temps.get(k[i+1]));
+			
+			if(min < temperature && temperature < max) {
+				planetPosibilitys.add(k[i].split("\\.")[0]);
+			}
+			
+		}
+		
+		List<Double> probList = new ArrayList<Double>();
+		double m = 0;
+		
+		for(Entry<String, String> p : prob.entrySet()) {
+			
+			if(planetPosibilitys.contains(p.getKey().split("\\.")[0])) {
+				probList.add(Double.parseDouble(p.getValue()));
+				m += Double.parseDouble(p.getValue());
+			}
+			
+		}
+		
+		radius = Math.round(rad);
 		
 		starSystem = s;
 		

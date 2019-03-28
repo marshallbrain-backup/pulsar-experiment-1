@@ -47,8 +47,11 @@ public class StarSystem {
 			radius = RanAlg.randomDouble(radius, 0.5, 1.5, 2);
 		}
 		
+		Map<String, String> temps = gf.getFieldAll(".*\\.range_temp\\..*", 0);
+		Map<String, String> prob = gf.getFieldAll(".*\\.spawn_odds", 0);
+		
 		for(double r: radiusList) {
-			planetList.add(new Body(gf, gf.getFieldAll(".*\\.range_temp\\..*", 0), this, star, r*149597870700.0, star));
+			planetList.add(new Body(gf, temps, prob, this, star, r*149597870700.0, star));
 		}
 		
 	}

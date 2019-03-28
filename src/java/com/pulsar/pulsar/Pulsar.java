@@ -13,6 +13,7 @@ import files.GameFile;
 import input.Keyboard;
 import input.Mouse;
 import settings.Settings;
+import ui.engine.VectorGraphics;
 import universe.Universe;
 
 public class Pulsar extends Canvas implements Runnable {
@@ -212,7 +213,7 @@ public class Pulsar extends Canvas implements Runnable {
 		
 		BufferStrategy bs = this.getBufferStrategy();
 		
-		Graphics g = bs.getDrawGraphics();
+		VectorGraphics g = new VectorGraphics(bs.getDrawGraphics());
 		
 		//RENDER HERE
 		

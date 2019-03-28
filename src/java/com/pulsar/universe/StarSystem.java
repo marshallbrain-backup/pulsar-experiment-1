@@ -28,7 +28,7 @@ public class StarSystem {
 		
 		Map<String, String> s = gf.getFieldAll(system.get("star") + "\\..*", 1);
 		
-		star = new Body(s, this, 0.0);
+		star = new Body(system.get("star"), s, this, 0.0);
 		
 		generatePlanets(gf, star, system.get("num_planets.min"), system.get("num_planets.max"));
 		

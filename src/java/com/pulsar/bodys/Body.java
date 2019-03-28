@@ -1,6 +1,7 @@
 package bodys;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,9 +16,14 @@ public class Body {
 	private long temperature;
 	private long radius;
 	
+	private String bodyType;
+	
 	private StarSystem starSystem;
 
-	public Body(Map<String, String> f, StarSystem s, double r) {
+	public Body(String t, Map<String, String> f, StarSystem s, double r) {
+		
+		bodyType = t;
+		starSystem = s;
 		
 		double sr = convert("6.95700e8");
 		
@@ -31,8 +37,6 @@ public class Body {
 		
 		temperature = Math.round(tem);
 		radius = Math.round(rad);
-		
-		starSystem = s;
 		
 	}
 
@@ -60,17 +64,31 @@ public class Body {
 			
 		}
 		
-		List<Double> probList = new ArrayList<Double>();
+		Map<String ,Double> probList = new HashMap<String ,Double>();
 		double m = 0;
 		
 		for(Entry<String, String> p : prob.entrySet()) {
 			
-			if(planetPosibilitys.contains(p.getKey().split("\\.")[0])) {
-				probList.add(Double.parseDouble(p.getValue()));
+			String plan = p.getKey().split("\\.")[0];
+			
+			if(planetPosibilitys.contains(plan)) {
+				probList.put(plan, Double.parseDouble(p.getValue()));
 				m += Double.parseDouble(p.getValue());
 			}
 			
 		}
+		
+		double rand = RanAlg.randomDouble(0, m, 5);
+		String planet = "";
+		
+		for(Entry<String, Double> d: probList.entrySet()) {
+			rand -= d.getValue();
+			if(rand <= 0) {
+				planet = d.getKey();
+			}
+		}
+		
+		bodyType = planet;
 		
 		radius = Math.round(rad);
 		

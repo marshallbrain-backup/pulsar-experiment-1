@@ -9,7 +9,7 @@ import species.Species;
 
 public class Galaxy {
 	
-	private StarSystem s;
+	private StarSystem starSystem;
 
 	/**
 	 * initalizes Galaxy
@@ -37,9 +37,13 @@ public class Galaxy {
 		
 		//loop for number of systems
 		for(int i = 0; i < totalSystems; i++) {
-			s = new StarSystem(b, sy.get(r.nextInt(sy.size())), sp); //make a new system based on the type
+			starSystem = new StarSystem(b, sy.get(r.nextInt(sy.size())), sp); //make a new system based on the type
 		}
 		
+	}
+	
+	public StarSystem getStarSystem() {
+		return starSystem;
 	}
 
 	/**

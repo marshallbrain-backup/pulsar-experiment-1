@@ -1,10 +1,6 @@
 <circle
-
-	style="fill:#007bff;fill-opacity:1"  
-	cx="0"
-
-	cy="0"
-
+	fill=#007bff
+	fill-opacity=1
+	cx=0
+	cy=0
 />
-
-#opacity:1;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal;fill:url(#radialGradient6783)

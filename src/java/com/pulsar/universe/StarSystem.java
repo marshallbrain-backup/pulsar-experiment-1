@@ -56,4 +56,8 @@ public class StarSystem {
 		
 	}
 
+	public Body getBodys() {
+		return star;
+	}
+
 }

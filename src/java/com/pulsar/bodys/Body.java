@@ -112,4 +112,8 @@ public class Body {
 		
 	}
 
+	public String getType() {
+		return bodyType;
+	}
+
 }

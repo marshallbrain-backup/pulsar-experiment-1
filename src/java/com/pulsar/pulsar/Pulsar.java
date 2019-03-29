@@ -17,6 +17,7 @@ import settings.Settings;
 import ui.engine.Circle;
 import ui.engine.ScreenPosition;
 import ui.engine.VectorGraphics;
+import ui.universe_ui.StarSystemDisplay;
 import universe.Universe;
 
 public class Pulsar extends Canvas implements Runnable {
@@ -26,7 +27,7 @@ public class Pulsar extends Canvas implements Runnable {
 	private int fps = 0; //fps counter
 	private int tick = 0; //tick counter
 	
-	private boolean worldLoaded = false; //is a save loaded
+	private boolean universeLoaded = false; //is a save loaded
 	
 	public static boolean running = false; //is the game running
 	
@@ -36,6 +37,7 @@ public class Pulsar extends Canvas implements Runnable {
 	
 	private Settings settings; //settings
 	private Universe universe; //game logic class
+	private StarSystemDisplay starSystemDisplay; //game logic class
 	private Keyboard keyboard; //keyboard manager
 	private Mouse mouse; //mouse manager
 	
@@ -201,11 +203,12 @@ public class Pulsar extends Canvas implements Runnable {
 		mouse.poll(); //set current mouse state
 		
 		//if a game world is loaded call the tick function for that world
-		if(worldLoaded) {
+		if(universeLoaded) {
 			universe.tick();
 		} else {
 			universe = new Universe(null, gf);
-			worldLoaded = true;
+			starSystemDisplay = new StarSystemDisplay(universe.getGalaxy().getStarSystem());
+			universeLoaded = true;
 		}
 		
 		tick++;
@@ -224,9 +227,8 @@ public class Pulsar extends Canvas implements Runnable {
 		g.setColor(Color.DARK_GRAY);
 		g.fillRect(0, 0, Main.WIDTH, Main.HEIGHT);
 		
-		g.setColor(Color.WHITE);
-		vg.translationSet(ScreenPosition.CENTER);
-		vg.drawCircle(new Circle(0, 0, 50));
+		if(universeLoaded)
+			starSystemDisplay.render(vg);
 		
 		//END RENDER
 		

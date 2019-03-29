@@ -3,6 +3,7 @@ package pulsar;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 
@@ -13,6 +14,8 @@ import files.GameFile;
 import input.Keyboard;
 import input.Mouse;
 import settings.Settings;
+import ui.engine.Circle;
+import ui.engine.ScreenPosition;
 import ui.engine.VectorGraphics;
 import universe.Universe;
 
@@ -213,13 +216,17 @@ public class Pulsar extends Canvas implements Runnable {
 		
 		BufferStrategy bs = this.getBufferStrategy();
 		
-		VectorGraphics g = new VectorGraphics(bs.getDrawGraphics());
+		Graphics g = bs.getDrawGraphics();
+		VectorGraphics vg = new VectorGraphics(g);
 		
 		//RENDER HERE
 		
 		g.setColor(Color.DARK_GRAY);
-		
 		g.fillRect(0, 0, Main.WIDTH, Main.HEIGHT);
+		
+		g.setColor(Color.WHITE);
+		vg.translationSet(ScreenPosition.CENTER);
+		vg.drawCircle(new Circle(0, 0, 50));
 		
 		//END RENDER
 		

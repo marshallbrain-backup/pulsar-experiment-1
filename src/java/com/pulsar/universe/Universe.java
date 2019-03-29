@@ -42,6 +42,10 @@ public class Universe {
 		
 	}
 	
+	public Galaxy getGalaxy() {
+		return galaxy;
+	}
+	
 	//TODO make update var a class to get total time and days
 	/**
 	 * tick meathod

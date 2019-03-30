@@ -37,18 +37,17 @@ public class Circle implements Vector {
 		
 	}
 	
-	public Circle(int cx, int cy, long r) {
+	public Circle(long cx, long cy, long r) {
 		init("0", 1, cx, cy, r);
 	}
 	
-	private void init(String fc, float fa, int cx, int cy, long r) {
+	private void init(String fc, float fa, long cx, long cy, long r) {
 		
 		fillColor = toColor(fc, fa);
 		
-		centerX = cx;
-		centerY = cy;
+		centerX = Math.toIntExact(cx);
+		centerY = Math.toIntExact(cy);
 		radiusOffset = r;
-		radiusTemp = Math.toIntExact(radiusOffset);
 		
 	}
 	
@@ -79,10 +78,19 @@ public class Circle implements Vector {
 	public String getType() {
 		return "circle";
 	}
-
+	
 	@Override
 	public Color getFillColor() {
 		return fillColor;
+	}
+	
+	@Override
+	public Vector transform(long distance, double angle, long radius, long screenSize, int screenWidth, long minSize) {
+		long r = Math.toIntExact(radiusOffset + Math.round((((double) radius/screenSize)*screenWidth/2)));
+		if(r < minSize) {
+			r = minSize;
+		}
+		return new Circle(Math.round(Math.cos(angle)*distance), Math.round(Math.sin(angle)*distance), r);
 	}
 	
 }

@@ -8,4 +8,6 @@ public interface Vector {
 
 	Color getFillColor();
 
+	Vector transform(long distance, double angle, long radius, long screenSize, int screenWidth, long minSize);
+
 }

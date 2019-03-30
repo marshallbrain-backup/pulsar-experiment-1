@@ -1,40 +1,47 @@
 package ui.map;
 
-import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import bodys.Body;
-import ui.engine.Circle;
+import pulsar.Main;
 import ui.engine.ScreenPosition;
 import ui.engine.Vector;
 import ui.engine.VectorGraphics;
-import ui.engine.VectorParser;
 import universe.StarSystem;
 
 public class StarSystemUi implements Chart {
 	
-	List<Vector> bodys;
+	private List<Vector> bodys;
 	
 	private StarSystem starSystem;
 	
-	public StarSystemUi(StarSystem ss) {
+	public StarSystemUi(Map<String, List<Vector>> vectorList, StarSystem ss) {
+		
 		starSystem = ss;
 		Body s = starSystem.getBodys();
-		bodys = getRenderPropertys(s);
+		bodys = new ArrayList<Vector>();
+		
+		for(Entry<String, List<Vector>> e: vectorList.entrySet()) {
+			if(e.getKey().equals(s.getType())) {
+				for(Vector v: e.getValue()) {
+					v.setSize(s.getRadius());
+					bodys.add(v);
+				}
+			}
+		}
+		
 	}
 
 	@Override
 	public void render(VectorGraphics g) {
 		
 		g.translationSet(ScreenPosition.CENTER);
-		((Circle) bodys.get(0)).setRadius(50);
+		bodys.get(0).setTempSize(Math.round(696000000.0*10), Main.WIDTH, 5);
 		g.draw(bodys.get(0));
 		
-	}
-	
-	private List<Vector> getRenderPropertys(Body s) {
-		return VectorParser.getVectors("gfx\\body\\" + s.getType() + ".txt");
 	}
 
 }

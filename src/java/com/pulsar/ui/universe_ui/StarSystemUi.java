@@ -10,11 +10,11 @@ import ui.engine.VectorGraphics;
 import ui.engine.VectorParser;
 import universe.StarSystem;
 
-public class StarSystemDisplay {
+public class StarSystemUi {
 	
 	private StarSystem starSystem;
 	
-	public StarSystemDisplay(StarSystem ss) {
+	public StarSystemUi(StarSystem ss) {
 		starSystem = ss;
 		Body s = starSystem.getBodys();
 		List<Map<String, String>> o = getRenderPropertys(s);

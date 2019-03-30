@@ -48,7 +48,7 @@ public class VectorParser {
 	private static void read(BufferedReader br, List<Map<String, String>> vectorList) throws IOException {
 		
 		String line = null;
-		while ((line = br.readLine()) != null) {
+		while ((line = br.readLine().replaceAll("\\s+","")) != null) {
 			if(line.startsWith("<")) {
 				Map<String, String> vector = new HashMap<String, String>();
 				vector.put("type", line.replace("<", ""));
@@ -62,7 +62,7 @@ public class VectorParser {
 	private static void readPropertys(BufferedReader br, Map<String, String> vector) throws IOException {
 		
 		String line = null;
-		while ((line = br.readLine()) != null) {
+		while ((line = br.readLine().replaceAll("\\s+","")) != null) {
 			
 			if(line.equals("/>"))
 				return;

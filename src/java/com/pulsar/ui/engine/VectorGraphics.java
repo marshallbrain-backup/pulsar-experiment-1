@@ -37,6 +37,8 @@ public class VectorGraphics {
 
 	public void draw(Vector v) {
 		
+		graphics.setColor(v.getFillColor());
+		
 		switch(v.getType()) {
 		case "circle":
 			drawCircle((Circle) v);

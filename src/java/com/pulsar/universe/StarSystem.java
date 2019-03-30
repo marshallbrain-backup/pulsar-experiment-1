@@ -51,7 +51,7 @@ public class StarSystem {
 		Map<String, String> prob = gf.getFieldAll(".*\\.spawn_odds", 0);
 		
 		for(double r: radiusList) {
-			planetList.add(new Body(gf, temps, prob, this, star, r*149597870700.0, star));
+			planetList.add(new Body(gf, temps, prob, this, star, Math.round(r*149597870700.0), star));
 		}
 		
 	}

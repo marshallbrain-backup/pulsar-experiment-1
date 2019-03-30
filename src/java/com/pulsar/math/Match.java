@@ -4,12 +4,12 @@ import java.util.regex.Pattern;
 
 public class Match {
 	
-	private static String doublePattern = "\\p{Digit}\\.\\p{Digit}";
-	private static String intPattern = "\\p{Digit}";
-	private static String hexPattern = "\\p{XDigit}";
+	private static final Pattern DOUBLE_PATTERN = Pattern.compile("^\\p{Digit}+$" + "\\." + "^\\p{Digit}+$");
+	private static final Pattern INT_PATTERN = Pattern.compile("^\\p{Digit}+$");
+	private static final Pattern HEX_PATTERN = Pattern.compile("^\\p{XDigit}+$");
 	
 	public static boolean isDouble(String s) {
-		return (Pattern.matches(doublePattern, s) || isInt(s));
+		return (DOUBLE_PATTERN.matcher(s).matches() || isInt(s));
 	}
 	
 	public static boolean isInt(String s) {
@@ -19,9 +19,9 @@ public class Match {
 	public static boolean isInt(String s, int i) {
 		switch(i) {
 		case 10:
-			return Pattern.matches(intPattern, s);
+			return INT_PATTERN.matcher(s).matches();
 		case 16:
-			return Pattern.matches(hexPattern, s);
+			return HEX_PATTERN.matcher(s).matches();
 		default:
 			return false;
 		}

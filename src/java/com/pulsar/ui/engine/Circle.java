@@ -21,7 +21,7 @@ public class Circle implements Vector {
 		String cy = map.get("cy");
 		
 		if(fill == null || !Match.isInt(fill, 16))
-			fill = "0";
+			fill = "000000";
 		if(fillOpacity == null || !Match.isDouble(fill))
 			fillOpacity = "1";
 		if(cx == null || !Match.isInt(fill))

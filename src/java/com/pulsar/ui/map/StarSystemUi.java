@@ -28,7 +28,6 @@ public class StarSystemUi implements Chart {
 	public void render(VectorGraphics g) {
 		
 		g.translationSet(ScreenPosition.CENTER);
-		g.getGraphics().setColor(Color.WHITE);
 		((Circle) bodys.get(0)).setRadius(50);
 		g.draw(bodys.get(0));
 		

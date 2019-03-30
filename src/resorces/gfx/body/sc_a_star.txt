@@ -1,5 +1,5 @@
 <circle
-	fill=#007bff
+	fill=007bff
 	fill-opacity=1
 	cx=0
 	cy=0

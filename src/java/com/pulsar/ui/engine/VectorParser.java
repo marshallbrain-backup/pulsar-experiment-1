@@ -9,8 +9,14 @@ import java.util.List;
 import java.util.Map;
 
 public class VectorParser {
+
+	public static List<Vector> getVectors(String fileName) {
+		List<Vector> vectorList = new ArrayList<Vector>();
+		List<Map<String, String>> properties = readVectorFile(fileName);
+		return vectorList;
+	}
 	
-	public static List<Map<String, String>> readVectorFile(String fileName) {
+	private static List<Map<String, String>> readVectorFile(String fileName) {
 		
 		List<Map<String, String>> vectorList = new ArrayList<Map<String, String>>();
 		

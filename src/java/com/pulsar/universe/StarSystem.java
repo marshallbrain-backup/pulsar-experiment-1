@@ -1,6 +1,7 @@
 package universe;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import bodys.Body;
@@ -14,7 +15,7 @@ public class StarSystem {
 	
 	private Body star;
 	
-	private ArrayList<Body> planetList;
+	private List<Body> planetList;
 	
 	public StarSystem(GameFile gf, Map<String, String> system, Species s) {
 		
@@ -56,8 +57,11 @@ public class StarSystem {
 		
 	}
 
-	public Body getBodys() {
-		return star;
+	public List<Body> getBodys() {
+		List<Body> bodys = new ArrayList<Body>();
+		bodys.add(star);
+		bodys.addAll(planetList);
+		return bodys;
 	}
 
 }

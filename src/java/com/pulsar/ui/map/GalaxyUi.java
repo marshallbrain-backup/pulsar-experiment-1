@@ -3,18 +3,16 @@ package ui.map;
 import ui.engine.VectorGraphics;
 import universe.Galaxy;
 
-public class GalaxyUi {
+public class GalaxyUi implements Chart {
 	
 	private Galaxy galaxy;
-	private StarSystemUi starSystemUi;
 
 	public GalaxyUi(Galaxy g) {
 		galaxy = g;
-		starSystemUi = new StarSystemUi(galaxy.getStarSystem());
 	}
-
-	public void render(VectorGraphics vg) {
-		starSystemUi.render(vg);
+	
+	@Override
+	public void render(VectorGraphics g) {
 	}
 
 }

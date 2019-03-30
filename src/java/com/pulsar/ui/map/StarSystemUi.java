@@ -10,7 +10,7 @@ import ui.engine.VectorGraphics;
 import ui.engine.VectorParser;
 import universe.StarSystem;
 
-public class StarSystemUi {
+public class StarSystemUi implements Chart {
 	
 	private StarSystem starSystem;
 	
@@ -19,7 +19,8 @@ public class StarSystemUi {
 		Body s = starSystem.getBodys();
 		List<Map<String, String>> o = getRenderPropertys(s);
 	}
-	
+
+	@Override
 	public void render(VectorGraphics g) {
 		
 		g.translationSet(ScreenPosition.CENTER);

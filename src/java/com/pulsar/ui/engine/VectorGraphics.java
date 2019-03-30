@@ -1,10 +1,9 @@
 package ui.engine;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.util.Map;
+import java.awt.RenderingHints;
 
 import pulsar.Main;
 
@@ -16,7 +15,8 @@ public class VectorGraphics {
 	public VectorGraphics(Graphics g) {
 		graphics = (Graphics2D) g;
 		screenPosition = new Point(0, 0);
-		
+		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
 	}
 	
 	public Graphics getGraphics() {

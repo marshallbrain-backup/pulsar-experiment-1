@@ -78,5 +78,10 @@ public class Circle implements Vector {
 	public String getType() {
 		return "circle";
 	}
+
+	@Override
+	public Color getFillColor() {
+		return fillColor;
+	}
 	
 }

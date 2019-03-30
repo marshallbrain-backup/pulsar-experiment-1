@@ -14,19 +14,19 @@ public class Clock {
 	
 	private Calender calender;
 	
-	private BufferedImage pause;
-	private BufferedImage play;
+//	private BufferedImage pause;
+//	private BufferedImage play;
 	
 	public Clock() {
 		
 		calender = new Calender(2000);
 		
-		try {
-			pause  = ImageIO.read(new File("gfx\\ui\\view\\title\\pause.png"));
-			play  = ImageIO.read(new File("gfx\\ui\\view\\title\\play.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			pause  = ImageIO.read(new File("gfx\\ui\\view\\title\\pause.png"));
+//			play  = ImageIO.read(new File("gfx\\ui\\view\\title\\play.png"));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		
 		timeIncriment = 86400;
 		lastSecond = System.nanoTime() / 1000000000;

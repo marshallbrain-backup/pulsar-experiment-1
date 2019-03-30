@@ -12,7 +12,7 @@ sc_a_star = {
 	color		= @blue
 	entity_scale	= 20.0
 	
-	size		= { min = 2,  max = 1.5 }
+	size		= { min = 1.5,  max = 2 }
 	set_temp	= { min = 7e3, max = 10e3 }
 	
 	colonizable	= no

@@ -26,9 +26,14 @@ public class StarSystemUi implements Chart {
 		
 		for(Body b: starSystem.getBodys()) {
 			List<Vector> e = vectorList.get(b.getType());
-			for(Vector v: e) {
+			if(e != null) {
+				for(Vector v: e) {
+					bodys.add(b);
+					bodyVectors.add(v);
+				}
+			} else {
 				bodys.add(b);
-				bodyVectors.add(v);
+				bodyVectors.add(vectorList.get("_default").get(0));
 			}
 		}
 		

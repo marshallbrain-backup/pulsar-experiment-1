@@ -3,4 +3,5 @@
 	fill-opacity=1
 	cx=0
 	cy=0
+	r=0
 />

@@ -9,9 +9,7 @@ public class Circle implements Vector {
 
 	private int centerX;
 	private int centerY;
-	private int radiusTemp;
 	
-	private long radiusAbsolute;
 	private long radiusOffset;
 	
 	private Color fillColor;
@@ -73,25 +71,8 @@ public class Circle implements Vector {
 		return centerY;
 	}
 	
-	public int getRadius(long z, int max) {
-		return Math.toIntExact(radiusOffset + Math.round((((double) radiusAbsolute/z)*max)));
-	}
-	
-	public int getRadius() {
-		return radiusTemp;
-	}
-	
-	@Override
-	public void setTempSize(long z, int max, int min) {
-		radiusTemp = Math.toIntExact(radiusOffset + Math.round((((double) radiusAbsolute/z)*max/2)));
-		if(radiusTemp < min) {
-			radiusTemp = min;
-		}
-	}
-	
-	@Override
-	public void setSize(long r) {
-		radiusAbsolute = r;
+	public long getRadius() {
+		return radiusOffset;
 	}
 	
 	@Override

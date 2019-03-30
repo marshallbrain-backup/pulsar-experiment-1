@@ -35,43 +35,11 @@ public class VectorGraphics {
 
 	public void draw(Vector v) {
 		
-//		String type = map.get("type");
-//		String fill = map.get("fill");
-//		String fillOpacity = map.get("fill-opacity");
-//		String cx = map.get("cx");
-//		String cy = map.get("cy");
-//		
-//		if(type == null)
-//			return;
-//		if(fill == null)
-//			fill = "0";
-//		if(fillOpacity == null)
-//			fillOpacity = "1";
-//		if(cx == null)
-//			cx = "0";
-//		if(cy == null)
-//			cy = "0";
-//		
-//		int radius = 50;
-//		
-//		graphics.setColor(toColor(fill, Float.parseFloat(fillOpacity)));
-//		
-//		switch(type) {
-//		case "circle":
-//			
-//			break;
-//		}
-		
-	}
-	
-	private Color toColor(String hex, float opacity) {
-		
-		int r = Integer.parseInt(hex.substring(0, 2), 16);
-		int g = Integer.parseInt(hex.substring(2, 4), 16);
-		int b = Integer.parseInt(hex.substring(4, 6), 16);
-		int a = Math.round(opacity*255);
-		
-		return new Color(r, g, b, a);
+		switch(v.getType()) {
+		case "circle":
+			drawCircle((Circle) v);
+			break;
+		}
 		
 	}
 	

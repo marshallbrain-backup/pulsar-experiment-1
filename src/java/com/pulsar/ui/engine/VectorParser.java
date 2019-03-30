@@ -11,9 +11,22 @@ import java.util.Map;
 public class VectorParser {
 
 	public static List<Vector> getVectors(String fileName) {
+		
 		List<Vector> vectorList = new ArrayList<Vector>();
 		List<Map<String, String>> properties = readVectorFile(fileName);
+		for(Map<String, String> m: properties) {
+			switch(m.get("type")) {
+			case "circle":
+				m.remove("type");
+				vectorList.add(new Circle(m));
+				break;
+			default:
+				System.out.println("unreconised vector type");
+			}
+		}
+		
 		return vectorList;
+		
 	}
 	
 	private static List<Map<String, String>> readVectorFile(String fileName) {
@@ -36,13 +49,12 @@ public class VectorParser {
 		
 		String line = null;
 		while ((line = br.readLine()) != null) {
-			
 			if(line.startsWith("<")) {
 				Map<String, String> vector = new HashMap<String, String>();
 				vector.put("type", line.replace("<", ""));
 				readPropertys(br, vector);
+				vectorList.add(vector);
 			}
-			
 		}
 		
 	}

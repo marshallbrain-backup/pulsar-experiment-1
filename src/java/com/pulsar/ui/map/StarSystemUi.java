@@ -1,4 +1,4 @@
-package ui.universe_ui;
+package ui.map;
 
 import java.awt.Color;
 import java.util.List;

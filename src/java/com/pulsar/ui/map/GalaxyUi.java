@@ -1,4 +1,4 @@
-package ui.universe_ui;
+package ui.map;
 
 import ui.engine.VectorGraphics;
 import universe.Galaxy;

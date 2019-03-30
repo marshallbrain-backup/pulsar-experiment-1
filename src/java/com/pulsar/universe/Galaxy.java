@@ -37,8 +37,7 @@ public class Galaxy {
 		
 		//loop for number of systems
 		for(int i = 0; i < totalSystems; i++) {
-			starSystem = new StarSystem(b, sy.get(1), sp); //make a new system based on the type
-			//r.nextInt(sy.size())
+			starSystem = new StarSystem(b, sy.get(r.nextInt(sy.size())), sp); //make a new system based on the type
 		}
 		
 	}

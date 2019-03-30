@@ -1,7 +1,7 @@
 # Blue Stars
 sc_b  = {
 	star		= sc_b_star
-	spawn_odds 	= 0
+	spawn_odds 	= 10
 	num_planets 	= { min = 4, max = 10 }
 }
 

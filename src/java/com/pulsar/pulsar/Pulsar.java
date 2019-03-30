@@ -18,7 +18,7 @@ import ui.Ui;
 import ui.engine.Circle;
 import ui.engine.ScreenPosition;
 import ui.engine.VectorGraphics;
-import ui.universe_ui.StarSystemUi;
+import ui.map.StarSystemUi;
 import universe.Universe;
 
 public class Pulsar extends Canvas implements Runnable {

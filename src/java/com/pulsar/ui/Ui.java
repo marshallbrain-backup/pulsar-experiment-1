@@ -1,7 +1,7 @@
 package ui;
 
 import ui.engine.VectorGraphics;
-import ui.universe_ui.UniverseUi;
+import ui.map.UniverseUi;
 import universe.Universe;
 
 public class Ui {

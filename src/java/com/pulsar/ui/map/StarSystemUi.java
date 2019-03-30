@@ -14,12 +14,14 @@ import universe.StarSystem;
 
 public class StarSystemUi implements Chart {
 	
+	List<Vector> bodys;
+	
 	private StarSystem starSystem;
 	
 	public StarSystemUi(StarSystem ss) {
 		starSystem = ss;
 		Body s = starSystem.getBodys();
-		List<Vector> o = getRenderPropertys(s);
+		bodys = getRenderPropertys(s);
 	}
 
 	@Override
@@ -27,12 +29,13 @@ public class StarSystemUi implements Chart {
 		
 		g.translationSet(ScreenPosition.CENTER);
 		g.getGraphics().setColor(Color.WHITE);
-		g.drawCircle(new Circle(0, 0, 50));
+		((Circle) bodys.get(0)).setRadius(50);
+		g.draw(bodys.get(0));
 		
 	}
-
+	
 	private List<Vector> getRenderPropertys(Body s) {
-		return VectorParser.getVectors("gfx\\body\\" + s.getType() + ".txt");;
+		return VectorParser.getVectors("gfx\\body\\" + s.getType() + ".txt");
 	}
 
 }

@@ -48,7 +48,10 @@ public class VectorGraphics {
 	}
 	
 	public void drawCircle(Circle c) {
-		graphics.fillOval(c.getCenterX()-c.getRadius(), c.getCenterY()-c.getRadius(), c.getRadius()*2, c.getRadius()*2);
+		int cx = c.getCenterX();
+		int cy = c.getCenterY();
+		int r = Math.toIntExact(c.getRadius());
+		graphics.fillOval(cx-r, cy-r, r*2, r*2);
 	}
 
 }

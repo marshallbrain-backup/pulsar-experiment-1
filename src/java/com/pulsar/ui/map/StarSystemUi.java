@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import bodys.Body;
+import ui.engine.Circle;
 import ui.engine.ScreenPosition;
+import ui.engine.Vector;
 import ui.engine.VectorGraphics;
 import ui.engine.VectorParser;
 import universe.StarSystem;
@@ -17,7 +19,7 @@ public class StarSystemUi implements Chart {
 	public StarSystemUi(StarSystem ss) {
 		starSystem = ss;
 		Body s = starSystem.getBodys();
-		List<Map<String, String>> o = getRenderPropertys(s);
+		List<Vector> o = getRenderPropertys(s);
 	}
 
 	@Override
@@ -25,12 +27,12 @@ public class StarSystemUi implements Chart {
 		
 		g.translationSet(ScreenPosition.CENTER);
 		g.getGraphics().setColor(Color.WHITE);
+		g.drawCircle(new Circle(0, 0, 50));
 		
 	}
 
-	private List<Map<String, String>> getRenderPropertys(Body s) {
-		VectorParser.readVectorFile("gfx\\body\\" + s.getType() + ".txt");
-		return null;
+	private List<Vector> getRenderPropertys(Body s) {
+		return VectorParser.getVectors("gfx\\body\\" + s.getType() + ".txt");;
 	}
 
 }

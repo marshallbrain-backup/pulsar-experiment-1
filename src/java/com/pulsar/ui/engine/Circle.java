@@ -14,18 +14,19 @@ public class Circle implements Vector {
 	private Color fillColor;
 	
 	public Circle(Map<String, String> map) {
+		
 		String fill = map.get("fill");
 		String fillOpacity = map.get("fill-opacity");
 		String cx = map.get("cx");
 		String cy = map.get("cy");
 		
-		if(fill == null && Match.isInt(fill, 16))
+		if(fill == null || !Match.isInt(fill, 16))
 			fill = "0";
-		if(fillOpacity == null && Match.isDouble(fill))
+		if(fillOpacity == null || !Match.isDouble(fill))
 			fillOpacity = "1";
-		if(cx == null && Match.isInt(fill))
+		if(cx == null || !Match.isInt(fill))
 			cx = "0";
-		if(cy == null && Match.isInt(fill))
+		if(cy == null || !Match.isInt(fill))
 			cy = "0";
 		
 		init(fill, Float.parseFloat(fillOpacity), Integer.parseInt(cx), Integer.parseInt(cy), 0);

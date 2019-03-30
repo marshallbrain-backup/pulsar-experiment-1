@@ -1,5 +1,6 @@
 package ui.universe_ui;
 
+import ui.engine.VectorGraphics;
 import universe.Universe;
 
 public class UniverseUi {
@@ -10,6 +11,10 @@ public class UniverseUi {
 	public UniverseUi(Universe u) {
 		universe = u;
 		galaxyUi = new GalaxyUi(universe.getGalaxy());
+	}
+
+	public void render(VectorGraphics vg) {
+		galaxyUi.render(vg);
 	}
 
 }

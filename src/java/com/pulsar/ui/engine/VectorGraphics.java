@@ -16,6 +16,7 @@ public class VectorGraphics {
 	public VectorGraphics(Graphics g) {
 		graphics = (Graphics2D) g;
 		screenPosition = new Point(0, 0);
+		
 	}
 	
 	public Graphics getGraphics() {
@@ -27,6 +28,7 @@ public class VectorGraphics {
 		case CENTER:
 			Point newPos = new Point(Main.WIDTH/2, Main.HEIGHT/2);
 			graphics.translate(newPos.getX()-screenPosition.getX(), newPos.getY()-screenPosition.getY());
+			screenPosition = newPos;
 			break;
 		default:
 			break;

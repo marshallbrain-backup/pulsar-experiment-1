@@ -14,6 +14,7 @@ import files.GameFile;
 import input.Keyboard;
 import input.Mouse;
 import settings.Settings;
+import ui.Ui;
 import ui.engine.Circle;
 import ui.engine.ScreenPosition;
 import ui.engine.VectorGraphics;
@@ -37,7 +38,7 @@ public class Pulsar extends Canvas implements Runnable {
 	
 	private Settings settings; //settings
 	private Universe universe; //game logic class
-	private StarSystemUi starSystemDisplay; //game logic class
+	private Ui ui; //game logic class
 	private Keyboard keyboard; //keyboard manager
 	private Mouse mouse; //mouse manager
 	
@@ -207,7 +208,7 @@ public class Pulsar extends Canvas implements Runnable {
 			universe.tick();
 		} else {
 			universe = new Universe(null, gf);
-			starSystemDisplay = new StarSystemUi(universe.getGalaxy().getStarSystem());
+			ui = new Ui(universe);
 			universeLoaded = true;
 		}
 		
@@ -228,7 +229,7 @@ public class Pulsar extends Canvas implements Runnable {
 		g.fillRect(0, 0, Main.WIDTH, Main.HEIGHT);
 		
 		if(universeLoaded)
-			starSystemDisplay.render(vg);
+			ui.render(vg);
 		
 		//END RENDER
 		

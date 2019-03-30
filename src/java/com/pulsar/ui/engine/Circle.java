@@ -9,7 +9,10 @@ public class Circle implements Vector {
 
 	private int centerX;
 	private int centerY;
-	private int radius;
+	private int radiusTemp;
+	
+	private long radiusAbsolute;
+	private long radiusOffset;
 	
 	private Color fillColor;
 	
@@ -19,31 +22,35 @@ public class Circle implements Vector {
 		String fillOpacity = map.get("fill-opacity");
 		String cx = map.get("cx");
 		String cy = map.get("cy");
+		String r = map.get("r");
 		
 		if(fill == null || !Match.isInt(fill, 16))
 			fill = "000000";
-		if(fillOpacity == null || !Match.isDouble(fill))
+		if(fillOpacity == null || !Match.isDouble(fillOpacity))
 			fillOpacity = "1";
-		if(cx == null || !Match.isInt(fill))
+		if(cx == null || !Match.isInt(cx))
 			cx = "0";
-		if(cy == null || !Match.isInt(fill))
+		if(cy == null || !Match.isInt(cy))
 			cy = "0";
+		if(r == null || !Match.isInt(r))
+			r = "0";
 		
-		init(fill, Float.parseFloat(fillOpacity), Integer.parseInt(cx), Integer.parseInt(cy), 0);
+		init(fill, Float.parseFloat(fillOpacity), Integer.parseInt(cx), Integer.parseInt(cy), Long.parseLong(r));
 		
 	}
 	
-	public Circle(int cx, int cy, int r) {
+	public Circle(int cx, int cy, long r) {
 		init("0", 1, cx, cy, r);
 	}
 	
-	private void init(String fc, float fa, int cx, int cy, int r) {
+	private void init(String fc, float fa, int cx, int cy, long r) {
 		
 		fillColor = toColor(fc, fa);
 		
 		centerX = cx;
 		centerY = cy;
-		radius = r;
+		radiusOffset = r;
+		radiusTemp = Math.toIntExact(radiusOffset);
 		
 	}
 	
@@ -66,14 +73,27 @@ public class Circle implements Vector {
 		return centerY;
 	}
 	
+	public int getRadius(long z, int max) {
+		return Math.toIntExact(radiusOffset + Math.round((((double) radiusAbsolute/z)*max)));
+	}
+	
 	public int getRadius() {
-		return radius;
+		return radiusTemp;
 	}
-
-	public void setRadius(int r) {
-		radius = r;
+	
+	@Override
+	public void setTempSize(long z, int max, int min) {
+		radiusTemp = Math.toIntExact(radiusOffset + Math.round((((double) radiusAbsolute/z)*max/2)));
+		if(radiusTemp < min) {
+			radiusTemp = min;
+		}
 	}
-
+	
+	@Override
+	public void setSize(long r) {
+		radiusAbsolute = r;
+	}
+	
 	@Override
 	public String getType() {
 		return "circle";

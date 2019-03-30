@@ -1,21 +1,22 @@
 package ui;
 
 import ui.engine.VectorGraphics;
-import ui.map.UniverseUi;
+import ui.map.Chart;
+import ui.map.StarSystemUi;
 import universe.Universe;
 
 public class Ui {
 	
 	private Universe universe;
-	private UniverseUi universeUi;
+	private Chart currentUiChart;
 	
 	public Ui(Universe u) {
 		universe = u;
-		universeUi = new UniverseUi(universe);
+		currentUiChart = new StarSystemUi(universe.getGalaxy().getStarSystem());
 	}
 
 	public void render(VectorGraphics vg) {
-		universeUi.render(vg);
+		currentUiChart.render(vg);
 	}
 
 }

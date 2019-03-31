@@ -46,7 +46,7 @@ public class StarSystemUi implements Chart {
 		for(int i = 0; i < bodys.size(); i++) {
 			Body b = bodys.get(i);
 			Vector v = bodyVectors.get(i);
-			Vector vt = v.transform(b.getDistance(), b.getAngle(), b.getRadius(), Math.round(149597870700.0*5), Main.WIDTH, 5);
+			Vector vt = v.transform(b.getDistance(), b.getAngle(), b.getRadius(), Math.round(149597870700.0*5), Main.WIDTH, 8);
 			g.draw(vt);
 		}
 		

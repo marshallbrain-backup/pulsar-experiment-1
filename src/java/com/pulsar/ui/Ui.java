@@ -33,7 +33,9 @@ public class Ui {
 	}
 	
 	public void action(Mouse m, Keyboard k) {
-		
+		if(currentUiChart.action(m, k)) {
+			return;
+		}
 	}
 
 	public void render(VectorGraphics vg) {

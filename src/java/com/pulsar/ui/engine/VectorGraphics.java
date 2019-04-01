@@ -59,7 +59,7 @@ public class VectorGraphics {
 		int cy = c.getCenterY();
 		int r = Math.toIntExact(c.getRadius());
 //		Arc2D circle = drawVisibleArc(cx, cy, r, -Main.WIDTH/2, -Main.HEIGHT/2, Main.WIDTH/2, Main.HEIGHT/2);
-		List<Shape> arcs = drawVisibleArc(100, 100, 120, -100, -100, 100, 100);
+		List<Shape> arcs = drawVisibleArc(cx, cy, r, -Main.WIDTH/2, -Main.HEIGHT/2, Main.WIDTH/2, Main.HEIGHT/2);
 		//TODO specile case for no side is visible
 		
 		Path2D cutCircle = new Path2D.Double();
@@ -73,7 +73,7 @@ public class VectorGraphics {
 	
 	private List<Shape> drawVisibleArc(int cx, int cy, int r, int minX, int minY, int maxX, int maxY) {
 		
-		int[] lines = new int[] {maxX-cx, maxY-cy, minX+cx, minY+cy};
+		int[] lines = new int[] {maxX-cx, maxY-cy, minX-cx, minY-cy};
 		List<Double> angles = new ArrayList<Double>();
 		List<Shape> arcs = new ArrayList<Shape>();
 		
@@ -88,17 +88,17 @@ public class VectorGraphics {
 				double endAngle = 0;
 				
 				if(i%2 == 0) {
-					if(z > lines[i+1]) {
+					if(v > lines[i+1]) {
 						continue;
 					}
 					startAngle = Math.toDegrees(Math.atan2(z, v));
 					endAngle = Math.toDegrees(Math.atan2(-z, v));
 				} else {
-					if(z > lines[i-1]) {
+					if(Math.abs(v) > Math.abs(lines[i-1])) {
 						continue;
 					}
-					startAngle = Math.toDegrees(Math.atan2(v, z));
-					endAngle = Math.toDegrees(Math.atan2(v, -z));
+					startAngle = Math.toDegrees(Math.atan2(v, z))+180;
+					endAngle = Math.toDegrees(Math.atan2(v, -z))+180;
 				}
 				
 				if(v < 0) {

@@ -1,11 +1,12 @@
 package input;
 
-import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelListener;
+
+import ui.engine.Point;
 
 public class Mouse implements MouseListener, MouseMotionListener, MouseWheelListener {
 
@@ -71,7 +72,7 @@ public class Mouse implements MouseListener, MouseMotionListener, MouseWheelList
 	public synchronized void poll() {
 		
 		//mouse position and delta
-		mouseChange = new Point(mousePos.x-currentPos.x, mousePos.y-currentPos.y);
+		mouseChange = new Point(mousePos.getX()-currentPos.getX(), mousePos.getY()-currentPos.getY());
 		mousePos = new Point(currentPos);
 		
 		//mouse wheel

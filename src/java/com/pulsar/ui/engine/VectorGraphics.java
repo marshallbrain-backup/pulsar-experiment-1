@@ -2,17 +2,16 @@ package ui.engine;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.Arc2D;
-import java.awt.geom.GeneralPath;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
 import pulsar.Main;
+import ui.engine.Point;
 
 public class VectorGraphics {
 	

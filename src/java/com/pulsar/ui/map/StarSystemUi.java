@@ -1,6 +1,5 @@
 package ui.map;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +9,7 @@ import input.Keyboard;
 import input.Mouse;
 import pulsar.Main;
 import ui.engine.UiElement;
+import ui.engine.Point;
 import ui.engine.ScreenPosition;
 import ui.engine.Vector;
 import ui.engine.VectorGraphics;
@@ -51,6 +51,7 @@ public class StarSystemUi implements UiElement {
 		
 		if(m.buttonDown(1)) {
 			Point d = m.getChange();
+				System.out.println(d.getX() + ", " + d.getY());
 			if(d.getX() != 0 && d.getY() != 0) {
 				offsetAmount.setLocation(offsetAmount.getX()-d.getX(), offsetAmount.getY()-d.getY());
 				return true;

@@ -19,9 +19,8 @@ public class UniverseUi implements UiElement {
 	}
 
 	@Override
-	public void action(Mouse m, Keyboard k) {
-		// TODO Auto-generated method stub
-		
+	public boolean action(Mouse m, Keyboard k) {
+		return false;
 	}
 
 }

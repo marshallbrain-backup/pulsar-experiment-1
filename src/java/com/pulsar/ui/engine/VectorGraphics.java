@@ -60,14 +60,16 @@ public class VectorGraphics {
 		int r = Math.toIntExact(c.getRadius());
 //		Arc2D circle = drawVisibleArc(cx, cy, r, -Main.WIDTH/2, -Main.HEIGHT/2, Main.WIDTH/2, Main.HEIGHT/2);
 		List<Shape> arcs = drawVisibleArc(cx, cy, r, -Main.WIDTH/2, -Main.HEIGHT/2, Main.WIDTH/2, Main.HEIGHT/2);
-		//TODO specile case for no side is visible
+		//TODO do not show when off screen
 		
-		Path2D cutCircle = new Path2D.Double();
-		for(Shape a: arcs) {
-			cutCircle.append(a, true);
+		if(!arcs.isEmpty()) {
+			Path2D cutCircle = new Path2D.Double();
+			for(Shape a: arcs) {
+				cutCircle.append(a, true);
+			}
+			cutCircle.closePath();
+			graphics.fill(cutCircle);
 		}
-		cutCircle.closePath();
-		graphics.fill(cutCircle);
 		
 	}
 	
@@ -141,11 +143,11 @@ public class VectorGraphics {
 		}
 		
 		if(arcs.isEmpty()) {
-			if(maxX < r) {
-				arcs.add(new Rectangle2D.Float(minX, minY, maxX-minX, maxY-minY));
-			} else {
+			if((minX < cx-r && cx-r < maxX) && (minY < cy-r && cy-r < maxY)) {
 				Arc2D arc = new Arc2D.Double(cx-r, cy-r, r*2, r*2, 0, 360, Arc2D.OPEN);
 				arcs.add(arc);
+			} else if((minX > cx-r && cx-r > maxX) && (minY > cy-r && cy-r > maxY)) {
+				arcs.add(new Rectangle2D.Float(minX, minY, maxX-minX, maxY-minY));
 			}
 			
 		}

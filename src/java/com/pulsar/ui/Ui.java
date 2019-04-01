@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import input.Keyboard;
+import input.Mouse;
 import ui.engine.Vector;
 import ui.engine.VectorGraphics;
 import ui.engine.VectorParser;
@@ -15,16 +17,22 @@ import universe.Universe;
 public class Ui {
 	
 	private Map<String, List<Vector>> vectorList;
-	private Universe universe;
+	
 	private Chart currentUiChart;
 	
-	public Ui(Universe u) {
-		
-		vectorList = new HashMap<String, List<Vector>>();
-		loadVectorFiles(vectorList, new File("gfx"));
+	private Universe universe;
+	private Keyboard keyboard; //keyboard manager
+	private Mouse mouse; //mouse manager
+	
+	public Ui(Universe u, Mouse m, Keyboard k) {
 		
 		universe = u;
+		mouse = m;
+		keyboard = k;
+		
 		currentUiChart = new StarSystemUi(vectorList, universe.getGalaxy().getStarSystem());
+		vectorList = new HashMap<String, List<Vector>>();
+		loadVectorFiles(vectorList, new File("gfx"));
 		
 	}
 

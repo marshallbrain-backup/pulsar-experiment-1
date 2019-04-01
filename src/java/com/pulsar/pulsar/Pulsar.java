@@ -206,9 +206,10 @@ public class Pulsar extends Canvas implements Runnable {
 		//if a game world is loaded call the tick function for that world
 		if(universeLoaded) {
 			universe.tick();
+			ui.action(mouse, keyboard);
 		} else {
 			universe = new Universe(null, gf);
-			ui = new Ui(universe, mouse, keyboard);
+			ui = new Ui(universe);
 			universeLoaded = true;
 		}
 		

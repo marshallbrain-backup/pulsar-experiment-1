@@ -22,7 +22,7 @@ public class Ui {
 	
 	private Universe universe;
 	
-	public Ui(Universe u, Mouse m, Keyboard k) {
+	public Ui(Universe u) {
 		
 		universe = u;
 		

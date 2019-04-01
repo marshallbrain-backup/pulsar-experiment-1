@@ -26,7 +26,7 @@ public class VectorGraphics {
 		graphicsOriginal = (Graphics2D) g;
 		graphics = (Graphics2D) graphicsOriginal.create();
 		
-		screenBounds = new int[] {-Main.WIDTH/2, -Main.HEIGHT/2, Main.WIDTH/2, Main.HEIGHT/2};
+		screenBounds = new int[] {-Main.WIDTH/2+200, -Main.HEIGHT/2+200, Main.WIDTH/2-200, Main.HEIGHT/2-200};
 		
 		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);

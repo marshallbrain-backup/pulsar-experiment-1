@@ -58,6 +58,7 @@ public class VectorGraphics {
 		int r = Math.toIntExact(c.getRadius());
 //		Arc2D circle = drawVisibleArc(cx, cy, r, -Main.WIDTH/2, -Main.HEIGHT/2, Main.WIDTH/2, Main.HEIGHT/2);
 		List<Arc2D> arcs = drawVisibleArc(cx, cy, 120, -Main.WIDTH/2, -Main.HEIGHT/2, Main.WIDTH/2, Main.HEIGHT/2);
+		//TODO specile case for no side is visible
 		
 		Path2D cutCircle = new Path2D.Double();
 		for(Arc2D a: arcs) {
@@ -92,6 +93,15 @@ public class VectorGraphics {
 					endAngle = Math.toDegrees(Math.atan2(v, -z));
 				}
 				
+				if(v < 0) {
+					if(startAngle < 0) {
+						startAngle += 360;
+					}
+					if(endAngle < 0) {
+						endAngle += 360;
+					}
+				}
+				
 				angles.add(Math.min(startAngle, endAngle));
 				angles.add(Math.max(startAngle, endAngle));
 				
@@ -111,11 +121,11 @@ public class VectorGraphics {
 				endAngle = angles.get(i+1);
 			}
 			
+			endAngle -= startAngle;
+			
 			if(endAngle < 0) {
 				endAngle += 360;
 			}
-			
-			endAngle -= startAngle;
 			
 			Arc2D arc = new Arc2D.Double(cx-r, cy-r, r*2, r*2, startAngle, endAngle, Arc2D.OPEN);
 			arcs.add(arc);

@@ -16,6 +16,8 @@ import pulsar.Main;
 
 public class VectorGraphics {
 	
+	private int[] screenBounds;
+	
 	private Graphics2D graphics;
 	private Graphics2D graphicsOriginal;
 
@@ -23,6 +25,8 @@ public class VectorGraphics {
 		
 		graphicsOriginal = (Graphics2D) g;
 		graphics = (Graphics2D) graphicsOriginal.create();
+		
+		screenBounds = new int[] {-Main.WIDTH/2, -Main.HEIGHT/2, Main.WIDTH/2, Main.HEIGHT/2};
 		
 		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
@@ -62,12 +66,14 @@ public class VectorGraphics {
 	}
 	
 	public void drawCircle(Circle c) {
+		drawCircle(c, screenBounds[0], screenBounds[1], screenBounds[2], screenBounds[3]);
+	}
+	
+	public void drawCircle(Circle c, int minX, int minY, int maxX, int maxY) {
 		int cx = c.getCenterX();
 		int cy = c.getCenterY();
 		int r = Math.toIntExact(c.getRadius());
-//		Arc2D circle = drawVisibleArc(cx, cy, r, -Main.WIDTH/2, -Main.HEIGHT/2, Main.WIDTH/2, Main.HEIGHT/2);
-		List<Shape> arcs = drawVisibleArc(cx, cy, r, -Main.WIDTH/2, -Main.HEIGHT/2, Main.WIDTH/2, Main.HEIGHT/2);
-		//TODO do not show when off screen
+		List<Shape> arcs = drawVisibleArc(cx, cy, r, minX, minY, maxX, maxY);
 		
 		if(!arcs.isEmpty()) {
 			Path2D cutCircle = new Path2D.Double();

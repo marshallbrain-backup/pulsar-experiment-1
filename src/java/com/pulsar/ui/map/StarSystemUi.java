@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import bodys.Body;
+import input.Keyboard;
+import input.Mouse;
 import pulsar.Main;
 import ui.engine.UiElement;
 import ui.engine.ScreenPosition;
@@ -50,6 +52,12 @@ public class StarSystemUi implements UiElement {
 			Vector vt = v.transform(b.getDistance(), b.getAngle(), b.getRadius(), Math.round(149597870700.0*5), Main.WIDTH, 8);
 			g.draw(vt);
 		}
+		
+	}
+
+	@Override
+	public void action(Mouse m, Keyboard k) {
+		// TODO Auto-generated method stub
 		
 	}
 

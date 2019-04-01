@@ -4,9 +4,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.geom.Arc2D;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Path2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,11 +59,11 @@ public class VectorGraphics {
 		int cy = c.getCenterY();
 		int r = Math.toIntExact(c.getRadius());
 //		Arc2D circle = drawVisibleArc(cx, cy, r, -Main.WIDTH/2, -Main.HEIGHT/2, Main.WIDTH/2, Main.HEIGHT/2);
-		List<Arc2D> arcs = drawVisibleArc(cx, cy, 120, -Main.WIDTH/2, -Main.HEIGHT/2, Main.WIDTH/2, Main.HEIGHT/2);
+		List<Shape> arcs = drawVisibleArc(100, 100, 120, -100, -100, 100, 100);
 		//TODO specile case for no side is visible
 		
 		Path2D cutCircle = new Path2D.Double();
-		for(Arc2D a: arcs) {
+		for(Shape a: arcs) {
 			cutCircle.append(a, true);
 		}
 		cutCircle.closePath();
@@ -69,11 +71,11 @@ public class VectorGraphics {
 		
 	}
 	
-	private List<Arc2D> drawVisibleArc(int cx, int cy, int r, int minX, int minY, int maxX, int maxY) {
+	private List<Shape> drawVisibleArc(int cx, int cy, int r, int minX, int minY, int maxX, int maxY) {
 		
-		int[] lines = new int[] {maxX, maxY, minX, minY};
+		int[] lines = new int[] {maxX-cx, maxY-cy, minX+cx, minY+cy};
 		List<Double> angles = new ArrayList<Double>();
-		List<Arc2D> arcs = new ArrayList<Arc2D>();
+		List<Shape> arcs = new ArrayList<Shape>();
 		
 		for(int i = 0; i < lines.length; i++) {
 			
@@ -86,9 +88,15 @@ public class VectorGraphics {
 				double endAngle = 0;
 				
 				if(i%2 == 0) {
+					if(z > lines[i+1]) {
+						continue;
+					}
 					startAngle = Math.toDegrees(Math.atan2(z, v));
 					endAngle = Math.toDegrees(Math.atan2(-z, v));
 				} else {
+					if(z > lines[i-1]) {
+						continue;
+					}
 					startAngle = Math.toDegrees(Math.atan2(v, z));
 					endAngle = Math.toDegrees(Math.atan2(v, -z));
 				}
@@ -133,8 +141,13 @@ public class VectorGraphics {
 		}
 		
 		if(arcs.isEmpty()) {
-			Arc2D arc = new Arc2D.Double(cx-r, cy-r, r*2, r*2, 0, 360, Arc2D.OPEN);
-			arcs.add(arc);
+			if(maxX < r) {
+				arcs.add(new Rectangle2D.Float(minX, minY, maxX-minX, maxY-minY));
+			} else {
+				Arc2D arc = new Arc2D.Double(cx-r, cy-r, r*2, r*2, 0, 360, Arc2D.OPEN);
+				arcs.add(arc);
+			}
+			
 		}
 		
 		return arcs;

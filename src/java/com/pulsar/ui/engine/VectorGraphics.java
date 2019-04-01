@@ -17,13 +17,16 @@ import pulsar.Main;
 public class VectorGraphics {
 	
 	private Graphics2D graphics;
-	private Point screenPosition;
+	private Graphics2D graphicsOriginal;
 
 	public VectorGraphics(Graphics g) {
-		graphics = (Graphics2D) g;
-		screenPosition = new Point(0, 0);
+		
+		graphicsOriginal = (Graphics2D) g;
+		graphics = (Graphics2D) graphicsOriginal.create();
+		
 		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
+		
 	}
 	
 	public Graphics getGraphics() {
@@ -33,13 +36,17 @@ public class VectorGraphics {
 	public void translationSet(ScreenPosition pos) {
 		switch(pos) {
 		case CENTER:
-			Point newPos = new Point(Main.WIDTH/2, Main.HEIGHT/2);
-			graphics.translate(newPos.getX()-screenPosition.getX(), newPos.getY()-screenPosition.getY());
-			screenPosition = newPos;
+			Point center = new Point(Main.WIDTH/2, Main.HEIGHT/2);
+			graphics = (Graphics2D) graphicsOriginal.create();
+			graphics.translate(center.getX(), center.getY());
 			break;
 		default:
 			break;
 		}
+	}
+
+	public void translationMove(Point o) {
+		graphics.translate(o.getX(), o.getY());
 	}
 
 	public void draw(Vector v) {

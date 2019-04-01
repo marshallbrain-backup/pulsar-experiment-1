@@ -208,7 +208,7 @@ public class Pulsar extends Canvas implements Runnable {
 			universe.tick();
 		} else {
 			universe = new Universe(null, gf);
-			ui = new Ui(universe);
+			ui = new Ui(universe, mouse, keyboard);
 			universeLoaded = true;
 		}
 		

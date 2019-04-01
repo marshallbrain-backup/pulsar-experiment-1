@@ -21,18 +21,18 @@ public class Ui {
 	private Chart currentUiChart;
 	
 	private Universe universe;
-	private Keyboard keyboard; //keyboard manager
-	private Mouse mouse; //mouse manager
 	
 	public Ui(Universe u, Mouse m, Keyboard k) {
 		
 		universe = u;
-		mouse = m;
-		keyboard = k;
 		
 		currentUiChart = new StarSystemUi(vectorList, universe.getGalaxy().getStarSystem());
 		vectorList = new HashMap<String, List<Vector>>();
 		loadVectorFiles(vectorList, new File("gfx"));
+		
+	}
+	
+	public void action(Mouse m, Keyboard k) {
 		
 	}
 

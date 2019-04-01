@@ -26,9 +26,10 @@ public class Ui {
 		
 		universe = u;
 		
-		currentUiChart = new StarSystemUi(vectorList, universe.getGalaxy().getStarSystem());
 		vectorList = new HashMap<String, List<Vector>>();
 		loadVectorFiles(vectorList, new File("gfx"));
+		
+		currentUiChart = new StarSystemUi(vectorList, universe.getGalaxy().getStarSystem());
 		
 	}
 	

@@ -6,12 +6,13 @@ import java.util.Map;
 
 import bodys.Body;
 import pulsar.Main;
+import ui.engine.UiElement;
 import ui.engine.ScreenPosition;
 import ui.engine.Vector;
 import ui.engine.VectorGraphics;
 import universe.StarSystem;
 
-public class StarSystemUi implements Chart {
+public class StarSystemUi implements UiElement {
 	
 	private List<Vector> bodyVectors;
 	private List<Body> bodys;

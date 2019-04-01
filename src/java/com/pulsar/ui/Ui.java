@@ -7,10 +7,10 @@ import java.util.Map;
 
 import input.Keyboard;
 import input.Mouse;
+import ui.engine.UiElement;
 import ui.engine.Vector;
 import ui.engine.VectorGraphics;
 import ui.engine.VectorParser;
-import ui.map.Chart;
 import ui.map.StarSystemUi;
 import universe.Universe;
 
@@ -18,7 +18,7 @@ public class Ui {
 	
 	private Map<String, List<Vector>> vectorList;
 	
-	private Chart currentUiChart;
+	private UiElement currentUiChart;
 	
 	private Universe universe;
 	

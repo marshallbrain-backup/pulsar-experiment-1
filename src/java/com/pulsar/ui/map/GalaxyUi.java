@@ -1,9 +1,10 @@
 package ui.map;
 
+import ui.engine.UiElement;
 import ui.engine.VectorGraphics;
 import universe.Galaxy;
 
-public class GalaxyUi implements Chart {
+public class GalaxyUi implements UiElement {
 	
 	private Galaxy galaxy;
 

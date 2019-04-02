@@ -8,6 +8,9 @@ public interface Vector {
 
 	Color getFillColor();
 
-	Vector transform(long distance, double angle, long radius, long screenSize, int screenWidth, int minSize);
+	Vector clone();
+
+	void transform(long distance, double angle, long radius, long screenSize, int screenWidth, int minSize);
+	void transform(Point offsetAmount);
 
 }

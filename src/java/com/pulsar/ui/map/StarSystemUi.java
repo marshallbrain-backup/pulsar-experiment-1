@@ -65,7 +65,6 @@ public class StarSystemUi implements UiElement {
 	public void render(VectorGraphics g) {
 		
 		g.translationSet(ScreenPosition.CENTER);
-		g.translationMove(offsetAmount);
 		for(int i = 0; i < bodys.size(); i++) {
 			Body b = bodys.get(i);
 			Vector v = bodyVectors.get(i);

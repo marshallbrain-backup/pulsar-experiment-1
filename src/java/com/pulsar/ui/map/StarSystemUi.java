@@ -69,7 +69,9 @@ public class StarSystemUi implements UiElement {
 		for(int i = 0; i < bodys.size(); i++) {
 			Body b = bodys.get(i);
 			Vector v = bodyVectors.get(i);
-			Vector vt = v.transform(b.getDistance(), b.getAngle(), b.getRadius(), Math.round(149597870700.0*5), Main.WIDTH, 8);
+			Vector vt = v.clone();
+			vt.transform(b.getDistance(), b.getAngle(), b.getRadius(), Math.round(149597870700.0*5), Main.WIDTH, 8);
+			vt.transform(offsetAmount);
 			g.draw(vt);
 		}
 		

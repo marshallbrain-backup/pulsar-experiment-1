@@ -102,9 +102,6 @@ public class VectorGraphics {
 				double endAngle = 0;
 				
 				if(i%2 == 0) {
-					if(v > lines[i+1]) {
-						continue;
-					}
 					startAngle = Math.toDegrees(Math.atan2(z, v));
 					endAngle = Math.toDegrees(Math.atan2(-z, v));
 				} else {
@@ -144,10 +141,7 @@ public class VectorGraphics {
 			}
 			
 			endAngle -= startAngle;
-			
-			if(endAngle < 0) {
-				endAngle += 360;
-			}
+			endAngle += 360;
 			
 			Arc2D arc = new Arc2D.Double(cx-r, cy-r, r*2, r*2, startAngle, endAngle, Arc2D.OPEN);
 			arcs.add(arc);

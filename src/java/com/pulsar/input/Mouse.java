@@ -161,7 +161,7 @@ public class Mouse implements MouseListener, MouseMotionListener, MouseWheelList
 	}
 
 	public synchronized void mouseMoved(MouseEvent e) {
-		currentPos = e.getPoint();
+		currentPos.setLocation(e.getPoint());
 	}
 
 	public synchronized void mouseWheelMoved(MouseWheelEvent e) {

@@ -93,7 +93,7 @@ public class Circle implements Vector {
 	}
 	
 	@Override
-	public Vector transform(long distance, double angle, long radius, long screenSize, int screenWidth, int minSize) {
+	public void transform(long distance, double angle, long radius, long screenSize, int screenWidth, int minSize) {
 		int r = Math.toIntExact(radiusOffset + Math.round((((double) radius/screenSize)*screenWidth/2)));
 		int d = Math.toIntExact(Math.round((((double) distance/screenSize)*screenWidth/2)));
 		
@@ -101,7 +101,11 @@ public class Circle implements Vector {
 			r = minSize;
 		}
 		
-		return new Circle(getFillColor(), Math.round(Math.cos(angle)*d)+centerX, Math.round(Math.sin(angle)*d)+centerY, r);
+		centerX = Math.toIntExact(Math.round(Math.cos(angle)*d)+centerX);
+		centerY = Math.toIntExact(Math.round(Math.sin(angle)*d)+centerY);
+		radiusOffset = r;
+		
+		return;
 		
 	}
 	

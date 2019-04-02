@@ -111,8 +111,8 @@ public class Circle implements Vector {
 
 	@Override
 	public void transform(Point o) {
-		centerX = o.getX();
-		centerY = o.getY();
+		centerX += o.getX();
+		centerY += o.getY();
 	}
 
 	@Override

@@ -51,9 +51,8 @@ public class StarSystemUi implements UiElement {
 		
 		if(m.buttonDown(1)) {
 			Point d = m.getChange();
-				System.out.println(d.getX() + ", " + d.getY());
-			if(d.getX() != 0 && d.getY() != 0) {
-				offsetAmount.setLocation(offsetAmount.getX()-d.getX(), offsetAmount.getY()-d.getY());
+			if(d.getX() != 0 || d.getY() != 0) {
+				offsetAmount.move(-d.getX(), -d.getY());
 				return true;
 			}
 		}

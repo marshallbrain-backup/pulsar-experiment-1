@@ -108,5 +108,16 @@ public class Circle implements Vector {
 		return;
 		
 	}
+
+	@Override
+	public void transform(Point o) {
+		centerX = o.getX();
+		centerY = o.getY();
+	}
+
+	@Override
+	public Vector copy() {
+		return new Circle(fillColor, centerX, centerY, radiusOffset);
+	}
 	
 }

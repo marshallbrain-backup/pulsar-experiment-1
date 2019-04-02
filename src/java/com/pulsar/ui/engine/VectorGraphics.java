@@ -1,5 +1,6 @@
 package ui.engine;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -72,16 +73,21 @@ public class VectorGraphics {
 		int cx = c.getCenterX();
 		int cy = c.getCenterY();
 		int r = Math.toIntExact(c.getRadius());
+		r = 200;
 		List<Shape> arcs = drawVisibleArc(cx, cy, r, minX, minY, maxX, maxY);
 		
 		if(!arcs.isEmpty()) {
 			Path2D cutCircle = new Path2D.Double();
 			for(Shape a: arcs) {
 				cutCircle.append(a, true);
+				graphics.draw(a);
 			}
 			cutCircle.closePath();
-			graphics.fill(cutCircle);
+//		graphics.fill(cutCircle);
 		}
+		
+		graphics.setColor(Color.BLACK);
+		graphics.drawRect(minX, minY, maxX-minX, maxY-minY);
 		
 	}
 	
@@ -91,42 +97,10 @@ public class VectorGraphics {
 		List<Double> angles = new ArrayList<Double>();
 		List<Shape> arcs = new ArrayList<Shape>();
 		
-		for(int i = 0; i < lines.length; i++) {
-			
-			int v = lines[i];
-			double z = Math.sqrt(Math.pow(r, 2)-Math.pow(Math.abs(v), 2));
-			
-			if(!Double.isNaN(z)) {
-				
-				double startAngle = 0;
-				double endAngle = 0;
-				
-				if(i%2 == 0) {
-					startAngle = Math.toDegrees(Math.atan2(z, v));
-					endAngle = Math.toDegrees(Math.atan2(-z, v));
-				} else {
-					if(Math.abs(v) > Math.abs(lines[i-1])) {
-						continue;
-					}
-					startAngle = Math.toDegrees(Math.atan2(v, z))+180;
-					endAngle = Math.toDegrees(Math.atan2(v, -z))+180;
-				}
-				
-				if(v < 0) {
-					if(startAngle < 0) {
-						startAngle += 360;
-					}
-					if(endAngle < 0) {
-						endAngle += 360;
-					}
-				}
-				
-				angles.add(Math.min(startAngle, endAngle));
-				angles.add(Math.max(startAngle, endAngle));
-				
-			}
-			
-		}
+		getAngelIntersection(angles, 0, r, lines[0], lines[3], lines[1]);
+		getAngelIntersection(angles, 1, r, lines[1], lines[2], lines[0]);
+		getAngelIntersection(angles, 2, r, lines[2], lines[3], lines[1]);
+		getAngelIntersection(angles, 3, r, lines[3], lines[2], lines[0]);
 		
 		for(int i = 1; i < angles.size(); i+=2) {
 			
@@ -140,25 +114,74 @@ public class VectorGraphics {
 				endAngle = angles.get(i+1);
 			}
 			
-			endAngle -= startAngle;
-			endAngle += 360;
+			System.out.println(startAngle + ", " + endAngle);
 			
-			Arc2D arc = new Arc2D.Double(cx-r, cy-r, r*2, r*2, startAngle, endAngle, Arc2D.OPEN);
+			double offset = endAngle - startAngle;
+			
+			Arc2D arc = new Arc2D.Double(cx-r, cy-r, r*2, r*2, startAngle, offset, Arc2D.OPEN);
 			arcs.add(arc);
 			
 		}
 		
-		if(arcs.isEmpty()) {
-			if((minX < cx-r && cx-r < maxX) && (minY < cy-r && cy-r < maxY)) {
-				Arc2D arc = new Arc2D.Double(cx-r, cy-r, r*2, r*2, 0, 360, Arc2D.OPEN);
-				arcs.add(arc);
-			} else if((minX > cx-r && cx-r > maxX) && (minY > cy-r && cy-r > maxY)) {
-				arcs.add(new Rectangle2D.Float(minX, minY, maxX-minX, maxY-minY));
+//		if(arcs.isEmpty()) {
+//			if((minX < cx-r && cx-r < maxX) && (minY < cy-r && cy-r < maxY)) {
+//				Arc2D arc = new Arc2D.Double(cx-r, cy-r, r*2, r*2, 0, 360, Arc2D.OPEN);
+//				arcs.add(arc);
+//			} else if((minX > cx-r && cx-r > maxX) && (minY > cy-r && cy-r > maxY)) {
+//				arcs.add(new Rectangle2D.Float(minX, minY, maxX-minX, maxY-minY));
+//			}
+//			
+//		}
+		
+		return arcs;
+		
+	}
+	
+	private void getAngelIntersection(List<Double> angles, int cor, int r, int l, int min, int max) {
+		
+		double z = Math.sqrt(Math.pow(r, 2)-Math.pow(Math.abs(l), 2));
+		
+		if(!Double.isNaN(z)) {
+			
+			double startAngle = 0;
+			double endAngle = 0;
+			
+			startAngle = Math.toDegrees(Math.atan2(z, l));
+			endAngle = Math.toDegrees(Math.atan2(-z, l));
+			
+			if(cor%2 == 1) {
+				startAngle -= 90;
+				endAngle -= 90;
+				z = -z;
 			}
+			if(cor < 2) {
+				endAngle += 360;
+			}
+			
+			if(startAngle < 0) {
+				startAngle += 360;
+			}
+			if(endAngle < 0) {
+				endAngle += 360;
+			}
+			
+			if(insideBounds(-z, min, max))
+				angles.add(startAngle);
+
+			if(insideBounds(z, min, max))
+				angles.add(endAngle);
 			
 		}
 		
-		return arcs;
+	}
+
+	private boolean insideBounds(double z, int min, int max) {
+		
+		if(min <= z && z <= max) {
+			return true;
+		}
+		
+		return false;
 		
 	}
 

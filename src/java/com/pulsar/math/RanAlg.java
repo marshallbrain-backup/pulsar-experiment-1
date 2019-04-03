@@ -9,11 +9,15 @@ public class RanAlg {
 	private static Random r = new Random();
 	
 	public static int randomInt(int min, int max) {
-		return (int) Math.floor(randomDouble(min, max, 0));
+		return (int) Math.floor(randomDouble(min, max));
+	}
+
+	public static double randomDouble(double min, double max) {
+		return (r.nextDouble()*(max-min) + min);
 	}
 
 	public static double randomDouble(double min, double max, int d) {
-		long a = Math.round((r.nextDouble()*(max-min) + min)*Math.pow(10, d));
+		long a = Math.round(randomDouble(min, max)*Math.pow(10, d));
 		double b = new BigDecimal(a).movePointLeft(d).doubleValue();
 		return b;
 	}

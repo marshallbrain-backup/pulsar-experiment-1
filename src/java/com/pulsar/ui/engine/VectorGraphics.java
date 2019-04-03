@@ -7,6 +7,7 @@ import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Path2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -81,10 +82,10 @@ public class VectorGraphics {
 			Path2D cutCircle = new Path2D.Double();
 			for(Shape a: arcs) {
 				cutCircle.append(a, true);
-				graphics.draw(a);
+				
 			}
 			cutCircle.closePath();
-//			graphics.fill(cutCircle);
+			graphics.fill(cutCircle);
 		}
 		
 		graphics.setColor(Color.BLACK);
@@ -103,17 +104,30 @@ public class VectorGraphics {
 		getAngelIntersection(angles, 2, r, lines[2], lines[0], lines[1]);
 		getAngelIntersection(angles, 3, r, lines[3], lines[0], lines[1]);
 		
-//		Collections.sort(angles);
+		double totalAngle = 0;
 		
 		for(int i = 0; i < angles.size(); i+=2) {
 			
-			double startAngle = 0;
-			double endAngle = 0;
+			double startAngle = angles.get(i);
+			double endAngle = angles.get(i+1);
 			
-			startAngle = angles.get(i);
-			endAngle = angles.get(i+1);
+			double offset = endAngle - startAngle;
 			
-			System.out.println(startAngle + ", " + endAngle);
+			totalAngle += Math.abs(offset);
+			
+		}
+		
+		if(totalAngle > 360) {
+			Collections.sort(angles);
+			angles.set(0, angles.get(0)+360);
+		}
+
+		Collections.sort(angles);
+		
+		for(int i = 0; i < angles.size(); i+=2) {
+			
+			double startAngle = angles.get(i);
+			double endAngle = angles.get(i+1);
 			
 			double offset = endAngle - startAngle;
 			
@@ -122,17 +136,15 @@ public class VectorGraphics {
 			
 		}
 		
-		System.out.println();
-		
-//		if(arcs.isEmpty()) {
-//			if((minX < cx-r && cx-r < maxX) && (minY < cy-r && cy-r < maxY)) {
-//				Arc2D arc = new Arc2D.Double(cx-r, cy-r, r*2, r*2, 0, 360, Arc2D.OPEN);
-//				arcs.add(arc);
-//			} else if((minX > cx-r && cx-r > maxX) && (minY > cy-r && cy-r > maxY)) {
-//				arcs.add(new Rectangle2D.Float(minX, minY, maxX-minX, maxY-minY));
-//			}
-//			
-//		}
+		if(arcs.isEmpty()) {
+			if((minX < cx-r && cx-r < maxX) && (minY < cy-r && cy-r < maxY)) {
+				Arc2D arc = new Arc2D.Double(cx-r, cy-r, r*2, r*2, 0, 360, Arc2D.OPEN);
+				arcs.add(arc);
+			} else if((minX > cx-r && cx-r > maxX) && (minY > cy-r && cy-r > maxY)) {
+				arcs.add(new Rectangle2D.Float(minX, minY, maxX-minX, maxY-minY));
+			}
+			
+		}
 		
 		return arcs;
 		

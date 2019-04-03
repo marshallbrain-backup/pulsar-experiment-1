@@ -9,6 +9,7 @@ import java.awt.geom.Arc2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import pulsar.Main;
@@ -83,7 +84,7 @@ public class VectorGraphics {
 				graphics.draw(a);
 			}
 			cutCircle.closePath();
-//		graphics.fill(cutCircle);
+//			graphics.fill(cutCircle);
 		}
 		
 		graphics.setColor(Color.BLACK);
@@ -93,26 +94,24 @@ public class VectorGraphics {
 	
 	private List<Shape> drawVisibleArc(int cx, int cy, int r, int minX, int minY, int maxX, int maxY) {
 		
-		int[] lines = new int[] {maxX-cx, maxY-cy, minX-cx, minY-cy};
+		int[] lines = new int[] {minX-cx, maxX-cx, minY-cy, maxY-cy};
 		List<Double> angles = new ArrayList<Double>();
 		List<Shape> arcs = new ArrayList<Shape>();
 		
-		getAngelIntersection(angles, 0, r, lines[0], lines[3], lines[1]);
-		getAngelIntersection(angles, 1, r, lines[1], lines[2], lines[0]);
-		getAngelIntersection(angles, 2, r, lines[2], lines[3], lines[1]);
-		getAngelIntersection(angles, 3, r, lines[3], lines[2], lines[0]);
+		getAngelIntersection(angles, 0, r, lines[0], lines[2], lines[3]);
+		getAngelIntersection(angles, 1, r, lines[1], lines[2], lines[3]);
+		getAngelIntersection(angles, 2, r, lines[2], lines[0], lines[1]);
+		getAngelIntersection(angles, 3, r, lines[3], lines[0], lines[1]);
 		
-		for(int i = 1; i < angles.size(); i+=2) {
+//		Collections.sort(angles);
+		
+		for(int i = 0; i < angles.size(); i+=2) {
 			
 			double startAngle = 0;
 			double endAngle = 0;
 			
 			startAngle = angles.get(i);
-			if(i+1 >= angles.size()) {
-				endAngle = angles.get(0);
-			} else {
-				endAngle = angles.get(i+1);
-			}
+			endAngle = angles.get(i+1);
 			
 			System.out.println(startAngle + ", " + endAngle);
 			
@@ -122,6 +121,8 @@ public class VectorGraphics {
 			arcs.add(arc);
 			
 		}
+		
+		System.out.println();
 		
 //		if(arcs.isEmpty()) {
 //			if((minX < cx-r && cx-r < maxX) && (minY < cy-r && cy-r < maxY)) {
@@ -149,20 +150,17 @@ public class VectorGraphics {
 			startAngle = Math.toDegrees(Math.atan2(z, l));
 			endAngle = Math.toDegrees(Math.atan2(-z, l));
 			
-			if(cor%2 == 1) {
+			if(cor > 1) {
 				startAngle -= 90;
 				endAngle -= 90;
 				z = -z;
 			}
-			if(cor < 2) {
+			if(cor%2 == 1) {
 				endAngle += 360;
 			}
 			
-			if(startAngle < 0) {
-				startAngle += 360;
-			}
-			if(endAngle < 0) {
-				endAngle += 360;
+			if((startAngle == 0 && endAngle == 0) || (startAngle == 0 && endAngle == 0)) {
+				return;
 			}
 			
 			if(insideBounds(-z, min, max))

@@ -75,15 +75,31 @@ public class VectorGraphics {
 		int cx = c.getCenterX();
 		int cy = c.getCenterY();
 		int r = Math.toIntExact(c.getRadius());
-		r = 200;
 		List<Shape> arcs = drawVisibleArc(cx, cy, r, minX, minY, maxX, maxY);
 		
 		if(!arcs.isEmpty()) {
 			Path2D cutCircle = new Path2D.Double();
 			for(Shape a: arcs) {
 				cutCircle.append(a, true);
-				
 			}
+			
+			if(arcs.size() == 1) {
+				Arc2D a = ((Arc2D) arcs.get(0));
+				if(a.getStartPoint().getX() != a.getEndPoint().getX() && a.getStartPoint().getY() != a.getEndPoint().getY()) {
+					double x = a.getEndPoint().getX();
+					double y = a.getEndPoint().getY();
+					if(Math.round(x) == minX) {
+						cutCircle.lineTo(minX, maxY);
+					} else if(Math.round(x) == maxX) {
+						cutCircle.lineTo(maxX, minY);
+					} else if(Math.round(y) == minY) {
+						cutCircle.lineTo(minX, minY);
+					} else if(Math.round(y) == maxY) {
+						cutCircle.lineTo(maxX, maxY);
+					}
+				}
+			}
+			
 			cutCircle.closePath();
 			graphics.fill(cutCircle);
 		}

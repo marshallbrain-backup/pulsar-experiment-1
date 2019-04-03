@@ -65,10 +65,6 @@ public class VectorGraphics {
 	
 	public void drawCircle(Circle c, int minX, int minY, int maxX, int maxY) {
 		
-		int cx = c.getCenterX();
-		int cy = c.getCenterY();
-		int r = Math.toIntExact(c.getRadius());
-		
 		Area a = new Area(c.getCircle());
 		Area b = new Area(new Rectangle2D.Double(minX, minY, maxX-minX, maxY-minY));
 		

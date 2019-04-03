@@ -20,6 +20,7 @@ public class Body {
 	
 	private String bodyType;
 	
+	private Body parent;
 	private StarSystem starSystem;
 
 	public Body(String t, Map<String, String> f, StarSystem s, double r) {
@@ -44,7 +45,13 @@ public class Body {
 		
 	}
 
-	public Body(GameFile f, Map<String, String> temps, Map<String, String> prob, StarSystem s, Body parent, long dist, Body star) {
+	public Body(GameFile f, Map<String, String> temps, Map<String, String> prob, StarSystem s, Body par, long dist, Body star) {
+		
+		angle = RanAlg.randomDouble(0, 360);
+
+		distance = dist;
+		parent = par;
+		starSystem = s;
 			
 		double t = star.temperature;
 		double r = star.radius;
@@ -101,13 +108,7 @@ public class Body {
 		
 		temperature = Math.round(tem);
 		radius = Math.round(rad);
-		
 		bodyType = planet;
-		radius = Math.round(rad);
-		distance = dist;
-		angle = 0;
-		
-		starSystem = s;
 		
 	}
 	
@@ -141,6 +142,10 @@ public class Body {
 	
 	public double getAngle() {
 		return angle;
+	}
+	
+	public Body getParent() {
+		return parent;
 	}
 	
 }

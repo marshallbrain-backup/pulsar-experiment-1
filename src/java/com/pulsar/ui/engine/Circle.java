@@ -1,6 +1,8 @@
 package ui.engine;
 
 import java.awt.Color;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
 import java.util.Map;
 
 import math.Match;
@@ -94,6 +96,7 @@ public class Circle implements Vector {
 	
 	@Override
 	public void transform(long distance, double angle, long radius, long screenSize, int screenWidth, int minSize) {
+		
 		int r = Math.toIntExact(radiusOffset + Math.round((((double) radius/screenSize)*screenWidth/2)));
 		int d = Math.toIntExact(Math.round((((double) distance/screenSize)*screenWidth/2)));
 		
@@ -118,6 +121,10 @@ public class Circle implements Vector {
 	@Override
 	public Vector copy() {
 		return new Circle(fillColor, centerX, centerY, radiusOffset);
+	}
+
+	public Shape getCircle() {
+		return new Ellipse2D.Double(centerX-radiusOffset, centerY-radiusOffset, radiusOffset*2, radiusOffset*2);
 	}
 	
 }

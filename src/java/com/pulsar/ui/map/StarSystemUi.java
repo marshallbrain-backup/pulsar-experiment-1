@@ -34,7 +34,6 @@ public class StarSystemUi implements UiElement {
 		
 		starSystem = ss;
 		
-		//TODO set zoom equal to system max radius/1 au
 		zoom = 1;
 		
 		bodyVectors = new HashMap<String, List<Vector>>();
@@ -59,9 +58,9 @@ public class StarSystemUi implements UiElement {
 	public boolean action(Mouse m, Keyboard k) {
 		
 		if(m.getWheelDir() != 0) {
-			int z = zoom+m.getWheelDir();
-			if(z <= 0) {
-				z = 1;
+			int z = zoom+m.getWheelDir()*10;
+			if(z == 0) {
+				z += m.getWheelDir();
 			}
 			
 			Point n = new Point(m.getPosition().getX()-Main.WIDTH/2, m.getPosition().getY()-Main.HEIGHT/2, Main.WIDTH, getZoom(z));
@@ -97,7 +96,8 @@ public class StarSystemUi implements UiElement {
 			Body b = bodys.get(i);
 			
 			if(b.getParent() != null) {
-				Vector orbit = new Circle(Color.BLACK, Math.round(b.getParent().getX()), Math.round(b.getParent().getY()), b.getParent().getDistance());
+				Vector orbit = new Circle(Color.BLACK, Math.round(b.getParent().getX()), Math.round(b.getParent().getY()), b.getDistance());
+				orbit.normalize(getZoom(zoom), Main.WIDTH, 0);
 				g.draw(orbit);
 			}
 			
@@ -106,7 +106,7 @@ public class StarSystemUi implements UiElement {
 				vt.move(new Point(b.getX(), b.getY()));
 				vt.transform(b.getRadius());
 				vt.normalize(getZoom(zoom), Main.WIDTH, 8);
-				g.draw(vt);
+				g.fill(vt);
 			}
 			
 		}

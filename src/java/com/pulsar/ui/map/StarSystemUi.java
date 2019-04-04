@@ -80,9 +80,9 @@ public class StarSystemUi implements UiElement {
 			Body b = bodys.get(i);
 			List<Vector> vectList = bodyVectors.get(b.getType());
 			for(Vector v: vectList) {
-				Vector vt = v.copy();
+				Vector vt = v.copy(b);
 				vt.transform(offsetAmount, getZoom(), Main.WIDTH);
-				vt.transform(b.getDistance(), b.getAngle(), b.getRadius(), getZoom(), Main.WIDTH, 8);
+				vt.normalize(getZoom(), Main.WIDTH, 8);
 				g.draw(vt);
 			}
 		}

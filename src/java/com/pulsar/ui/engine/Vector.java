@@ -2,15 +2,17 @@ package ui.engine;
 
 import java.awt.Color;
 
+import bodys.Body;
+
 public interface Vector {
 
 	String getType();
-
+	
 	Color getFillColor();
 	
-	Vector copy();
-
-	void transform(long distance, double angle, long radius, long screenSize, int screenWidth, int minSize);
+	Vector copy(Body b);
+	
 	void transform(Point offsetAmount, long screenSize, int screenWidth);
+	void normalize(long screenSize, int screenWidth, int minSize);
 
 }

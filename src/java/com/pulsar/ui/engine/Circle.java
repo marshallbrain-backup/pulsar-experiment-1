@@ -5,16 +5,18 @@ import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.util.Map;
 
+import bodys.Body;
 import math.Match;
 
 public class Circle implements Vector {
 		
 	private int renderX;
 	private int renderY;
+	private int renderRadius;
 	
 	private long centerX;
 	private long centerY;
-	private long radiusOffset;
+	private long radius;
 	
 	private Color fillColor;
 	
@@ -59,7 +61,7 @@ public class Circle implements Vector {
 		
 		centerX = Math.toIntExact(cx);
 		centerY = Math.toIntExact(cy);
-		radiusOffset = r;
+		radius = r;
 		
 	}
 	
@@ -83,7 +85,7 @@ public class Circle implements Vector {
 	}
 	
 	public long getRadius() {
-		return radiusOffset;
+		return renderRadius;
 	}
 	
 	@Override
@@ -95,26 +97,6 @@ public class Circle implements Vector {
 	public Color getFillColor() {
 		return fillColor;
 	}
-	
-	@Override
-	public void transform(long distance, double angle, long radius, long screenSize, int screenWidth, int minSize) {
-		
-		int r = Math.toIntExact(radiusOffset + Math.round((((double) radius/screenSize)*screenWidth/2)));
-		int d = Math.toIntExact(Math.round((((double) distance/screenSize)*screenWidth/2)));
-		int x = Math.toIntExact(Math.round((((double) centerX/screenSize)*screenWidth)));
-		int y = Math.toIntExact(Math.round((((double) centerY/screenSize)*screenWidth)));
-		
-		if(r < minSize) {
-			r = minSize;
-		}
-		
-		renderX = Math.toIntExact(Math.round(Math.cos(angle)*d)+x);
-		renderY = Math.toIntExact(Math.round(Math.sin(angle)*d)+y);
-		radiusOffset = r;
-		
-		return;
-		
-	}
 
 	@Override
 	public void transform(Point o, long screenSize, int screenWidth) {
@@ -123,12 +105,34 @@ public class Circle implements Vector {
 	}
 
 	@Override
-	public Vector copy() {
-		return new Circle(fillColor, centerX, centerY, radiusOffset);
+	public void normalize(long screenSize, int screenWidth, int minSize) {
+		
+		int r = Math.toIntExact(Math.round((((double) radius/screenSize)*screenWidth/2)));
+		int x = Math.toIntExact(Math.round((((double) centerX/screenSize)*screenWidth)));
+		int y = Math.toIntExact(Math.round((((double) centerY/screenSize)*screenWidth)));
+		
+		if(r < minSize) {
+			r = minSize;
+		}
+		
+		renderX = x;
+		renderY = y;
+		renderRadius = r;
+		
+	}
+
+	@Override
+	public Vector copy(Body b) {
+		
+		long d = b.getDistance();
+		long r = b.getRadius();
+		double a = b.getAngle();
+		
+		return new Circle(fillColor, Math.round(Math.sin(a)*d), Math.round(Math.sin(a)*d), r);
 	}
 
 	public Shape getCircle() {
-		return new Ellipse2D.Double(renderX-radiusOffset, renderY-radiusOffset, radiusOffset*2, radiusOffset*2);
+		return new Ellipse2D.Double(renderX-renderRadius, renderY-renderRadius, renderRadius*2, renderRadius*2);
 	}
 	
 }

@@ -4,13 +4,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Area;
+import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Rectangle2D;
 import pulsar.Main;
 import ui.engine.Point;
 
 public class VectorGraphics {
-	
-	private int[] screenBounds;
 	
 	private Graphics2D graphics;
 	private Graphics2D graphicsOriginal;
@@ -20,8 +19,6 @@ public class VectorGraphics {
 		graphicsOriginal = (Graphics2D) g;
 		
 		graphics = (Graphics2D) graphicsOriginal.create();
-		
-		screenBounds = new int[] {-Main.WIDTH/2, -Main.HEIGHT/2, Main.WIDTH/2, Main.HEIGHT/2};
 		
 		init(graphics);
 		
@@ -56,19 +53,25 @@ public class VectorGraphics {
 	}
 
 	public void draw(Vector v) {
-		draw(v, screenBounds[0], screenBounds[1], screenBounds[2], screenBounds[3]);
+		draw(v, Main.WIDTH, Main.HEIGHT);
 	}
 	
-	public void draw(Vector v, int minX, int minY, int maxX, int maxY) {
+	public void draw(Vector v, int width, int height) {
 		
 		graphics.setColor(v.getFillColor());
 		
 		Area a = new Area(v.getShape());
-		Area b = new Area(new Rectangle2D.Double(minX, minY, maxX-minX, maxY-minY));
+		Area b = new Area(new Rectangle2D.Double(0, 0, width, height));
+		try {
+			b.transform(graphics.getTransform().createInverse());
+		} catch (NoninvertibleTransformException e) {
+			e.printStackTrace();
+		}
 		
 		a.intersect(b);
 		
 		graphics.fill(a);
+		graphics.draw(b);
 		
 	}
 

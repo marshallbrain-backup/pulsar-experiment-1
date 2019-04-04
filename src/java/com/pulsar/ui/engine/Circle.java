@@ -105,13 +105,13 @@ public class Circle implements Vector {
 
 	@Override
 	public void transform(double offset) {
-		radius *= offset;
+		radius += offset;
 	}
 	
 	@Override
 	public void normalize(long screenSize, int screenWidth, int minSize) {
 		
-		int r = Math.toIntExact(convert(radius, screenSize, screenWidth/2));
+		int r = Math.toIntExact(convert(radius, screenSize/2, screenWidth/2));
 		int x = Math.toIntExact(convert(centerX, screenSize, screenWidth));
 		int y = Math.toIntExact(convert(centerY, screenSize, screenWidth));
 		

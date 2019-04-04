@@ -1,6 +1,7 @@
 package ui.map;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,8 +18,11 @@ import universe.StarSystem;
 
 public class StarSystemUi implements UiElement {
 	
-	private List<Vector> bodyVectors;
+	private int zoom;
+	
 	private List<Body> bodys;
+	
+	private Map<String, List<Vector>> bodyVectors;
 	
 	private Point offsetAmount;
 	private StarSystem starSystem;
@@ -27,20 +31,20 @@ public class StarSystemUi implements UiElement {
 		
 		starSystem = ss;
 		
-		bodyVectors = new ArrayList<Vector>();
+		zoom = 1;
+		
+		bodyVectors = new HashMap<String, List<Vector>>();
 		bodys = new ArrayList<Body>();
 		offsetAmount = new Point(0, 0);
 		
 		for(Body b: starSystem.getBodys()) {
-			List<Vector> e = vectorList.get(b.getType());
-			if(e != null) {
-				for(Vector v: e) {
-					bodys.add(b);
-					bodyVectors.add(v);
-				}
+			List<Vector> v = vectorList.get(b.getType());
+			if(v != null) {
+				bodys.add(b);
+				bodyVectors.putIfAbsent(b.getType(), v);
 			} else {
 				bodys.add(b);
-				bodyVectors.add(vectorList.get("_default").get(0));
+				bodyVectors.putIfAbsent(b.getType(), vectorList.get("_default"));
 			}
 		}
 		
@@ -48,6 +52,13 @@ public class StarSystemUi implements UiElement {
 
 	@Override
 	public boolean action(Mouse m, Keyboard k) {
+		
+		if(m.getWheelDir() != 0) {
+			zoom += m.getWheelDir();
+			if(zoom == 0) {
+				zoom += m.getWheelDir();
+			}
+		}
 		
 		if(m.buttonDown(1)) {
 			Point d = m.getChange();
@@ -65,14 +76,28 @@ public class StarSystemUi implements UiElement {
 	public void render(VectorGraphics g) {
 		
 		g.translationSet(ScreenPosition.CENTER);
+		g.translationMove(offsetAmount);
 		for(int i = 0; i < bodys.size(); i++) {
 			Body b = bodys.get(i);
-			Vector v = bodyVectors.get(i);
-			Vector vt = v.copy();
-			vt.transform(b.getDistance(), b.getAngle(), b.getRadius(), Math.round(149597870700.0*5), Main.WIDTH, 8);
-			vt.transform(offsetAmount);
-			g.draw(vt);
+			List<Vector> vectList = bodyVectors.get(b.getType());
+			for(Vector v: vectList) {
+				Vector vt = v.copy();
+				vt.transform(b.getDistance(), b.getAngle(), b.getRadius(), getZoom(), Main.WIDTH, 8);
+				g.draw(vt);
+			}
 		}
+		
+	}
+	
+	private long getZoom() {
+		if(zoom > 0) {
+			return Math.round(149597870700.0/Math.abs(zoom));
+		}
+		if(zoom < 0) {
+			return Math.round(149597870700.0*Math.abs(zoom));
+		}
+		
+		return Math.round(149597870700.0);
 		
 	}
 

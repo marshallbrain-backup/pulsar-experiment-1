@@ -97,14 +97,14 @@ public class Circle implements Vector {
 	public Color getFillColor() {
 		return fillColor;
 	}
-
+	
 	@Override
 	public void move(Point o, long screenSize, int screenWidth) {
 		centerX = convert(o.getX(), screenWidth, screenSize);
 		centerY = convert(o.getY(), screenWidth, screenSize);
 		
 	}
-
+	
 	@Override
 	public void normalize(long screenSize, int screenWidth, int minSize) {
 		
@@ -121,7 +121,7 @@ public class Circle implements Vector {
 		renderRadius = r;
 		
 	}
-
+	
 	@Override
 	public Vector copy(Body b) {
 		
@@ -132,12 +132,13 @@ public class Circle implements Vector {
 		return new Circle(fillColor, Math.round(Math.sin(a)*d), Math.round(Math.sin(a)*d), r);
 	}
 	
+	@Override
+	public Shape getShape() {
+		return new Ellipse2D.Double(renderX-renderRadius, renderY-renderRadius, renderRadius*2, renderRadius*2);
+	}
+	
 	private long convert(double value, double fromRefrence, double toRefrence) {
 		return Math.round(((value/fromRefrence)*toRefrence));
-	}
-
-	public Shape getCircle() {
-		return new Ellipse2D.Double(renderX-renderRadius, renderY-renderRadius, renderRadius*2, renderRadius*2);
 	}
 	
 }

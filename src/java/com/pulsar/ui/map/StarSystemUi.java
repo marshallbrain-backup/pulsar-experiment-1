@@ -32,6 +32,7 @@ public class StarSystemUi implements UiElement {
 		
 		starSystem = ss;
 		
+		//TODO set zoom equal to system max radius/1 au
 		zoom = 1;
 		
 		bodyVectors = new HashMap<String, List<Vector>>();
@@ -56,18 +57,24 @@ public class StarSystemUi implements UiElement {
 	public boolean action(Mouse m, Keyboard k) {
 		
 		if(m.getWheelDir() != 0) {
-			zoom += m.getWheelDir();
-			if(zoom <= 0) {
-				zoom = 1;
+			int z = zoom+m.getWheelDir();
+			if(z <= 0) {
+				z = 1;
 			}
-			offsetZoom.setLocation(0, 0);
-			offsetZoom.move(offsetAmount.getX(), offsetAmount.getY());
+			
+			Point n = new Point(m.getPosition().getX()-Main.WIDTH/2, m.getPosition().getY()-Main.HEIGHT/2, Main.WIDTH, getZoom(z));
+			Point o = new Point(m.getPosition().getX()-Main.WIDTH/2, m.getPosition().getY()-Main.HEIGHT/2, Main.WIDTH, getZoom(zoom));
+			
+			offsetZoom.move(new Point(n, o));
+			
+			zoom = z;
+			
 		}
 		
 		if(m.buttonDown(1)) {
 			Point d = m.getChange();
 			if(d.getX() != 0 || d.getY() != 0) {
-				offsetAmount.move(-d.getX(), -d.getY(), getZoom(), Main.WIDTH);
+				offsetAmount.move(-d.getX(), -d.getY(), Main.WIDTH, getZoom(zoom));
 				return true;
 			}
 		}
@@ -80,26 +87,26 @@ public class StarSystemUi implements UiElement {
 	public void render(VectorGraphics g) {
 		
 		g.translationSet(ScreenPosition.CENTER);
-		g.translationMove(new Point(offsetAmount, getZoom(), Main.WIDTH));
-		g.translationMove(new Point(offsetZoom, getZoom(), Main.WIDTH));
+		g.translationMove(new Point(offsetAmount, getZoom(zoom), Main.WIDTH));
+		g.translationMove(new Point(offsetZoom, getZoom(zoom), Main.WIDTH));
 		for(int i = 0; i < 1; i++) { //bodys.size()
 			Body b = bodys.get(i);
 			List<Vector> vectList = bodyVectors.get(b.getType());
 			for(Vector v: vectList) {
 				Vector vt = v.copy(b);
-				vt.normalize(getZoom(), Main.WIDTH, 8);
+				vt.normalize(getZoom(zoom), Main.WIDTH, 8);
 				g.draw(vt);
 			}
 		}
 		
 	}
 	
-	private long getZoom() {
+	private long getZoom(int z) {
 		if(zoom > 0) {
-			return Math.round(149597870700.0/Math.abs(zoom));
+			return Math.round(149597870700.0/Math.abs(z));
 		}
 		if(zoom < 0) {
-			return Math.round(149597870700.0*Math.abs(zoom));
+			return Math.round(149597870700.0*Math.abs(z));
 		}
 		
 		return Math.round(149597870700.0);

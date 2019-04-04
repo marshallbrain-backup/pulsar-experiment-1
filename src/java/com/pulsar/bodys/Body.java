@@ -28,6 +28,8 @@ public class Body {
 		bodyType = t;
 		starSystem = s;
 		
+		parent = null;
+		
 		double sr = convert("6.95700e8");
 		
 		double minT = convert(f.get("set_temp.min"));
@@ -132,16 +134,24 @@ public class Body {
 		return bodyType;
 	}
 	
-	public long getRadius() {
-		return radius;
-	}
-	
 	public long getDistance() {
 		return distance;
 	}
 	
 	public double getAngle() {
 		return angle;
+	}
+	
+	public double getX() {
+		return Math.cos(Math.toRadians(angle))*distance;
+	}
+	
+	public double getY() {
+		return Math.sin(Math.toRadians(angle))*distance;
+	}
+	
+	public long getRadius() {
+		return radius;
 	}
 	
 	public Body getParent() {

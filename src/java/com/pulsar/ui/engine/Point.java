@@ -18,8 +18,12 @@ public class Point {
 		this.y = y;
 	}
 
+	public Point(double x, double y, long fromRefrence, long toRefrence) {
+		this(convert(x, fromRefrence, toRefrence), convert(y, fromRefrence, toRefrence));
+	}
+
 	public Point(Point p, long fromRefrence, long toRefrence) {
-		this(convert(p.getXLong(), fromRefrence, toRefrence), convert(p.getYLong(), fromRefrence, toRefrence));
+		this(p.x, p.y, fromRefrence, toRefrence);
 	}
 
 	public int getXInt() {

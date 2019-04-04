@@ -26,6 +26,11 @@ public class Point {
 		this(p.x, p.y, fromRefrence, toRefrence);
 	}
 
+	public Point(Point p1, Point p2) {
+		x = p1.x - p2.x;
+		y = p1.y - p2.y;
+	}
+
 	public int getXInt() {
 		return Math.toIntExact(getXLong());
 	}
@@ -63,6 +68,10 @@ public class Point {
 	public void move(double dx, double dy) {
 		this.x = x + dx;
 		this.y = y + dy;
+	}
+
+	public void move(Point p) {
+		move(p.x, p.y);
 	}
 
 	public void move(double dx, double dy, long fromRefrence, long toRefrence) {

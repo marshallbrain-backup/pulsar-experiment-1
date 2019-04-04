@@ -12,7 +12,7 @@ public interface Vector {
 	
 	Vector copy(Body b);
 	
-	void transform(Point offsetAmount, long screenSize, int screenWidth);
+	void move(Point offsetAmount, long screenSize, int screenWidth);
 	void normalize(long screenSize, int screenWidth, int minSize);
 
 }

@@ -53,10 +53,16 @@ public class VectorGraphics {
 	}
 
 	public void draw(Vector v) {
-		draw(v, Main.WIDTH, Main.HEIGHT);
+		Area a = getArea(v, Main.WIDTH, Main.HEIGHT);
+		graphics.draw(a);
+	}
+
+	public void fill(Vector v) {
+		Area a = getArea(v, Main.WIDTH, Main.HEIGHT);
+		graphics.fill(a);
 	}
 	
-	public void draw(Vector v, int width, int height) {
+	public Area getArea(Vector v, int width, int height) {
 		
 		graphics.setColor(v.getFillColor());
 		
@@ -70,7 +76,7 @@ public class VectorGraphics {
 		
 		a.intersect(b);
 		
-		graphics.fill(a);
+		return a;
 		
 	}
 

@@ -18,13 +18,18 @@ public class VectorGraphics {
 	public VectorGraphics(Graphics g) {
 		
 		graphicsOriginal = (Graphics2D) g;
+		
 		graphics = (Graphics2D) graphicsOriginal.create();
 		
 		screenBounds = new int[] {-Main.WIDTH/2, -Main.HEIGHT/2, Main.WIDTH/2, Main.HEIGHT/2};
 		
-		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
+		init(graphics);
 		
+	}
+	
+	private void init(Graphics2D g) {
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
 	}
 	
 	public Graphics getGraphics() {
@@ -41,6 +46,9 @@ public class VectorGraphics {
 		default:
 			break;
 		}
+		
+		init(graphics);
+		
 	}
 
 	public void translationMove(Point o) {

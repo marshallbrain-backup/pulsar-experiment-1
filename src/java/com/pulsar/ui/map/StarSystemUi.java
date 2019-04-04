@@ -96,8 +96,10 @@ public class StarSystemUi implements UiElement {
 			
 			Body b = bodys.get(i);
 			
-			Vector orbit = new Circle(Color.BLACK, Math.round(b.getParent().getX()), Math.round(b.getParent().getY()), b.getParent().getDistance());
-			g.draw(orbit);
+			if(b.getParent() != null) {
+				Vector orbit = new Circle(Color.BLACK, Math.round(b.getParent().getX()), Math.round(b.getParent().getY()), b.getParent().getDistance());
+				g.draw(orbit);
+			}
 			
 			for(Vector v: bodyVectors.get(b.getType())) {
 				Vector vt = v.copy();

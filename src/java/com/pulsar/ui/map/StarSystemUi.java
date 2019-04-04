@@ -1,5 +1,6 @@
 package ui.map;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +11,7 @@ import input.Keyboard;
 import input.Mouse;
 import pulsar.Main;
 import ui.engine.UiElement;
+import ui.engine.Circle;
 import ui.engine.Point;
 import ui.engine.ScreenPosition;
 import ui.engine.Vector;
@@ -89,14 +91,22 @@ public class StarSystemUi implements UiElement {
 		g.translationSet(ScreenPosition.CENTER);
 		g.translationMove(new Point(offsetAmount, getZoom(zoom), Main.WIDTH));
 		g.translationMove(new Point(offsetZoom, getZoom(zoom), Main.WIDTH));
-		for(int i = 0; i < 1; i++) { //bodys.size()
+		
+		for(int i = 0; i < bodys.size(); i++) {
+			
 			Body b = bodys.get(i);
-			List<Vector> vectList = bodyVectors.get(b.getType());
-			for(Vector v: vectList) {
-				Vector vt = v.copy(b);
+			
+			Vector orbit = new Circle(Color.BLACK, Math.round(b.getParent().getX()), Math.round(b.getParent().getY()), b.getParent().getDistance());
+			g.draw(orbit);
+			
+			for(Vector v: bodyVectors.get(b.getType())) {
+				Vector vt = v.copy();
+				vt.move(new Point(b.getX(), b.getY()));
+				vt.transform(b.getRadius());
 				vt.normalize(getZoom(zoom), Main.WIDTH, 8);
 				g.draw(vt);
 			}
+			
 		}
 		
 	}

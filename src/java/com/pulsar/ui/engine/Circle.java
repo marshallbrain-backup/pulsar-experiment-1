@@ -99,17 +99,18 @@ public class Circle implements Vector {
 	}
 
 	@Override
-	public void transform(Point o, long screenSize, int screenWidth) {
-		centerX += Math.round((((double) o.getX()/screenWidth)*screenSize));
-		centerY += Math.round((((double) o.getY()/screenWidth)*screenSize));
+	public void move(Point o, long screenSize, int screenWidth) {
+		centerX = convert(o.getX(), screenWidth, screenSize);
+		centerY = convert(o.getY(), screenWidth, screenSize);
+		
 	}
 
 	@Override
 	public void normalize(long screenSize, int screenWidth, int minSize) {
 		
-		int r = Math.toIntExact(Math.round((((double) radius/screenSize)*screenWidth/2)));
-		int x = Math.toIntExact(Math.round((((double) centerX/screenSize)*screenWidth)));
-		int y = Math.toIntExact(Math.round((((double) centerY/screenSize)*screenWidth)));
+		int r = Math.toIntExact(convert(radius, screenSize, screenWidth/2));
+		int x = Math.toIntExact(convert(centerX, screenSize, screenWidth));
+		int y = Math.toIntExact(convert(centerY, screenSize, screenWidth));
 		
 		if(r < minSize) {
 			r = minSize;
@@ -129,6 +130,10 @@ public class Circle implements Vector {
 		double a = b.getAngle();
 		
 		return new Circle(fillColor, Math.round(Math.sin(a)*d), Math.round(Math.sin(a)*d), r);
+	}
+	
+	private long convert(double value, double fromRefrence, double toRefrence) {
+		return Math.round(((value/fromRefrence)*toRefrence));
 	}
 
 	public Shape getCircle() {

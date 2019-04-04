@@ -56,24 +56,14 @@ public class VectorGraphics {
 	}
 
 	public void draw(Vector v) {
+		draw(v, screenBounds[0], screenBounds[1], screenBounds[2], screenBounds[3]);
+	}
+	
+	public void draw(Vector v, int minX, int minY, int maxX, int maxY) {
 		
 		graphics.setColor(v.getFillColor());
 		
-		switch(v.getType()) {
-		case "circle":
-			drawCircle((Circle) v);
-			break;
-		}
-		
-	}
-	
-	public void drawCircle(Circle c) {
-		drawCircle(c, screenBounds[0], screenBounds[1], screenBounds[2], screenBounds[3]);
-	}
-	
-	public void drawCircle(Circle c, int minX, int minY, int maxX, int maxY) {
-		
-		Area a = new Area(c.getCircle());
+		Area a = new Area(v.getShape());
 		Area b = new Area(new Rectangle2D.Double(minX, minY, maxX-minX, maxY-minY));
 		
 		a.intersect(b);

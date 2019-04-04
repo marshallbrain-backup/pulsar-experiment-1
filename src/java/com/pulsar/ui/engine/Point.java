@@ -18,8 +18,8 @@ public class Point {
 		this.y = y;
 	}
 
-	public Point(Point p, long screenSize, int screenWidth) {
-		this(convert(p.getXLong(), screenSize, screenWidth), convert(p.getYLong(), screenSize, screenWidth));
+	public Point(Point p, long fromRefrence, long toRefrence) {
+		this(convert(p.getXLong(), fromRefrence, toRefrence), convert(p.getYLong(), fromRefrence, toRefrence));
 	}
 
 	public int getXInt() {
@@ -61,8 +61,8 @@ public class Point {
 		this.y = y + dy;
 	}
 
-	public void move(double dx, double dy, long screenSize, int screenWidth) {
-		move(convert(dx, screenWidth, screenSize), convert(dy, screenWidth, screenSize));
+	public void move(double dx, double dy, long fromRefrence, long toRefrence) {
+		move(convert(dx, fromRefrence, toRefrence), convert(dy, fromRefrence, toRefrence));
 	}
 	
 	private static long convert(double value, double fromRefrence, double toRefrence) {

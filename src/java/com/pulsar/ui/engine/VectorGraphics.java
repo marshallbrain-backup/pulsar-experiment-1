@@ -71,7 +71,6 @@ public class VectorGraphics {
 		a.intersect(b);
 		
 		graphics.fill(a);
-		graphics.draw(b);
 		
 	}
 

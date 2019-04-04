@@ -25,6 +25,7 @@ public class StarSystemUi implements UiElement {
 	private Map<String, List<Vector>> bodyVectors;
 	
 	private Point offsetAmount;
+	private Point offsetZoom;
 	private StarSystem starSystem;
 	
 	public StarSystemUi(Map<String, List<Vector>> vectorList, StarSystem ss) {
@@ -36,6 +37,7 @@ public class StarSystemUi implements UiElement {
 		bodyVectors = new HashMap<String, List<Vector>>();
 		bodys = new ArrayList<Body>();
 		offsetAmount = new Point(0, 0);
+		offsetZoom = new Point(0, 0);
 		
 		for(Body b: starSystem.getBodys()) {
 			List<Vector> v = vectorList.get(b.getType());
@@ -55,15 +57,17 @@ public class StarSystemUi implements UiElement {
 		
 		if(m.getWheelDir() != 0) {
 			zoom += m.getWheelDir();
-			if(zoom == 0) {
-				zoom += m.getWheelDir();
+			if(zoom <= 0) {
+				zoom = 1;
 			}
+			offsetZoom.setLocation(0, 0);
+			offsetZoom.move(offsetAmount.getX(), offsetAmount.getY());
 		}
 		
 		if(m.buttonDown(1)) {
 			Point d = m.getChange();
 			if(d.getX() != 0 || d.getY() != 0) {
-				offsetAmount.move(-d.getX(), -d.getY());
+				offsetAmount.move(-d.getX(), -d.getY(), getZoom(), Main.WIDTH);
 				return true;
 			}
 		}
@@ -76,12 +80,13 @@ public class StarSystemUi implements UiElement {
 	public void render(VectorGraphics g) {
 		
 		g.translationSet(ScreenPosition.CENTER);
+		g.translationMove(new Point(offsetAmount, getZoom(), Main.WIDTH));
+		g.translationMove(new Point(offsetZoom, getZoom(), Main.WIDTH));
 		for(int i = 0; i < 1; i++) { //bodys.size()
 			Body b = bodys.get(i);
 			List<Vector> vectList = bodyVectors.get(b.getType());
 			for(Vector v: vectList) {
 				Vector vt = v.copy(b);
-				vt.transform(offsetAmount, getZoom(), Main.WIDTH);
 				vt.normalize(getZoom(), Main.WIDTH, 8);
 				g.draw(vt);
 			}

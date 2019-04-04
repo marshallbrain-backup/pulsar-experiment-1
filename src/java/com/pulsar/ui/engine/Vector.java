@@ -3,19 +3,18 @@ package ui.engine;
 import java.awt.Color;
 import java.awt.Shape;
 
-import bodys.Body;
-
 public interface Vector {
 
 	String getType();
 	
 	Color getFillColor();
 	
-	Vector copy(Body b);
+	Vector copy();
 
 	Shape getShape();
 	
-	void move(Point offsetAmount, long screenSize, int screenWidth);
+	void move(Point offset);
+	void transform(double offset);
 	void normalize(long screenSize, int screenWidth, int minSize);
 
 }

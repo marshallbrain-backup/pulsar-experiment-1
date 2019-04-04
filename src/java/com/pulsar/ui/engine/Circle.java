@@ -5,7 +5,6 @@ import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.util.Map;
 
-import bodys.Body;
 import math.Match;
 
 public class Circle implements Vector {
@@ -59,8 +58,8 @@ public class Circle implements Vector {
 		
 		fillColor = fill;
 		
-		centerX = Math.toIntExact(cx);
-		centerY = Math.toIntExact(cy);
+		centerX = cx;
+		centerY = cy;
 		radius = r;
 		
 	}
@@ -99,10 +98,14 @@ public class Circle implements Vector {
 	}
 	
 	@Override
-	public void move(Point o, long screenSize, int screenWidth) {
-		centerX = convert(o.getX(), screenWidth, screenSize);
-		centerY = convert(o.getY(), screenWidth, screenSize);
-		
+	public void move(Point o) {
+		centerX += o.getX();
+		centerY += o.getY();
+	}
+
+	@Override
+	public void transform(double offset) {
+		radius *= offset;
 	}
 	
 	@Override
@@ -123,13 +126,8 @@ public class Circle implements Vector {
 	}
 	
 	@Override
-	public Vector copy(Body b) {
-		
-		long d = b.getDistance();
-		long r = b.getRadius();
-		double a = b.getAngle();
-		
-		return new Circle(fillColor, Math.round(Math.sin(a)*d), Math.round(Math.sin(a)*d), r);
+	public Vector copy() {
+		return new Circle(fillColor, centerX, centerY, radius);
 	}
 	
 	@Override

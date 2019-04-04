@@ -11,6 +11,6 @@ public interface Vector {
 	Vector copy();
 
 	void transform(long distance, double angle, long radius, long screenSize, int screenWidth, int minSize);
-	void transform(Point offsetAmount);
+	void transform(Point offsetAmount, long screenSize, int screenWidth);
 
 }

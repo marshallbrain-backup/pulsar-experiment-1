@@ -76,12 +76,12 @@ public class StarSystemUi implements UiElement {
 	public void render(VectorGraphics g) {
 		
 		g.translationSet(ScreenPosition.CENTER);
-		g.translationMove(offsetAmount);
-		for(int i = 0; i < bodys.size(); i++) {
+		for(int i = 0; i < 1; i++) { //bodys.size()
 			Body b = bodys.get(i);
 			List<Vector> vectList = bodyVectors.get(b.getType());
 			for(Vector v: vectList) {
 				Vector vt = v.copy();
+				vt.transform(offsetAmount, getZoom(), Main.WIDTH);
 				vt.transform(b.getDistance(), b.getAngle(), b.getRadius(), getZoom(), Main.WIDTH, 8);
 				g.draw(vt);
 			}

@@ -8,10 +8,12 @@ import java.util.Map;
 import math.Match;
 
 public class Circle implements Vector {
-
-	private int centerX;
-	private int centerY;
+		
+	private int renderX;
+	private int renderY;
 	
+	private long centerX;
+	private long centerY;
 	private long radiusOffset;
 	
 	private Color fillColor;
@@ -73,11 +75,11 @@ public class Circle implements Vector {
 	}
 	
 	public int getCenterX() {
-		return centerX;
+		return renderX;
 	}
 	
 	public int getCenterY() {
-		return centerY;
+		return renderY;
 	}
 	
 	public long getRadius() {
@@ -99,13 +101,15 @@ public class Circle implements Vector {
 		
 		int r = Math.toIntExact(radiusOffset + Math.round((((double) radius/screenSize)*screenWidth/2)));
 		int d = Math.toIntExact(Math.round((((double) distance/screenSize)*screenWidth/2)));
+		int x = Math.toIntExact(Math.round((((double) centerX/screenSize)*screenWidth)));
+		int y = Math.toIntExact(Math.round((((double) centerY/screenSize)*screenWidth)));
 		
 		if(r < minSize) {
 			r = minSize;
 		}
 		
-		centerX = Math.toIntExact(Math.round(Math.cos(angle)*d)+centerX);
-		centerY = Math.toIntExact(Math.round(Math.sin(angle)*d)+centerY);
+		renderX = Math.toIntExact(Math.round(Math.cos(angle)*d)+x);
+		renderY = Math.toIntExact(Math.round(Math.sin(angle)*d)+y);
 		radiusOffset = r;
 		
 		return;
@@ -113,9 +117,9 @@ public class Circle implements Vector {
 	}
 
 	@Override
-	public void transform(Point o) {
-		centerX += o.getX();
-		centerY += o.getY();
+	public void transform(Point o, long screenSize, int screenWidth) {
+		centerX += Math.round((((double) o.getX()/screenWidth)*screenSize));
+		centerY += Math.round((((double) o.getY()/screenWidth)*screenSize));
 	}
 
 	@Override
@@ -124,7 +128,7 @@ public class Circle implements Vector {
 	}
 
 	public Shape getCircle() {
-		return new Ellipse2D.Double(centerX-radiusOffset, centerY-radiusOffset, radiusOffset*2, radiusOffset*2);
+		return new Ellipse2D.Double(renderX-radiusOffset, renderY-radiusOffset, radiusOffset*2, radiusOffset*2);
 	}
 	
 }

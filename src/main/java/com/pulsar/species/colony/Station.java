@@ -3,7 +3,7 @@ package species.colony;
 import java.util.ArrayList;
 
 import bodys.Body;
-import files.type.Type;
+import files.Type;
 import files.type.TypeDistrict;
 import files.type.TypeLoader;
 import species.Species;

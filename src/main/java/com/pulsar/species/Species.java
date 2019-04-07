@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import bodys.Body;
 import bodys.Planet;
+import files.GameFile;
 import files.type.TypeCategory;
 import files.type.TypeLoader;
 import fleets.Ship;
@@ -19,7 +20,7 @@ public class Species {
 	
 	private ArrayList<Body> colonys = new ArrayList<Body>(); //list of colonys that the species controles
 	
-	private TypeLoader speciesLoader;
+	private GameFile gameFile;
 	private ResourceManagerMaster master; //the master resourcemanager for the entier species
 	private Ship ship;
 	
@@ -28,14 +29,14 @@ public class Species {
 	 * 
 	 * @param gamefile gamefile
 	 */
-	public Species(TypeLoader sl) {
+	public Species(GameFile gf) {
 		
 		timePerUpdate = 86400;
 		timeUpdate = 0;
 		
-		speciesLoader = sl;
+		gameFile = gf;
 		
-		master = new ResourceManagerMaster(this, speciesLoader);
+		master = new ResourceManagerMaster(this, gf);
 		
 		ship = new Ship(this);
 		

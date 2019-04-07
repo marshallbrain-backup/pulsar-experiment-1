@@ -1,4 +1,5 @@
 package pulsar;
+
 import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;

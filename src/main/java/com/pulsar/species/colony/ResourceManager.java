@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import bodys.Body;
-import files.type.Type;
+import files.Type;
 import files.type.TypeBuilding;
 import files.type.TypeDistrict;
 import files.type.TypeJob;

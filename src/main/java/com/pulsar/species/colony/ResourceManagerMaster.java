@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import files.type.Type;
+import files.GameFile;
+import files.Type;
 import files.type.TypeCategory;
 import files.type.TypeLoader;
 import species.Species;
@@ -13,21 +14,21 @@ public class ResourceManagerMaster {
 	
 	private ArrayList<ResourceManager> managerList;
 	
-	private HashMap<String, TypeCategory> popCategory;
+	private HashMap<String, String> popCategory;
 	private HashMap<String, Double> resourceIncome;
 	private HashMap<String, Double> resource;
-	
-	private TypeCategory defaltPopCategory;
+
+	private GameFile gameFile;
 	private Species species;
 
-	public ResourceManagerMaster(Species s ,TypeLoader l) {
+	public ResourceManagerMaster(Species s , GameFile gf) {
 		
 		species = s;
 		
 		resourceIncome = new HashMap<String, Double>();
 		resource = new HashMap<String, Double>();
 		managerList = new ArrayList<ResourceManager>();
-		popCategory = new HashMap<String, TypeCategory>();
+		popCategory = new HashMap<String, String>();
 		
 		ArrayList<Type> c = l.getTypes("category");
 		

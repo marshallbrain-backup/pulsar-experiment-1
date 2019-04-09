@@ -23,6 +23,20 @@ public class StarSystem {
 		
 		init(gf, system);
 		
+		ArrayList<Body> colonize = new ArrayList<Body>();
+		
+		//adds all colonizable planets to a list
+		for(Body b: planetList) {
+			if(b.isColonizable()) {
+				colonize.add(b);
+			}
+		}
+		
+		//picks one to colonize
+		int id = RanAlg.randomInt(0, colonize.size());
+		
+		s.createColony(colonize.get(id));
+		
 	}
 	
 	private void init(GameFile gf, Map<String, String> system) {

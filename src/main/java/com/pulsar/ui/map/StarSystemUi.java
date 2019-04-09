@@ -1,7 +1,9 @@
 package ui.map;
 
 import java.awt.Color;
+import java.awt.geom.Area;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,7 @@ import input.Mouse;
 import pulsar.Main;
 import ui.engine.UiElement;
 import ui.engine.Circle;
+import ui.engine.EntrySet;
 import ui.engine.Point;
 import ui.engine.ScreenPosition;
 import ui.engine.Vector;
@@ -26,6 +29,7 @@ public class StarSystemUi implements UiElement {
 	
 	private List<Body> bodys;
 	private List<View> views;
+	private List<EntrySet<Area, Body>> Areas;
 	
 	private Map<String, List<Vector>> bodyVectors;
 	private Map<String, List<Vector>> modifierVectors;
@@ -44,6 +48,7 @@ public class StarSystemUi implements UiElement {
 		bodyVectors = new HashMap<String, List<Vector>>();
 		modifierVectors = new HashMap<String, List<Vector>>();
 		bodys = new ArrayList<Body>();
+		Areas = new ArrayList<EntrySet<Area, Body>>();
 		offsetAmount = new Point(0, 0);
 		offsetZoom = new Point(0, 0);
 		
@@ -64,7 +69,17 @@ public class StarSystemUi implements UiElement {
 	@Override
 	public boolean action(Mouse m, Keyboard k) {
 		
-		if(m.buttonClicked(1)) {
+		Point mp = new Point(m.getPosition());
+		
+		if(m.buttonDownOnce(1)) {
+				
+			ArrayList<EntrySet<Area, Body>> cl = new ArrayList<EntrySet<Area, Body>>(Areas);
+			
+			for(EntrySet<Area, Body> e: cl) {
+				if(e.getKey().contains(mp.getX(), mp.getY())) {
+					System.out.println(e.getValue().getType());
+				}
+			}
 			
 		} else if(m.buttonDown(1)) {
 			Point d = m.getChange();
@@ -94,6 +109,8 @@ public class StarSystemUi implements UiElement {
 	@Override
 	public void render(VectorGraphics g) {
 		
+		Areas.clear();
+		
 		g.translationSet(ScreenPosition.CENTER);
 		g.translationMove(new Point(offsetAmount, getZoom(zoom), Main.WIDTH));
 		g.translationMove(new Point(offsetZoom, getZoom(zoom), Main.WIDTH));
@@ -107,6 +124,8 @@ public class StarSystemUi implements UiElement {
 				orbit.normalize(getZoom(zoom), Main.WIDTH, 0);
 				g.draw(orbit);
 			}
+			
+			g.startLogArea();
 			
 			for(Vector v: bodyVectors.get(b.getType())) {
 				Vector vt = v.copy();
@@ -124,6 +143,11 @@ public class StarSystemUi implements UiElement {
 					vt.normalize(getZoom(zoom), Main.WIDTH, 8);
 					g.fill(vt);
 				}
+			}
+			
+			Area a = g.stopLogArea();
+			if(a != null) {
+				Areas.add(new EntrySet<>(a, b));
 			}
 			
 		}

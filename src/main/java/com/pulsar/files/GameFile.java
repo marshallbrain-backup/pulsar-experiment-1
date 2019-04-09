@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import math.Other;
+
 public class GameFile {
 	
 	private String name;
@@ -123,17 +125,7 @@ public class GameFile {
 	}
 	
 	public HashMap<String, String> getFieldAll(String name, int i) {
-		
-		HashMap<String, String> o = new HashMap<String, String>();
-		
-		for(Entry<String, String> e: fields.entrySet()) {
-			String f = e.getKey();
-			if(f.matches(name + ".*"))
-				o.put(f.substring(f.indexOf(f.split("\\.")[i])), e.getValue());
-		}
-		
-		return o;
-		
+		return Other.getAllMatchingKeys(fields, name, i);
 	}
 	
 	public void comit() {

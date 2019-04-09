@@ -7,6 +7,7 @@ import java.util.Map;
 
 import input.Keyboard;
 import input.Mouse;
+import math.Other;
 import ui.engine.UiElement;
 import ui.engine.Vector;
 import ui.engine.VectorGraphics;
@@ -48,8 +49,9 @@ public class Ui {
 			for(File f: file.listFiles()) {
 				loadVectorFiles(v, f);
 			}
-		} else {
-			v.put(file.getName().split("\\.")[0], VectorParser.getVectors(file.getPath()));
+		} else if(Other.getExtension(file).equals(".txt")){
+			String head = file.getPath().split("\\\\")[0]+"\\";
+			v.put(file.getPath().split("\\.")[0].replace(head, "").replace("\\", "."), VectorParser.getVectors(file.getPath()));
 		}
 		
 	}

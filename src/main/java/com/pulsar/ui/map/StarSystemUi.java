@@ -25,6 +25,7 @@ public class StarSystemUi implements UiElement {
 	private List<Body> bodys;
 	
 	private Map<String, List<Vector>> bodyVectors;
+	private Map<String, List<Vector>> modifierVectors;
 	
 	private Point offsetAmount;
 	private Point offsetZoom;
@@ -37,6 +38,7 @@ public class StarSystemUi implements UiElement {
 		zoom = 1;
 		
 		bodyVectors = new HashMap<String, List<Vector>>();
+		modifierVectors = new HashMap<String, List<Vector>>();
 		bodys = new ArrayList<Body>();
 		offsetAmount = new Point(0, 0);
 		offsetZoom = new Point(0, 0);
@@ -46,6 +48,7 @@ public class StarSystemUi implements UiElement {
 			if(v != null) {
 				bodys.add(b);
 				bodyVectors.putIfAbsent(b.getType(), v);
+				modifierVectors.putIfAbsent("colony", vectorList.get("modifiers.colony"));
 			} else {
 				bodys.add(b);
 				bodyVectors.putIfAbsent(b.getTypePath(), vectorList.get("body._default"));
@@ -107,6 +110,16 @@ public class StarSystemUi implements UiElement {
 				vt.transform(b.getRadius());
 				vt.normalize(getZoom(zoom), Main.WIDTH, 8);
 				g.fill(vt);
+			}
+			
+			if(b.getColony() != null) {
+				for(Vector v: modifierVectors.get("colony")) {
+					Vector vt = v.copy();
+					vt.move(new Point(b.getX(), b.getY()));
+					vt.transform(b.getRadius());
+					vt.normalize(getZoom(zoom), Main.WIDTH, 8);
+					g.fill(vt);
+				}
 			}
 			
 		}

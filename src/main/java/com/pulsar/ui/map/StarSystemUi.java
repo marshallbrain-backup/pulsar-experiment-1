@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.text.View;
-
 import bodys.Body;
 import input.Keyboard;
 import input.Mouse;
@@ -21,6 +19,8 @@ import ui.engine.Point;
 import ui.engine.ScreenPosition;
 import ui.engine.Vector;
 import ui.engine.VectorGraphics;
+import ui.view.View;
+import ui.view.ViewColony;
 import universe.StarSystem;
 
 public class StarSystemUi implements UiElement {
@@ -77,7 +77,7 @@ public class StarSystemUi implements UiElement {
 			
 			for(EntrySet<Area, Body> e: cl) {
 				if(e.getKey().contains(mp.getX(), mp.getY())) {
-					System.out.println(e.getValue().getType());
+					views.add(new ViewColony());
 				}
 			}
 			

@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.text.View;
-
 import input.Keyboard;
 import input.Mouse;
 import math.Other;
@@ -16,6 +14,7 @@ import ui.engine.Vector;
 import ui.engine.VectorGraphics;
 import ui.engine.VectorParser;
 import ui.map.StarSystemUi;
+import ui.view.View;
 import universe.Universe;
 
 public class Ui {

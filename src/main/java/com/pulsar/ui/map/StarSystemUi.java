@@ -34,10 +34,10 @@ public class StarSystemUi implements UiElement {
 	private Point offsetZoom;
 	private StarSystem starSystem;
 	
-	public StarSystemUi(Map<String, List<Vector>> vectorList, StarSystem ss, List<View> v) {
+	public StarSystemUi(Map<String, List<Vector>> vectorList, StarSystem ss, List<View> vi) {
 		
 		starSystem = ss;
-		views = v;
+		views = vi;
 		
 		zoom = 1;
 		
@@ -64,7 +64,15 @@ public class StarSystemUi implements UiElement {
 	@Override
 	public boolean action(Mouse m, Keyboard k) {
 		
-		if(m.getWheelDir() != 0) {
+		if(m.buttonClicked(1)) {
+			
+		} else if(m.buttonDown(1)) {
+			Point d = m.getChange();
+			if(d.getX() != 0 || d.getY() != 0) {
+				offsetAmount.move(-d.getX(), -d.getY(), Main.WIDTH, getZoom(zoom));
+				return true;
+			}
+		} else if(m.getWheelDir() != 0) {
 			int z = zoom+m.getWheelDir();
 			if(z == 0) {
 				z += m.getWheelDir();
@@ -77,14 +85,6 @@ public class StarSystemUi implements UiElement {
 			
 			zoom = z;
 			
-		}
-		
-		if(m.buttonDown(1)) {
-			Point d = m.getChange();
-			if(d.getX() != 0 || d.getY() != 0) {
-				offsetAmount.move(-d.getX(), -d.getY(), Main.WIDTH, getZoom(zoom));
-				return true;
-			}
 		}
 		
 		return true;

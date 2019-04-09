@@ -70,6 +70,8 @@ public class VectorParser {
 			line = line.replaceAll("\\s+","");
 			if(line.equals("/>"))
 				return;
+			if(line.equals(""))
+				continue;
 			
 			String[] l = line.split("=");
 			vector.put(l[0], l[1]);

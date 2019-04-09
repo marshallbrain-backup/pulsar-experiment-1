@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 
 import files.GameFile;
 import math.RanAlg;
+import species.colony.Colony;
 import universe.StarSystem;
 
 public class Body {
@@ -18,17 +19,22 @@ public class Body {
 	
 	private double angle;
 	
+	private boolean colonizable;
+	
 	private String bodyType;
 	
 	private Body parent;
 	private StarSystem starSystem;
+	private Colony colony;
 
 	public Body(String t, Map<String, String> f, StarSystem s, double r) {
+		
+		parent = null;
 		
 		bodyType = t;
 		starSystem = s;
 		
-		parent = null;
+		init(f);
 		
 		double sr = convert("6.95700e8");
 		
@@ -111,6 +117,20 @@ public class Body {
 		temperature = Math.round(tem);
 		radius = Math.round(rad);
 		bodyType = planet;
+
+		init(file);
+		
+	}
+	
+	private void init(Map<String, String> f) {
+		
+		if(f.containsKey("colonizable")) {
+			if(f.get("colonizable").equals("yes")) {
+				colonizable = true;
+			}
+		} else {
+			colonizable = true;
+		}
 		
 	}
 	
@@ -160,6 +180,14 @@ public class Body {
 	
 	public Body getParent() {
 		return parent;
+	}
+
+	public void setColony(Colony c) {
+		colony = c;
+	}
+
+	public boolean isColonizable() {
+		return colonizable;
 	}
 	
 }

@@ -6,6 +6,12 @@ import java.awt.RenderingHints;
 import java.awt.geom.Area;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import pulsar.Main;
 import ui.engine.Point;
 
@@ -13,6 +19,8 @@ public class VectorGraphics {
 	
 	private Graphics2D graphics;
 	private Graphics2D graphicsOriginal;
+	
+	private Area areaLog;
 
 	public VectorGraphics(Graphics g) {
 		
@@ -75,9 +83,26 @@ public class VectorGraphics {
 		}
 		
 		a.intersect(b);
+		if(areaLog != null && !a.isEmpty()) {
+			areaLog.add(a);
+		}
 		
 		return a;
 		
+	}
+	
+	public void startLogArea() {
+		areaLog = new Area();
+	}
+	
+	public Area stopLogArea() {
+		Area a = (Area) areaLog.clone();
+		a.transform(graphics.getTransform());
+		areaLog.reset();
+		if(!a.isEmpty()) {
+			return a;
+		}
+		return null;
 	}
 
 }

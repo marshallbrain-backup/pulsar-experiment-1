@@ -30,7 +30,9 @@ public class Ui {
 		vectorList = new HashMap<String, List<Vector>>();
 		loadVectorFiles(vectorList, new File("gfx"));
 		
-		currentUiChart = new StarSystemUi(vectorList, universe.getGalaxy().getStarSystem());
+		HashMap<String, List<Vector>> systemList = Other.getAllMatchingKeys(vectorList, "system\\..*", 1);
+		
+		currentUiChart = new StarSystemUi(systemList, universe.getGalaxy().getStarSystem());
 		
 	}
 	
@@ -49,7 +51,7 @@ public class Ui {
 			for(File f: file.listFiles()) {
 				loadVectorFiles(v, f);
 			}
-		} else if(Other.getExtension(file).equals(".txt")){
+		} else if(Other.getExtension(file).equals("txt")){
 			String head = file.getPath().split("\\\\")[0]+"\\";
 			v.put(file.getPath().split("\\.")[0].replace(head, "").replace("\\", "."), VectorParser.getVectors(file.getPath()));
 		}

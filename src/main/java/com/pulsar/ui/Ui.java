@@ -30,7 +30,8 @@ public class Ui {
 		vectorList = new HashMap<String, List<Vector>>();
 		loadVectorFiles(vectorList, new File("gfx"));
 		
-		HashMap<String, List<Vector>> systemList = Other.getAllMatchingKeys(vectorList, "system\\..*", 1);
+		HashMap<String, List<Vector>> systemList = Other.getAllMatchingKeys(vectorList, "map\\.system\\..*", 1);
+		HashMap<String, List<Vector>> viewList = Other.getAllMatchingKeys(vectorList, "view\\..*", 1);
 		
 		currentUiChart = new StarSystemUi(systemList, universe.getGalaxy().getStarSystem());
 		

@@ -48,7 +48,7 @@ public class StarSystemUi implements UiElement {
 				bodyVectors.putIfAbsent(b.getTypePath(), v);
 			} else {
 				bodys.add(b);
-				bodyVectors.putIfAbsent(b.getTypePath(), vectorList.get("_default"));
+				bodyVectors.putIfAbsent(b.getTypePath(), vectorList.get("body._default"));
 			}
 		}
 		

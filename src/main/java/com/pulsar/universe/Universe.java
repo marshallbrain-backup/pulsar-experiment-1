@@ -32,7 +32,7 @@ public class Universe {
 	 */
 	private void init(GameFile gf) {
 		
-//		species = new Species(gf);
+		species = new Species(gf);
 		
 		List<Map<String, String>> systems = GameFile.convertFiles(gf.getFieldAll("system_classes\\..*", 1));
 		GameFile bodyTypes = new GameFile(gf.getFieldAll("body_classes\\..*", 1));

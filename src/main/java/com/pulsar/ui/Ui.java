@@ -1,9 +1,12 @@
 package ui;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.swing.text.View;
 
 import input.Keyboard;
 import input.Mouse;
@@ -17,6 +20,8 @@ import universe.Universe;
 
 public class Ui {
 	
+	private List<View> views;
+	
 	private Map<String, List<Vector>> vectorList;
 	
 	private UiElement currentUiChart;
@@ -28,12 +33,14 @@ public class Ui {
 		universe = u;
 		
 		vectorList = new HashMap<String, List<Vector>>();
+		views = new ArrayList<View>();
+		
 		loadVectorFiles(vectorList, new File("gfx"));
 		
 		HashMap<String, List<Vector>> systemList = Other.getAllMatchingKeys(vectorList, "map\\.system\\..*", 2);
 		HashMap<String, List<Vector>> viewList = Other.getAllMatchingKeys(vectorList, "view\\..*", 1);
 		
-		currentUiChart = new StarSystemUi(systemList, universe.getGalaxy().getStarSystem());
+		currentUiChart = new StarSystemUi(systemList, universe.getGalaxy().getStarSystem(), views);
 		
 	}
 	

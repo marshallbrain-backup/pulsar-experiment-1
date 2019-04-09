@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.text.View;
+
 import bodys.Body;
 import input.Keyboard;
 import input.Mouse;
@@ -23,6 +25,7 @@ public class StarSystemUi implements UiElement {
 	private int zoom;
 	
 	private List<Body> bodys;
+	private List<View> views;
 	
 	private Map<String, List<Vector>> bodyVectors;
 	private Map<String, List<Vector>> modifierVectors;
@@ -31,9 +34,10 @@ public class StarSystemUi implements UiElement {
 	private Point offsetZoom;
 	private StarSystem starSystem;
 	
-	public StarSystemUi(Map<String, List<Vector>> vectorList, StarSystem ss) {
+	public StarSystemUi(Map<String, List<Vector>> vectorList, StarSystem ss, List<View> v) {
 		
 		starSystem = ss;
+		views = v;
 		
 		zoom = 1;
 		

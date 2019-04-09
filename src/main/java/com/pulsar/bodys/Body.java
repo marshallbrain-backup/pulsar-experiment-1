@@ -186,6 +186,10 @@ public class Body {
 		colony = c;
 	}
 
+	public Colony getColony() {
+		return colony;
+	}
+
 	public boolean isColonizable() {
 		return colonizable;
 	}

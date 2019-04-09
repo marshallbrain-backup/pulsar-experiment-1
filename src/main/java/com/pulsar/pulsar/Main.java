@@ -68,9 +68,9 @@ public class Main {
 	
 	private static void cloneResorses() throws URISyntaxException, IOException, ClassNotFoundException {
 		
-		URI commonOld = Main.class.getResource("/resorces/common/").toURI();
-		URI assetsOld = Main.class.getResource("/resorces/gfx/").toURI();
-		URI uiOld = Main.class.getResource("/resorces/ui/").toURI();
+		URI commonOld = Main.class.getResource("/common/").toURI();
+		URI assetsOld = Main.class.getResource("/gfx/").toURI();
+		URI uiOld = Main.class.getResource("/ui/").toURI();
 		
 		File commonNew = new File("common");
 		File assetsNew = new File("gfx");

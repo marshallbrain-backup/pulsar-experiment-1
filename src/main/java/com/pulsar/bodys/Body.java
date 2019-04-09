@@ -133,6 +133,10 @@ public class Body {
 	public String getType() {
 		return bodyType;
 	}
+
+	public String getTypePath() {
+		return "body." + bodyType;
+	}
 	
 	public long getDistance() {
 		return distance;

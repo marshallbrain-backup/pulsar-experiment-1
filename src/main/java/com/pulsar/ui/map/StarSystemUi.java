@@ -42,13 +42,13 @@ public class StarSystemUi implements UiElement {
 		offsetZoom = new Point(0, 0);
 		
 		for(Body b: starSystem.getBodys()) {
-			List<Vector> v = vectorList.get(b.getType());
+			List<Vector> v = vectorList.get(b.getTypePath());
 			if(v != null) {
 				bodys.add(b);
-				bodyVectors.putIfAbsent(b.getType(), v);
+				bodyVectors.putIfAbsent(b.getTypePath(), v);
 			} else {
 				bodys.add(b);
-				bodyVectors.putIfAbsent(b.getType(), vectorList.get("_default"));
+				bodyVectors.putIfAbsent(b.getTypePath(), vectorList.get("_default"));
 			}
 		}
 		

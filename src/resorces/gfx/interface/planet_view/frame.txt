@@ -1,9 +1,9 @@
 <rect
-	stroke-opacity:1
-	stroke:#000000
-	stroke-width:4
-	fill-opacity:1
-	fill:none
+	stroke-opacity=1
+	stroke=#000000
+	stroke-width=4
+	fill-opacity=1
+	fill=none
 	width=820
 	height=720
 	x=0

@@ -1,6 +1,8 @@
 package species;
 
+import bodys.Body;
 import files.GameFile;
+import species.colony.Colony;
 import species.colony.ResourceManagerMaster;
 
 public class Species {
@@ -8,6 +10,7 @@ public class Species {
 	private long timeUpdate;
 	private long timePerUpdate;
 	
+	private Colony colony;
 	private GameFile gameFile;
 	private ResourceManagerMaster master; //the master resourcemanager for the entier species
 	
@@ -38,6 +41,12 @@ public class Species {
 			timeUpdate -= timePerUpdate;
 			
 		}
+		
+	}
+	
+	public void createColony(Body b) {
+		
+		colony = new Colony(b, this);
 		
 	}
 

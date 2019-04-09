@@ -58,7 +58,7 @@ public class StarSystemUi implements UiElement {
 	public boolean action(Mouse m, Keyboard k) {
 		
 		if(m.getWheelDir() != 0) {
-			int z = zoom+m.getWheelDir()*10;
+			int z = zoom+m.getWheelDir();
 			if(z == 0) {
 				z += m.getWheelDir();
 			}

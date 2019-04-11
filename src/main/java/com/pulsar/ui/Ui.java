@@ -10,8 +10,8 @@ import input.Keyboard;
 import input.Mouse;
 import math.Other;
 import ui.engine.UiElement;
-import ui.engine.Vector;
 import ui.engine.VectorGraphics;
+import ui.engine.VectorLayer;
 import ui.engine.VectorParser;
 import ui.map.StarSystemUi;
 import ui.view.View;
@@ -21,7 +21,7 @@ public class Ui {
 	
 	private List<View> views;
 	
-	private Map<String, List<Vector>> vectorList;
+	private Map<String, VectorLayer> vectorList;
 	
 	private UiElement currentUiChart;
 	
@@ -31,13 +31,12 @@ public class Ui {
 		
 		universe = u;
 		
-		vectorList = new HashMap<String, List<Vector>>();
+		vectorList = new HashMap<String, VectorLayer>();
 		views = new ArrayList<View>();
-		
 		loadVectorFiles(vectorList, new File("gfx"));
 		
-		HashMap<String, List<Vector>> systemList = Other.getAllMatchingKeys(vectorList, "map\\.system\\..*", 2);
-		HashMap<String, List<Vector>> viewList = Other.getAllMatchingKeys(vectorList, "view\\..*", 1);
+		Map<String, VectorLayer> systemList = Other.getAllMatchingKeys(vectorList, "map\\.system\\..*", 2);
+//		Map<String, VectorLayer> viewList = Other.getAllMatchingKeys(vectorList, "view\\..*", 1);
 		
 		currentUiChart = new StarSystemUi(systemList, universe.getGalaxy().getStarSystem(), views);
 		
@@ -53,12 +52,12 @@ public class Ui {
 		currentUiChart.render(vg);
 	}
 	
-	private void loadVectorFiles(Map<String, List<Vector>> v, File file) {
+	private void loadVectorFiles(Map<String, VectorLayer> v, File file) {
 		if(file.isDirectory()) {
 			for(File f: file.listFiles()) {
 				loadVectorFiles(v, f);
 			}
-		} else if(Other.getExtension(file).equals("txt")){
+		} else if(Other.getExtension(file).equals("xml")){
 			String head = file.getPath().split("\\\\")[0]+"\\";
 			v.put(file.getPath().split("\\.")[0].replace(head, "").replace("\\", "."), VectorParser.getVectors(file.getPath()));
 		}

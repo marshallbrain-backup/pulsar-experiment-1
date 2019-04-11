@@ -9,7 +9,7 @@ public interface Vector {
 	
 	Color getFillColor();
 	
-	Vector copy();
+	Object clone();
 
 	Shape getShape();
 	

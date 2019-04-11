@@ -1,4 +1,4 @@
-package ui.engine;
+package ui.engine.vectors;
 
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import math.Other;
+import ui.engine.Point;
 
 @XmlRootElement(name = "circle")
 public class Circle implements Vector, Cloneable {

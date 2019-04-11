@@ -1,7 +1,9 @@
-package ui.engine;
+package ui.engine.vectors;
 
 import java.awt.Shape;
 import java.util.Map;
+
+import ui.engine.Point;
 
 public interface Vector {
 

@@ -1,5 +1,6 @@
 package math;
 
+import java.awt.Color;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,6 +42,27 @@ public class Other {
 		}
 		
 		return style;
+		
+	}
+	
+	public static Color getColor(String hex, String alpha) {
+		
+		Color c = null;
+			
+		if(hex.startsWith("#")) {
+			
+			hex = hex.substring(1);
+			
+			int r = Integer.parseInt(hex.substring(0, 2), 16);
+			int g = Integer.parseInt(hex.substring(2, 4), 16);
+			int b = Integer.parseInt(hex.substring(4, 6), 16);
+			int a = Math.round(Float.parseFloat(alpha)*255);
+			
+			c = new Color(r, g, b, a);
+			
+		}
+		
+		return c;
 		
 	}
 

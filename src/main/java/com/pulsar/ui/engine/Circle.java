@@ -16,12 +16,16 @@ public class Circle implements Vector, Cloneable {
 	private int renderX;
 	private int renderY;
 	private int renderRadius;
-
+	
 	@XmlAttribute(name = "cx")
-	private long centerX;
+	private int baseX;
 	@XmlAttribute(name = "cy")
-	private long centerY;
+	private int baseY;
 	@XmlAttribute(name = "r")
+	private int baseR;
+
+	private long centerX;
+	private long centerY;
 	private long radius;
 
 	@XmlAttribute(name = "style")
@@ -121,7 +125,12 @@ public class Circle implements Vector, Cloneable {
 	
 	@Override
 	public Shape getShape() {
-		return new Ellipse2D.Double(renderX-renderRadius, renderY-renderRadius, renderRadius*2, renderRadius*2);
+		
+		int r = baseR+renderRadius;
+		int x = baseX+(renderX-r);
+		int y = baseY+(renderY-r);
+		
+		return new Ellipse2D.Double(x, y, r*2, r*2);
 	}
 	
 	private long convert(double value, double fromRefrence, double toRefrence) {

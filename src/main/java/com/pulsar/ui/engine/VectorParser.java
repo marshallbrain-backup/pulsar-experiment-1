@@ -1,6 +1,8 @@
 package ui.engine;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,75 +10,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+
 public class VectorParser {
 
-	public static List<Vector> getVectors(String fileName) {
+	public static List<VectorLayer> getVectors(String fileName) {
 		
-		List<Vector> vectorList = new ArrayList<Vector>();
-		List<Map<String, String>> properties = readVectorFile(fileName);
-		for(Map<String, String> m: properties) {
-			switch(m.get("type")) {
-			case "circle":
-				m.remove("type");
-				vectorList.add(new Circle(m));
-				break;
-			default:
-				System.out.println("unreconised vector type");
-			}
-		}
-		
-		return vectorList;
-		
-	}
-	
-	private static List<Map<String, String>> readVectorFile(String fileName) {
-		
-		List<Map<String, String>> vectorList = new ArrayList<Map<String, String>>();
+		List<VectorLayer> layer = new ArrayList<VectorLayer>();
 		
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(fileName));
-			read(br, vectorList);
-			br.close();
-		} catch (IOException e) {
+			layer.add(readVectorFile(fileName));
+		} catch (FileNotFoundException | JAXBException e) {
 			e.printStackTrace();
 		}
 		
-		return vectorList;
+		return layer;
 		
 	}
 	
-	private static void read(BufferedReader br, List<Map<String, String>> vectorList) throws IOException {
+	private static VectorLayer readVectorFile(String fileName) throws JAXBException, FileNotFoundException {
 		
-		String line = null;
-		while ((line = br.readLine()) != null) {
-			
-			line = line.replaceAll("\\s+","");
-			if(line.startsWith("<")) {
-				Map<String, String> vector = new HashMap<String, String>();
-				vector.put("type", line.replace("<", ""));
-				readPropertys(br, vector);
-				vectorList.add(vector);
-			}
-			
-		}
+		JAXBContext context = JAXBContext.newInstance(VectorLayer.class, Circle.class);
+		Unmarshaller um = context.createUnmarshaller();
+		VectorLayer vectors = (VectorLayer) um.unmarshal(new FileReader(new File(fileName)));
 		
-	}
-	
-	private static void readPropertys(BufferedReader br, Map<String, String> vector) throws IOException {
-		
-		String line = null;
-		while ((line = br.readLine()) != null) {
-
-			line = line.replaceAll("\\s+","");
-			if(line.equals("/>"))
-				return;
-			if(line.equals(""))
-				continue;
-			
-			String[] l = line.split("=");
-			vector.put(l[0], l[1]);
-			
-		}
+		return vectors;
 		
 	}
 

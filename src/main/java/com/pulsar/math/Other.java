@@ -2,7 +2,6 @@ package math;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -25,6 +24,23 @@ public class Other {
 		}
 		
 		return newMap;
+		
+	}
+	
+	public static Map<String, String> convertStyle(String s) {
+		
+		Map<String, String> style = new HashMap<String, String>();
+		
+		for(String e: s.split(";")) {
+			
+			String key = e.split(":")[0];
+			String value = e.split(":")[1];
+			
+			style.put(key, value);
+			
+		}
+		
+		return style;
 		
 	}
 

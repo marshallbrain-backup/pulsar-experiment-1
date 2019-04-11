@@ -11,7 +11,6 @@ import input.Keyboard;
 import input.Mouse;
 import pulsar.Main;
 import ui.engine.UiElement;
-import ui.engine.Circle;
 import ui.engine.EntrySet;
 import ui.engine.Point;
 import ui.engine.ScreenPosition;
@@ -51,15 +50,17 @@ public class StarSystemUi implements UiElement {
 		offsetAmount = new Point(0, 0);
 		offsetZoom = new Point(0, 0);
 		
+		bodyVectors.put("orbit", vectorList.get("orbit").getVectors());
+		modifierVectors.putIfAbsent("colony", vectorList.get("modifiers.colony").getVectors());
+		
 		for(Body b: starSystem.getBodys()) {
 			List<Vector> v = vectorList.get(b.getTypePath()).getVectors();
 			if(v != null) {
 				bodys.add(b);
 				bodyVectors.putIfAbsent(b.getType(), v);
-				modifierVectors.putIfAbsent("colony", vectorList.get("modifiers.colony").getVectors());
 			} else {
 				bodys.add(b);
-				bodyVectors.putIfAbsent(b.getTypePath(), vectorList.get("body._default").getVectors());
+				bodyVectors.putIfAbsent(b.getTypePath(), vectorList.get("body").getVectors());
 			}
 		}
 		
@@ -119,10 +120,13 @@ public class StarSystemUi implements UiElement {
 			Body b = bodys.get(i);
 			
 			if(b.getParent() != null) {
-				String style = "stroke=#000000;fill-opacity=1";
-				Vector orbit = new Circle(style, Math.round(b.getParent().getX()), Math.round(b.getParent().getY()), b.getDistance());
-				orbit.normalize(getZoom(zoom), Main.WIDTH, 0);
-				g.draw(orbit);
+				for(Vector v: bodyVectors.get("orbit")) {
+					Vector vt = (Vector) v.clone();
+					vt.move(new Point(b.getParent().getX(), b.getParent().getY()));
+					vt.transform(b.getDistance());
+					vt.normalize(getZoom(zoom), Main.WIDTH, 8);
+					g.draw(vt);
+				}
 			}
 			
 			g.startLogArea();

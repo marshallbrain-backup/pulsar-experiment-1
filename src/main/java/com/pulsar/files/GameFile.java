@@ -12,9 +12,9 @@ public class GameFile {
 	
 	private String name;
 	
-	private HashMap<String, GameFile> gameFiles;
-	private HashMap<String, String> fields;
-	private HashMap<String, String> vars;
+	private Map<String, GameFile> gameFiles;
+	private Map<String, String> fields;
+	private Map<String, String> vars;
 	
 	/**
 	 * Initalizes gamefile
@@ -36,7 +36,7 @@ public class GameFile {
 	 * 
 	 * @param file hashmap containing fields
 	 */
-	public GameFile(HashMap<String, String> f) {
+	public GameFile(Map<String, String> f) {
 		fields = f;
 	}
 
@@ -99,7 +99,7 @@ public class GameFile {
 	/**
 	 * @return returns the fields
 	 */
-	public HashMap<String, String> getFields() {
+	public Map<String, String> getFields() {
 		return fields;
 	}
 	
@@ -116,15 +116,15 @@ public class GameFile {
 	 * @return returns the first field that fits the regular expretion
 	 */
 	public String getFieldOne(String name) {
-		HashMap<String, String> h = getFieldAll(name);
+		Map<String, String> h = getFieldAll(name);
 		return h.get(h.keySet().toArray()[0]);
 	}
 	
-	public HashMap<String, String> getFieldAll(String name) {
+	public Map<String, String> getFieldAll(String name) {
 		return getFieldAll(name, 0);
 	}
 	
-	public HashMap<String, String> getFieldAll(String name, int i) {
+	public Map<String, String> getFieldAll(String name, int i) {
 		return Other.getAllMatchingKeys(fields, name, i);
 	}
 	
@@ -155,7 +155,7 @@ public class GameFile {
 		return name;
 	}
 
-	public static List<Map<String, String>> convertFiles(HashMap<String, String> fieldAll) {
+	public static List<Map<String, String>> convertFiles(Map<String, String> fieldAll) {
 		
 		HashMap<String, HashMap<String, String>> gf = new HashMap<String, HashMap<String, String>>();
 		

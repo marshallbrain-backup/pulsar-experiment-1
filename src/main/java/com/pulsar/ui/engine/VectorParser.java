@@ -1,32 +1,23 @@
 package ui.engine;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 public class VectorParser {
 
-	public static List<VectorLayer> getVectors(String fileName) {
-		
-		List<VectorLayer> layer = new ArrayList<VectorLayer>();
+	public static VectorLayer getVectors(String fileName) {
 		
 		try {
-			layer.add(readVectorFile(fileName));
+			return readVectorFile(fileName);
 		} catch (FileNotFoundException | JAXBException e) {
 			e.printStackTrace();
 		}
 		
-		return layer;
+		return null;
 		
 	}
 	

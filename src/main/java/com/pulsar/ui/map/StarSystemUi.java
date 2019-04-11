@@ -19,6 +19,7 @@ import ui.engine.Point;
 import ui.engine.ScreenPosition;
 import ui.engine.Vector;
 import ui.engine.VectorGraphics;
+import ui.engine.VectorLayer;
 import ui.view.View;
 import ui.view.ViewColony;
 import universe.StarSystem;
@@ -38,7 +39,7 @@ public class StarSystemUi implements UiElement {
 	private Point offsetZoom;
 	private StarSystem starSystem;
 	
-	public StarSystemUi(Map<String, List<Vector>> vectorList, StarSystem ss, List<View> vi) {
+	public StarSystemUi(Map<String, VectorLayer> vectorList, StarSystem ss, List<View> vi) {
 		
 		starSystem = ss;
 		views = vi;
@@ -53,14 +54,14 @@ public class StarSystemUi implements UiElement {
 		offsetZoom = new Point(0, 0);
 		
 		for(Body b: starSystem.getBodys()) {
-			List<Vector> v = vectorList.get(b.getTypePath());
+			List<Vector> v = vectorList.get(b.getTypePath()).getVectors();
 			if(v != null) {
 				bodys.add(b);
 				bodyVectors.putIfAbsent(b.getType(), v);
-				modifierVectors.putIfAbsent("colony", vectorList.get("modifiers.colony"));
+				modifierVectors.putIfAbsent("colony", vectorList.get("modifiers.colony").getVectors());
 			} else {
 				bodys.add(b);
-				bodyVectors.putIfAbsent(b.getTypePath(), vectorList.get("body._default"));
+				bodyVectors.putIfAbsent(b.getTypePath(), vectorList.get("body._default").getVectors());
 			}
 		}
 		
@@ -77,7 +78,7 @@ public class StarSystemUi implements UiElement {
 			
 			for(EntrySet<Area, Body> e: cl) {
 				if(e.getKey().contains(mp.getX(), mp.getY())) {
-					views.add(new ViewColony());
+					views.add(new ViewColony(null));
 				}
 			}
 			
@@ -128,7 +129,7 @@ public class StarSystemUi implements UiElement {
 			g.startLogArea();
 			
 			for(Vector v: bodyVectors.get(b.getType())) {
-				Vector vt = v.copy();
+				Vector vt = (Vector) v.clone();
 				vt.move(new Point(b.getX(), b.getY()));
 				vt.transform(b.getRadius());
 				vt.normalize(getZoom(zoom), Main.WIDTH, 8);
@@ -137,7 +138,7 @@ public class StarSystemUi implements UiElement {
 			
 			if(b.getColony() != null) {
 				for(Vector v: modifierVectors.get("colony")) {
-					Vector vt = v.copy();
+					Vector vt = (Vector) v.clone();
 					vt.move(new Point(b.getX(), b.getY()));
 					vt.transform(b.getRadius());
 					vt.normalize(getZoom(zoom), Main.WIDTH, 8);

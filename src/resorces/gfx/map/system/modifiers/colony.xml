@@ -1,8 +1,10 @@
-<circle
-	stroke-opacity="1"
-	stroke="#ffffff"
-	stroke-width="4"
-	cx="0"
-	cy="0"
-	r="200"
-/>
+<vector_layer>
+	<circle
+		stroke-opacity="1"
+		stroke="#ffffff"
+		stroke-width="4"
+		cx="0"
+		cy="0"
+		r="200"
+	/>
+</vector_layer>

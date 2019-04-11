@@ -1,7 +1,9 @@
-<circle
-	fill="#0000ff"
-	fill-opacity="1"
-	cx="0"
-	cy="0"
-	r="0"
-/>
+<vector_layer>
+	<circle
+		fill="#0000ff"
+		fill-opacity="1"
+		cx="0"
+		cy="0"
+		r="0"
+	/>
+</vector_layer>

@@ -1,10 +1,14 @@
 package ui.engine;
 
-import java.awt.Color;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import math.Other;
 
 @XmlRootElement(name = "circle")
 public class Circle implements Vector, Cloneable {
@@ -20,23 +24,21 @@ public class Circle implements Vector, Cloneable {
 	@XmlAttribute(name = "r")
 	private long radius;
 
-	@XmlAttribute(name = "fill")
-	private String fill;
-	@XmlAttribute(name = "fill-opacity")
-	private String fillOpacity;
+	@XmlAttribute(name = "style")
+	private String styleString;
 	
-	private Color fillColor;
+	private Map<String, String> style;
 
 	public Circle() {
 	}
 	
-	public Circle(Color fill, long cx, long cy, long r) {
-		init(fill, cx, cy, r);
+	public Circle(String s, long cx, long cy, long r) {
+		init(s, cx, cy, r);
 	}
 	
-	private void init(Color f, long cx, long cy, long r) {
+	private void init(String s, long cx, long cy, long r) {
 		
-		fillColor = f;
+		style = Other.convertStyle(s);
 		
 		centerX = cx;
 		centerY = cy;
@@ -73,30 +75,20 @@ public class Circle implements Vector, Cloneable {
 	public String getType() {
 		return "circle";
 	}
-	
+
 	@Override
-	public Color getFillColor() {
-		
-		if(fillColor == null) {
-			
-			System.out.println(fill);
-			System.out.println(fillOpacity);
-			
-			if(fill.startsWith("#")) {
-				fill = fill.substring(1);
-			}
-			
-			int r = Integer.parseInt(fill.substring(0, 2), 16);
-			int g = Integer.parseInt(fill.substring(2, 4), 16);
-			int b = Integer.parseInt(fill.substring(4, 6), 16);
-			int a = Math.round(Float.parseFloat(fillOpacity)*255);
-			
-			fillColor = new Color(r, g, b, a);
-			
-		}
-		
-		return fillColor;
-		
+	public Map<String, String> getStyle() {
+		return style;
+	}
+
+	@Override
+	public String getStyleString() {
+		return styleString;
+	}
+
+	@Override
+	public void setStyle(Map<String, String> s) {
+		style = new HashMap<String, String>(s);
 	}
 	
 	@Override

@@ -6,12 +6,6 @@ import java.awt.RenderingHints;
 import java.awt.geom.Area;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import pulsar.Main;
 import ui.engine.Point;
 
@@ -61,18 +55,16 @@ public class VectorGraphics {
 	}
 
 	public void draw(Vector v) {
+		
 		Area a = getArea(v, Main.WIDTH, Main.HEIGHT);
+		
+		
+		
 		graphics.draw(a);
+		
 	}
 
-	public void fill(Vector v) {
-		Area a = getArea(v, Main.WIDTH, Main.HEIGHT);
-		graphics.fill(a);
-	}
-	
 	public Area getArea(Vector v, int width, int height) {
-		
-		graphics.setColor(v.getFillColor());
 		
 		Area a = new Area(v.getShape());
 		Area b = new Area(new Rectangle2D.Double(0, 0, width, height));

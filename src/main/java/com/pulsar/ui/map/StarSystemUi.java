@@ -1,9 +1,7 @@
 package ui.map;
 
-import java.awt.Color;
 import java.awt.geom.Area;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -121,7 +119,8 @@ public class StarSystemUi implements UiElement {
 			Body b = bodys.get(i);
 			
 			if(b.getParent() != null) {
-				Vector orbit = new Circle(Color.BLACK, Math.round(b.getParent().getX()), Math.round(b.getParent().getY()), b.getDistance());
+				String style = "stroke=#000000;fill-opacity=1";
+				Vector orbit = new Circle(style, Math.round(b.getParent().getX()), Math.round(b.getParent().getY()), b.getDistance());
 				orbit.normalize(getZoom(zoom), Main.WIDTH, 0);
 				g.draw(orbit);
 			}
@@ -133,7 +132,7 @@ public class StarSystemUi implements UiElement {
 				vt.move(new Point(b.getX(), b.getY()));
 				vt.transform(b.getRadius());
 				vt.normalize(getZoom(zoom), Main.WIDTH, 8);
-				g.fill(vt);
+				g.draw(vt);
 			}
 			
 			if(b.getColony() != null) {
@@ -142,7 +141,7 @@ public class StarSystemUi implements UiElement {
 					vt.move(new Point(b.getX(), b.getY()));
 					vt.transform(b.getRadius());
 					vt.normalize(getZoom(zoom), Main.WIDTH, 8);
-					g.fill(vt);
+					g.draw(vt);
 				}
 			}
 			

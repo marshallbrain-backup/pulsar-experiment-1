@@ -8,6 +8,9 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import math.Other;
+import ui.engine.vectors.Circle;
+import ui.engine.vectors.Vector;
+import ui.engine.vectors.VectorLayer;
 
 public class VectorParser {
 

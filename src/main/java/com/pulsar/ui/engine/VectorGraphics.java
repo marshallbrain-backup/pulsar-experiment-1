@@ -11,6 +11,7 @@ import java.awt.geom.Rectangle2D;
 import math.Other;
 import pulsar.Main;
 import ui.engine.Point;
+import ui.engine.vectors.Vector;
 
 public class VectorGraphics {
 	

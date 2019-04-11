@@ -28,8 +28,14 @@ public class VectorParser {
 		Unmarshaller um = context.createUnmarshaller();
 		VectorLayer vectors = (VectorLayer) um.unmarshal(new FileReader(new File(fileName)));
 		
-		for(Vector v: vectors.getVectors()) {
-			v.setStyle(Other.convertStyle(v.getStyleString()));
+		System.out.println(vectors.getVectors().get(0) instanceof Vector);
+		
+		if(!vectors.getVectors().isEmpty() && vectors.getVectors().get(0) instanceof Vector) {
+			for(Vector v: vectors.getVectors()) {
+				v.setStyle(Other.convertStyle(v.getStyleString()));
+			}
+		} else {
+			vectors = null;
 		}
 		
 		return vectors;

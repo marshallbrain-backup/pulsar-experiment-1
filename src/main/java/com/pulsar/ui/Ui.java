@@ -59,7 +59,10 @@ public class Ui {
 			}
 		} else if(Other.getExtension(file).equals("xml")){
 			String head = file.getPath().split("\\\\")[0]+"\\";
-			v.put(file.getPath().split("\\.")[0].replace(head, "").replace("\\", "."), VectorParser.getVectors(file.getPath()));
+			VectorLayer vl = VectorParser.getVectors(file.getPath());
+			if(vl != null) {
+				v.put(file.getPath().split("\\.")[0].replace(head, "").replace("\\", "."), vl);
+			}
 		}
 		
 	}

@@ -11,10 +11,10 @@ import ui.engine.vectors.Vector;
 public class ActionGroup {
 
 	@XmlAnyElement(lax = true)
-	private List<Action> vectors;
+	private List<Action> actions;
 	
 	public List<Action> getActions(){
-		return vectors;
+		return actions;
 	}
 	
 }

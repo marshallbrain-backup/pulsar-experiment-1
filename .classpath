@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="src/**|src/main/java/com/pulsar/|src/main/java/com/pulsar/|src/resorces/|src/resorces/|src/test/java/com/pulsar/|src/test/java/com/pulsar/" kind="src" path=""/>
+	<classpathentry excluding="src/**" kind="src" path=""/>
 	<classpathentry kind="src" path="src/main/java/com/pulsar"/>
 	<classpathentry kind="src" path="src/resorces"/>
 	<classpathentry kind="src" path="src/test/java/com/pulsar"/>

@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "vector_layer")
-public class VectorLayer {
+public class VectorGroup {
 
 	@XmlAnyElement(lax = true)
 	private List<Vector> vectors;

@@ -3,21 +3,18 @@ package ui.engine;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import math.Other;
-import ui.engine.vectors.Circle;
-import ui.engine.vectors.Vector;
-import ui.engine.vectors.VectorLayer;
+public class XmlParser {
 
-public class VectorParser {
-
-	public static VectorLayer getVectors(String fileName) {
+	public static Object getXml(String fileName, Class<?>[] classList) {
 		
 		try {
-			return readVectorFile(fileName);
+			return readXmlFile(fileName, classList);
 		} catch (FileNotFoundException | JAXBException e) {
 			e.printStackTrace();
 		}
@@ -26,20 +23,22 @@ public class VectorParser {
 		
 	}
 	
-	private static VectorLayer readVectorFile(String fileName) throws JAXBException, FileNotFoundException {
-		JAXBContext context = JAXBContext.newInstance(VectorLayer.class, Circle.class);
+	private static Object readXmlFile(String fileName, Class<?>[] classList) throws JAXBException, FileNotFoundException {
+		JAXBContext context = JAXBContext.newInstance(classList);
 		Unmarshaller um = context.createUnmarshaller();
-		VectorLayer vectors = (VectorLayer) um.unmarshal(new FileReader(new File(fileName)));
+
+		FileReader reader = new FileReader(new File(fileName));
 		
-		System.out.println(vectors.getVectors().get(0) instanceof Vector);
-		
-		if(!vectors.getVectors().isEmpty() && vectors.getVectors().get(0) instanceof Vector) {
-			for(Vector v: vectors.getVectors()) {
-				v.setStyle(Other.convertStyle(v.getStyleString()));
+		try {
+			if(!reader.ready()) {
+				reader.close();
+				return null;
 			}
-		} else {
-			vectors = null;
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		
+		Object vectors = um.unmarshal(reader);
 		
 		return vectors;
 	}

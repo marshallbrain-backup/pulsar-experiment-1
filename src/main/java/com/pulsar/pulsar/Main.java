@@ -70,12 +70,15 @@ public class Main {
 		
 		URI commonOld = Main.class.getResource("/common/").toURI();
 		URI assetsOld = Main.class.getResource("/gfx/").toURI();
+		URI actionOld = Main.class.getResource("/action/").toURI();
 		
 		File commonNew = new File("common");
 		File assetsNew = new File("gfx");
+		File actionNew = new File("action");
 		
 		cloneFolder(commonOld, commonNew);
 		cloneFolder(assetsOld, assetsNew);
+		cloneFolder(actionOld, actionNew);
 		
 	}
 	

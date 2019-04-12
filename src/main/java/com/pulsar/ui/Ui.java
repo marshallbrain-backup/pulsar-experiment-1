@@ -11,8 +11,12 @@ import input.Mouse;
 import math.Other;
 import ui.engine.UiElement;
 import ui.engine.VectorGraphics;
-import ui.engine.VectorParser;
-import ui.engine.vectors.VectorLayer;
+import ui.engine.XmlParser;
+import ui.engine.actions.Action;
+import ui.engine.actions.ActionGroup;
+import ui.engine.vectors.Circle;
+import ui.engine.vectors.Vector;
+import ui.engine.vectors.VectorGroup;
 import ui.map.StarSystemUi;
 import ui.view.View;
 import universe.Universe;
@@ -21,7 +25,8 @@ public class Ui {
 	
 	private List<View> views;
 	
-	private Map<String, VectorLayer> vectorList;
+	private Map<String, VectorGroup> vectorList;
+	private Map<String, ActionGroup> actionList;
 	
 	private UiElement currentUiChart;
 	
@@ -31,11 +36,15 @@ public class Ui {
 		
 		universe = u;
 		
-		vectorList = new HashMap<String, VectorLayer>();
+		vectorList = new HashMap<String, VectorGroup>();
+		actionList = new HashMap<String, ActionGroup>();
 		views = new ArrayList<View>();
-		loadVectorFiles(vectorList, new File("gfx"));
 		
-		Map<String, VectorLayer> systemList = Other.getAllMatchingKeys(vectorList, "map\\.system\\..*", 2);
+		loadVectorFiles(vectorList, new File("gfx"));
+		loadActionFiles(actionList, new File("action"));
+		//TODO implement actions
+		
+		Map<String, VectorGroup> systemList = Other.getAllMatchingKeys(vectorList, "map\\.system\\..*", 2);
 //		Map<String, VectorLayer> viewList = Other.getAllMatchingKeys(vectorList, "view\\..*", 1);
 		
 		currentUiChart = new StarSystemUi(systemList, universe.getGalaxy().getStarSystem(), views);
@@ -52,16 +61,57 @@ public class Ui {
 		currentUiChart.render(vg);
 	}
 	
-	private void loadVectorFiles(Map<String, VectorLayer> v, File file) {
+	private void loadVectorFiles(Map<String, VectorGroup> vl, File file) {
 		if(file.isDirectory()) {
 			for(File f: file.listFiles()) {
-				loadVectorFiles(v, f);
+				loadVectorFiles(vl, f);
 			}
 		} else if(Other.getExtension(file).equals("xml")){
 			String head = file.getPath().split("\\\\")[0]+"\\";
-			VectorLayer vl = VectorParser.getVectors(file.getPath());
-			if(vl != null) {
-				v.put(file.getPath().split("\\.")[0].replace(head, "").replace("\\", "."), vl);
+			
+			Class<?>[] classList = {VectorGroup.class, Circle.class};
+			
+			VectorGroup vg = (VectorGroup) XmlParser.getXml(file.getPath(), classList);
+			
+			if(!vg.getVectors().isEmpty() && vg.getVectors().get(0) instanceof Vector) {
+				for(Vector v: vg.getVectors()) {
+					v.setStyle(Other.convertStyle(v.getStyleString()));
+				}
+			} else {
+				vg = null;
+			}
+			
+			if(vg != null) {
+				vl.put(file.getPath().split("\\.")[0].replace(head, "").replace("\\", "."), vg);
+			}
+		}
+		
+	}
+	
+	private void loadActionFiles(Map<String, ActionGroup> al, File file) {
+		if(file.isDirectory()) {
+			for(File f: file.listFiles()) {
+				loadActionFiles(al, f);
+			}
+		} else if(Other.getExtension(file).equals("xml")){
+			String head = file.getPath().split("\\\\")[0]+"\\";
+			
+			Class<?>[] classList = {ActionGroup.class};
+			
+			Object o = XmlParser.getXml(file.getPath(), classList);
+			
+			if(o == null)
+				return;
+						
+			ActionGroup ag = (ActionGroup) o;
+			
+			if(!ag.getActions().isEmpty() && ag.getActions().get(0) instanceof Action) {
+			} else {
+				ag = null;
+			}
+			
+			if(ag != null) {
+				al.put(file.getPath().split("\\.")[0].replace(head, "").replace("\\", "."), ag);
 			}
 		}
 		

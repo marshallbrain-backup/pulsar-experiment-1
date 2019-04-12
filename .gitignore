@@ -307,5 +307,5 @@ dmypy.json
 ### Project Specific ###
 /common/
 /gfx/
-/interface/
+/action/
 settings.txt

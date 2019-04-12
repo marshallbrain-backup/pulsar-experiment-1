@@ -16,7 +16,7 @@ import ui.engine.Point;
 import ui.engine.ScreenPosition;
 import ui.engine.VectorGraphics;
 import ui.engine.vectors.Vector;
-import ui.engine.vectors.VectorLayer;
+import ui.engine.vectors.VectorGroup;
 import ui.view.View;
 import ui.view.ViewColony;
 import universe.StarSystem;
@@ -36,7 +36,7 @@ public class StarSystemUi implements UiElement {
 	private Point offsetZoom;
 	private StarSystem starSystem;
 	
-	public StarSystemUi(Map<String, VectorLayer> vectorList, StarSystem ss, List<View> vi) {
+	public StarSystemUi(Map<String, VectorGroup> vectorList, StarSystem ss, List<View> vi) {
 		
 		starSystem = ss;
 		views = vi;

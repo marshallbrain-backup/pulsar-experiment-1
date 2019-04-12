@@ -1,3 +1,0 @@
-<click>
-	<open tab="1,1">frame</open>
-</click>

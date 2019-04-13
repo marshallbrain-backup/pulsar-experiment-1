@@ -12,11 +12,7 @@ import math.Other;
 import ui.engine.Point;
 
 @XmlRootElement(name = "circle")
-public class Circle implements Vector, Cloneable {
-		
-	private int renderX;
-	private int renderY;
-	private int renderRadius;
+public class Circle implements Vector {
 	
 	@XmlAttribute(name = "cx")
 	private int baseX;
@@ -24,6 +20,10 @@ public class Circle implements Vector, Cloneable {
 	private int baseY;
 	@XmlAttribute(name = "r")
 	private int baseR;
+		
+	private int renderX;
+	private int renderY;
+	private int renderRadius;
 
 	private long centerX;
 	private long centerY;
@@ -51,30 +51,17 @@ public class Circle implements Vector, Cloneable {
 		
 	}
 
-	public int getCenterX() {
-		return renderX;
-	}
-	
-	public int getCenterY() {
-		return renderY;
-	}
-	
-	public long getRadius() {
-		return renderRadius;
-	}
-	
-	@Override
-	public Object clone() {
-		
-		try {
-			return super.clone();
-		} catch (CloneNotSupportedException e) {
-			e.printStackTrace();
-		}
-		
-		return null;
-		
-	}  
+//	public int getCenterX() {
+//		return renderX;
+//	}
+//	
+//	public int getCenterY() {
+//		return renderY;
+//	}
+//	
+//	public long getRadius() {
+//		return renderRadius;
+//	}
 	
 	@Override
 	public String getType() {
@@ -132,10 +119,20 @@ public class Circle implements Vector, Cloneable {
 		int y = baseY+(renderY-r);
 		
 		return new Ellipse2D.Double(x, y, r*2, r*2);
+		
 	}
 	
-	private long convert(double value, double fromRefrence, double toRefrence) {
-		return Math.round(((value/fromRefrence)*toRefrence));
+	@Override
+	public Object clone() {
+		
+		try {
+			return super.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+		
 	}
 	
 }

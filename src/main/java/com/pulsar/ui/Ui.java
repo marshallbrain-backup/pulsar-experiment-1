@@ -17,6 +17,7 @@ import ui.engine.actions.ActionGroup;
 import ui.engine.actions.Click;
 import ui.engine.actions.Open;
 import ui.engine.vectors.Circle;
+import ui.engine.vectors.Rectangle;
 import ui.engine.vectors.Vector;
 import ui.engine.vectors.VectorGroup;
 import ui.map.StarSystemUi;
@@ -43,7 +44,8 @@ public class Ui {
 		actionList = new HashMap<String, ActionGroup>();
 		views = new ArrayList<View>();
 		
-		actionHandler = new ActionHandler(vectorList, actionList, views);
+		View.initGroups(vectorList, actionList);
+		actionHandler = new ActionHandler(actionList, views);
 		
 		loadVectorFiles(vectorList, new File("gfx"));
 		loadActionFiles(actionList, new File("action"));
@@ -62,7 +64,11 @@ public class Ui {
 	}
 
 	public void render(VectorGraphics vg) {
+		
+		
+		
 		currentUiChart.render(vg);
+		
 	}
 	
 	private void loadVectorFiles(Map<String, VectorGroup> vl, File file) {
@@ -73,7 +79,10 @@ public class Ui {
 		} else if(Other.getExtension(file).equals("xml")){
 			String head = file.getPath().split("\\\\")[0]+"\\";
 			
-			Class<?>[] classList = {VectorGroup.class, Circle.class};
+			Class<?>[] classList = {
+					VectorGroup.class, 
+					Circle.class, Rectangle.class
+					};
 			
 			VectorGroup vg = (VectorGroup) XmlParser.getXml(file.getPath(), classList);
 			
@@ -93,11 +102,13 @@ public class Ui {
 	}
 	
 	private void loadActionFiles(Map<String, ActionGroup> al, File file) {
+		
 		if(file.isDirectory()) {
 			for(File f: file.listFiles()) {
 				loadActionFiles(al, f);
 			}
 		} else if(Other.getExtension(file).equals("xml")){
+			
 			String head = file.getPath().split("\\\\")[0]+"\\";
 			
 			Class<?>[] classList = {ActionGroup.class, Click.class, Open.class};
@@ -117,6 +128,7 @@ public class Ui {
 			if(ag != null) {
 				al.put(file.getPath().split("\\.")[0].replace(head, "").replace("\\", "."), ag);
 			}
+			
 		}
 		
 	}

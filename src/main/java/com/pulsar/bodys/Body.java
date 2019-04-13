@@ -154,8 +154,12 @@ public class Body {
 		return bodyType;
 	}
 
-	public String getTypePath() {
+	public String getPath() {
 		return "body." + bodyType;
+	}
+
+	public String getFullPath() {
+		return "map.system.body." + bodyType;
 	}
 	
 	public long getDistance() {

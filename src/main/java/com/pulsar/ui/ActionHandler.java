@@ -8,20 +8,16 @@ import input.Keyboard;
 import input.Mouse;
 import ui.engine.actions.Action;
 import ui.engine.actions.ActionGroup;
-import ui.engine.actions.Click;
 import ui.engine.actions.Effect;
-import ui.engine.vectors.VectorGroup;
 import ui.view.View;
 
 public class ActionHandler {
 	
 	private List<View> viewList;
 	
-	private Map<String, VectorGroup> vectorList;
 	private Map<String, ActionGroup> actionList;
 	
-	public ActionHandler(Map<String, VectorGroup> vl, Map<String, ActionGroup> al, List<View> v) {
-		vectorList = vl;
+	public ActionHandler(Map<String, ActionGroup> al, List<View> v) {
 		actionList = al;
 		viewList = v;
 	}
@@ -75,10 +71,11 @@ public class ActionHandler {
 		switch(e.getType()) {
 			case "open":
 				System.out.println(effect);
+				viewList.clear();
+				viewList.add(new View(effect));
 				break;
 			default:
 				System.out.println("Unrecognized class " + e.getType());
-				System.out.println("You should not see this");
 				System.out.println();
 		}
 		

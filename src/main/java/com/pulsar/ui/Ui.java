@@ -14,6 +14,8 @@ import ui.engine.VectorGraphics;
 import ui.engine.XmlParser;
 import ui.engine.actions.Action;
 import ui.engine.actions.ActionGroup;
+import ui.engine.actions.Click;
+import ui.engine.actions.Open;
 import ui.engine.vectors.Circle;
 import ui.engine.vectors.Vector;
 import ui.engine.vectors.VectorGroup;
@@ -31,6 +33,7 @@ public class Ui {
 	private UiElement currentUiChart;
 	
 	private Universe universe;
+	private ActionHandler actionHandler;
 	
 	public Ui(Universe u) {
 		
@@ -40,14 +43,15 @@ public class Ui {
 		actionList = new HashMap<String, ActionGroup>();
 		views = new ArrayList<View>();
 		
+		actionHandler = new ActionHandler(vectorList, actionList);
+		
 		loadVectorFiles(vectorList, new File("gfx"));
 		loadActionFiles(actionList, new File("action"));
-		//TODO implement actions
 		
-		Map<String, VectorGroup> systemList = Other.getAllMatchingKeys(vectorList, "map\\.system\\..*", 2);
-//		Map<String, VectorLayer> viewList = Other.getAllMatchingKeys(vectorList, "view\\..*", 1);
+		Map<String, VectorGroup> systemVectors = Other.getAllMatchingKeys(vectorList, "map\\.system\\..*", 2);
+		Map<String, ActionGroup> systemActions = Other.getAllMatchingKeys(actionList, "map\\.system\\..*", 2);
 		
-		currentUiChart = new StarSystemUi(systemList, universe.getGalaxy().getStarSystem(), views);
+		currentUiChart = new StarSystemUi(systemVectors, systemActions, actionHandler, universe.getGalaxy().getStarSystem());
 		
 	}
 	
@@ -96,7 +100,7 @@ public class Ui {
 		} else if(Other.getExtension(file).equals("xml")){
 			String head = file.getPath().split("\\\\")[0]+"\\";
 			
-			Class<?>[] classList = {ActionGroup.class};
+			Class<?>[] classList = {ActionGroup.class, Click.class, Open.class};
 			
 			Object o = XmlParser.getXml(file.getPath(), classList);
 			

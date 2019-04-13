@@ -19,8 +19,6 @@ import ui.engine.VectorGraphics;
 import ui.engine.actions.ActionGroup;
 import ui.engine.vectors.Vector;
 import ui.engine.vectors.VectorGroup;
-import ui.view.View;
-import ui.view.ViewColony;
 import universe.StarSystem;
 
 public class StarSystemUi implements UiElement {

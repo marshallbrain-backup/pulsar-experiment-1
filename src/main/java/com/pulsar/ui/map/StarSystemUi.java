@@ -11,10 +11,12 @@ import input.Keyboard;
 import input.Mouse;
 import pulsar.Main;
 import ui.engine.UiElement;
+import ui.ActionHandler;
 import ui.engine.EntrySet;
 import ui.engine.Point;
 import ui.engine.ScreenPosition;
 import ui.engine.VectorGraphics;
+import ui.engine.actions.ActionGroup;
 import ui.engine.vectors.Vector;
 import ui.engine.vectors.VectorGroup;
 import ui.view.View;
@@ -26,7 +28,6 @@ public class StarSystemUi implements UiElement {
 	private int zoom;
 	
 	private List<Body> bodys;
-	private List<View> views;
 	private List<EntrySet<Area, Body>> Areas;
 	
 	private Map<String, List<Vector>> bodyVectors;
@@ -35,11 +36,12 @@ public class StarSystemUi implements UiElement {
 	private Point offsetAmount;
 	private Point offsetZoom;
 	private StarSystem starSystem;
+	private ActionHandler actionHandler;
 	
-	public StarSystemUi(Map<String, VectorGroup> vectorList, StarSystem ss, List<View> vi) {
+	public StarSystemUi(Map<String, VectorGroup> vectorList, Map<String, ActionGroup> actionList, ActionHandler ah, StarSystem ss) {
 		
+		actionHandler = ah;
 		starSystem = ss;
-		views = vi;
 		
 		zoom = 1;
 		
@@ -54,13 +56,13 @@ public class StarSystemUi implements UiElement {
 		modifierVectors.putIfAbsent("colony", vectorList.get("modifiers.colony").getVectors());
 		
 		for(Body b: starSystem.getBodys()) {
-			List<Vector> v = vectorList.get(b.getTypePath()).getVectors();
+			List<Vector> v = vectorList.get(b.getPath()).getVectors();
 			if(v != null) {
 				bodys.add(b);
 				bodyVectors.putIfAbsent(b.getType(), v);
 			} else {
 				bodys.add(b);
-				bodyVectors.putIfAbsent(b.getTypePath(), vectorList.get("body").getVectors());
+				bodyVectors.putIfAbsent(b.getPath(), vectorList.get("body").getVectors());
 			}
 		}
 		
@@ -69,19 +71,15 @@ public class StarSystemUi implements UiElement {
 	@Override
 	public boolean action(Mouse m, Keyboard k) {
 		
-		Point mp = new Point(m.getPosition());
+		ArrayList<EntrySet<Area, Body>> cl = new ArrayList<EntrySet<Area, Body>>(Areas);
 		
-		if(m.buttonDownOnce(1)) {
-				
-			ArrayList<EntrySet<Area, Body>> cl = new ArrayList<EntrySet<Area, Body>>(Areas);
-			
-			for(EntrySet<Area, Body> e: cl) {
-				if(e.getKey().contains(mp.getX(), mp.getY())) {
-					views.add(new ViewColony(null));
-				}
+		for(EntrySet<Area, Body> e: cl) {
+			if(actionHandler.performAction(m, k, e.getValue().getFullPath(), e.getKey())) {
+				return true;
 			}
-			
-		} else if(m.buttonDown(1)) {
+		}
+		
+		if(m.buttonDown(1)) {
 			Point d = m.getChange();
 			if(d.getX() != 0 || d.getY() != 0) {
 				offsetAmount.move(-d.getX(), -d.getY(), Main.WIDTH, getZoom(zoom));
@@ -102,7 +100,7 @@ public class StarSystemUi implements UiElement {
 			
 		}
 		
-		return true;
+		return false;
 		
 	}
 

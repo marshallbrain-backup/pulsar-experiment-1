@@ -1,5 +1,6 @@
 package ui.engine.actions;
 
+import java.awt.geom.Area;
 import java.util.List;
 
 import input.Keyboard;
@@ -9,6 +10,6 @@ public interface Action {
 	
 	public List<Effect> getEffect();
 	
-	public boolean didAction(Mouse m, Keyboard k);
+	public boolean didAction(Mouse m, Keyboard k, Area area);
 	
 }

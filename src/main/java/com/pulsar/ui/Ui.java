@@ -43,7 +43,7 @@ public class Ui {
 		actionList = new HashMap<String, ActionGroup>();
 		views = new ArrayList<View>();
 		
-		actionHandler = new ActionHandler(vectorList, actionList);
+		actionHandler = new ActionHandler(vectorList, actionList, views);
 		
 		loadVectorFiles(vectorList, new File("gfx"));
 		loadActionFiles(actionList, new File("action"));

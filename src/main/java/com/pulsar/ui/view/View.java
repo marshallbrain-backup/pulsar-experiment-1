@@ -44,7 +44,7 @@ public class View {
 
 	public void render(VectorGraphics vg) {
 		
-		vg.translationMove(new Point(150, 100));
+		vg.translationSet(new Point(150, 100));
 		
 		for(Vector v: activeVectors) {
 			vg.draw(v);

@@ -65,9 +65,11 @@ public class Ui {
 
 	public void render(VectorGraphics vg) {
 		
-		
-		
 		currentUiChart.render(vg);
+		
+		for(View v: views) {
+			v.render(vg);
+		}
 		
 	}
 	

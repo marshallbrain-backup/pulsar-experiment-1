@@ -3,6 +3,8 @@ package ui.view;
 import java.util.List;
 import java.util.Map;
 
+import ui.engine.Point;
+import ui.engine.VectorGraphics;
 import ui.engine.actions.Action;
 import ui.engine.actions.ActionGroup;
 import ui.engine.vectors.Vector;
@@ -38,6 +40,16 @@ public class View {
 	public static void initGroups(Map<String, VectorGroup> vl, Map<String, ActionGroup> al) {
 		vectorList = vl;
 		actionList = al;
+	}
+
+	public void render(VectorGraphics vg) {
+		
+		vg.translationMove(new Point(150, 100));
+		
+		for(Vector v: activeVectors) {
+			vg.draw(v);
+		}
+		
 	}
 
 }

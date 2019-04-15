@@ -1,5 +1,5 @@
 package ui.engine;
 
 public enum ScreenPosition {
-	CENTER
+	CENTER, ZERO
 }

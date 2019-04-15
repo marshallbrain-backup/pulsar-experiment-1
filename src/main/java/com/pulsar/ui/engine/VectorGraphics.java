@@ -39,16 +39,28 @@ public class VectorGraphics {
 		return graphics;
 	}
 
+	public void translationSet(Point o) {
+		translationSet(ScreenPosition.ZERO);
+		translationMove(o);
+	}
+
 	public void translationSet(ScreenPosition pos) {
+		
+		Point p;
+		
 		switch(pos) {
-		case CENTER:
-			Point center = new Point(Main.WIDTH/2, Main.HEIGHT/2);
-			graphics = (Graphics2D) graphicsOriginal.create();
-			graphics.translate(center.getX(), center.getY());
-			break;
-		default:
-			break;
+			case CENTER:
+				p = new Point(Main.WIDTH/2, Main.HEIGHT/2);
+				break;
+			case ZERO:
+				p = new Point(0, 0);
+				break;
+			default:
+				return;
 		}
+		
+		graphics = (Graphics2D) graphicsOriginal.create();
+		graphics.translate(p.getX(), p.getY());
 		
 		init(graphics);
 		

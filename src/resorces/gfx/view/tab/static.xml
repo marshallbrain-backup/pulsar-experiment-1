@@ -1,14 +1,14 @@
 <vector_layer text="0">
-	<rect
-		style="stroke:#000000;stroke-opacity:1;stroke-width:4"
-		width="0"
-		height="-25"
-		x="0"
-		y="0"
-	/>
 	<text
 		style="FIT"
 		pading_x="5"
 		pading_y="5"
+	/>
+	<rect
+		style="stroke:#000000;stroke-opacity:1;stroke-width:4"
+		width=""
+		height="-25"
+		x="0"
+		y="0"
 	/>
 </vector_layer>

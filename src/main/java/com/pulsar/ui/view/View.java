@@ -1,5 +1,6 @@
 package ui.view;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,33 +22,31 @@ public class View {
 
 	public View(Object[] action) {
 		
+		activeVectors = new ArrayList<Vector>();
+		activeActions = new ArrayList<Action>();
+		
 		initVectors(action);
 		
 	}
 	
 	private void initVectors(Object[] action) {
 		
+		VectorGroup av = null;
+		ActionGroup aa = null;
+		
 		String key = (String) action[0];
 		
 		System.out.println("Loading vectors from: " + key);
-		
-		if (activeVectors == null) {
-			try {
-				activeVectors = vectorList.get(key).getVectors();
-				activeActions = actionList.get(key).getActions();
-			} catch (NullPointerException e) {
-			}
-			
-			if(activeVectors == null) {
-				throw new NullPointerException();
-			}
-		} else {
-			try {
-				activeVectors.addAll(vectorList.get(key).getVectors());
-				activeActions.addAll(actionList.get(key).getActions());
-			} catch (NullPointerException e) {
-			}
+
+		try {
+			av = vectorList.get(key);
+			aa = actionList.get(key);
+			activeVectors.addAll(av.getVectors());
+			activeActions.addAll(aa.getActions());
+		} catch (NullPointerException e) {
 		}
+		
+		av.assingParamerters(action);
 		
 		for(int i = 0; i < activeVectors.size(); i++) {
 			if(activeVectors.get(i).getType().equals("link vector")) {

@@ -1,6 +1,6 @@
 <action>
 	<click>
-		<open tab="1,1" give="this">
+		<open give="this;1,1">
 			view.colony.frame
 		</open>
 	</click>

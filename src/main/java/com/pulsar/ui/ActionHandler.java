@@ -22,13 +22,15 @@ public class ActionHandler {
 		viewList = v;
 	}
 
-	public boolean performAction(Mouse m, Keyboard k, String path, Area area) {
+	public boolean performAction(Mouse m, Keyboard k, String path, Area area, Object... objects) {
 		
 		ActionGroup action = getActionGroup(path);
 		
 		if(action == null) {
 			return false;
 		}
+		
+		action.assingParameters(objects);
 		
 		for(Action a: action.getActions()) {
 			if(a.didAction(m, k, area)) {

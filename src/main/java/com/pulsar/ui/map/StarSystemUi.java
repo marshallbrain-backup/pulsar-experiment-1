@@ -72,7 +72,7 @@ public class StarSystemUi implements UiElement {
 		ArrayList<EntrySet<Area, Body>> cl = new ArrayList<EntrySet<Area, Body>>(Areas);
 		
 		for(EntrySet<Area, Body> e: cl) {
-			if(actionHandler.performAction(m, k, e.getValue().getFullPath(), e.getKey())) {
+			if(actionHandler.performAction(m, k, e.getValue().getFullPath(), e.getKey(), this)) {
 				return true;
 			}
 		}

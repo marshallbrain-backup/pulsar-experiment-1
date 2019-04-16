@@ -4,8 +4,9 @@ import java.awt.Shape;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlValue;
 import javax.xml.namespace.QName;
 
 import ui.engine.Point;
@@ -20,7 +21,7 @@ public class Text implements Vector {
 
 	@XmlAttribute(name = "style")
 	private String styleString;
-	@XmlElement
+	@XmlValue
 	private String text;
 	
 	private Map<QName, Object> parameters;
@@ -37,9 +38,21 @@ public class Text implements Vector {
 
 	@Override
 	public Shape getShape() {
+		
+		text = text.replaceAll("\\s+","");
+		
+		String t = text;
+		
+		if(t.startsWith("@")) {
+			t = parameters.get(new QName(t.substring(1))).toString();
+		}
+		
+		System.out.println(t);
+		
 		return null;
 	}
-
+	
+	@XmlTransient
 	@Override
 	public Map<String, String> getStyle() {
 		return null;

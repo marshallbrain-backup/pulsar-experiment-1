@@ -46,14 +46,14 @@ public class View {
 		} catch (NullPointerException e) {
 		}
 		
-		av.assingParamerters(action);
+		av.assingParameters(action);
 		
 		for(int i = 0; i < activeVectors.size(); i++) {
 			if(activeVectors.get(i).getType().equals("link vector")) {
 				LinkVector link = (LinkVector) activeVectors.get(i);
 				activeVectors.remove(i);
 				i--;
-//				initVectors(link.getLink());
+				initVectors(link.getParamerters());
 			}
 		}
 		

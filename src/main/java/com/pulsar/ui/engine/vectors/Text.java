@@ -37,7 +37,6 @@ public class Text implements Vector {
 
 	@Override
 	public Shape getShape() {
-		System.out.println("!");
 		return null;
 	}
 

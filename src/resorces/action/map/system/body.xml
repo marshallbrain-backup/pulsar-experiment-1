@@ -1,5 +1,7 @@
 <action>
 	<click>
-		<open tab="1,1">view.colony.frame</open>
+		<open tab="1,1" give="this">
+			view.colony.frame
+		</open>
 	</click>
 </action>

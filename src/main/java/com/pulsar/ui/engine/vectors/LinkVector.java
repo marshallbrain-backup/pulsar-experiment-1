@@ -35,15 +35,13 @@ public class LinkVector implements Vector {
 		
 		e.add(location);
 		
-		if(par.contains("@")) {
-			for(int i = par.indexOf("@", 0); i != -1; i = par.indexOf("@", 0)) {
-				String v = par.substring(i+1, par.indexOf(";", i));
-				e.add(parameters.get(new QName(v)));
-				par = par.replace("@"+v+";", "");
+		for(String s: par.split(";")) {
+			String v = s;
+			if(s.contains("@")) {
+				v = s.substring(1);
 			}
+			e.add(parameters.get(new QName(v.split("\\.")[0])));
 		}
-		
-		e.addAll(Arrays.asList(par.split(";")));
 		
 		return e.toArray();
 		

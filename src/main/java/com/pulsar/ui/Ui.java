@@ -19,6 +19,7 @@ import ui.engine.actions.Open;
 import ui.engine.vectors.Circle;
 import ui.engine.vectors.LinkVector;
 import ui.engine.vectors.Rectangle;
+import ui.engine.vectors.Text;
 import ui.engine.vectors.Vector;
 import ui.engine.vectors.VectorGroup;
 import ui.map.StarSystemUi;
@@ -84,14 +85,18 @@ public class Ui {
 			
 			Class<?>[] classList = {
 					VectorGroup.class, 
-					Circle.class, Rectangle.class, LinkVector.class
+					Circle.class, Rectangle.class, LinkVector.class, Text.class
 					};
 			
 			VectorGroup vg = (VectorGroup) XmlParser.getXml(file.getPath(), classList);
 			
 			if(vg != null && !vg.getVectors().isEmpty()) {
-				for(Vector v: vg.getVectors()) {
-					v.setStyle(Other.convertStyle(v.getStyleString()));
+				try {
+					for(Vector v: vg.getVectors()) {
+						v.setStyle(Other.convertStyle(v.getStyleString()));
+					}
+				} catch(ClassCastException e) {
+					vg = null;
 				}
 			} else {
 				vg = null;
@@ -122,6 +127,7 @@ public class Ui {
 				return;
 						
 			ActionGroup ag = (ActionGroup) o;
+			ag.propegateParameters();
 			
 			if(!ag.getActions().isEmpty() && ag.getActions().get(0) instanceof Action) {
 			} else {

@@ -2,6 +2,7 @@ package ui.engine.vectors;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.xml.bind.annotation.XmlAnyAttribute;
 import javax.xml.bind.annotation.XmlAnyElement;
@@ -28,9 +29,8 @@ public class VectorGroup {
 	}
 	
 	public void assingParameters(Object... p) {
-		Object[] s = parameters.keySet().toArray();
-		for(int i = 0; i < p.length; i++) {
-			parameters.put((QName) s[i], p[i]);
+		for(Entry<QName, Object> e: parameters.entrySet()) {
+			parameters.put(e.getKey(), p[Integer.parseInt(e.getValue().toString())+1]);
 		}
 	}
 

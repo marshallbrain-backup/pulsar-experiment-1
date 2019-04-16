@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.namespace.QName;
 
 import ui.engine.Point;
 
@@ -22,7 +23,7 @@ public class Text implements Vector {
 	@XmlElement
 	private String text;
 	
-	private Map<String, Object> parameters;
+	private Map<QName, Object> parameters;
 
 	@Override
 	public String getType() {
@@ -59,6 +60,11 @@ public class Text implements Vector {
 
 	@Override
 	public void setStyle(Map<String, String> s) {
+	}
+
+	@Override
+	public void assingParamerters(Map<QName, Object> p) {
+		parameters = p;
 	}
 	
 	@Override

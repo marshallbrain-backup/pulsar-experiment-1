@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.namespace.QName;
 
 import ui.engine.Point;
 
@@ -21,12 +22,14 @@ public class LinkVector implements Vector {
 	@XmlAttribute(name = "give")
 	private String par;
 	
+	private Map<QName, Object> parameters;
+	
 	public String getLink() {
 		return vector;
 	}
 	
-	public String getParamaters() {
-		return par;
+	public Object[] getParamerters() {
+		return parameters.values().toArray();
 	}
 	
 	public Point getOffset() {
@@ -67,6 +70,11 @@ public class LinkVector implements Vector {
 
 	@Override
 	public void setStyle(Map<String, String> s) {
+	}
+
+	@Override
+	public void assingParamerters(Map<QName, Object> p) {
+		parameters = p;
 	}
 	
 	@Override

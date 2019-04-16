@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.namespace.QName;
 
 import math.Other;
 import ui.engine.Point;
@@ -33,6 +34,7 @@ public class Circle implements Vector {
 	private String styleString;
 	
 	private Map<String, String> style;
+	private Map<QName, Object> parameters;
 
 	public Circle() {
 	}
@@ -120,6 +122,11 @@ public class Circle implements Vector {
 		
 		return new Ellipse2D.Double(x, y, r*2, r*2);
 		
+	}
+
+	@Override
+	public void assingParamerters(Map<QName, Object> p) {
+		parameters = p;
 	}
 	
 	@Override

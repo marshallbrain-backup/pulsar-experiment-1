@@ -3,6 +3,8 @@ package ui.engine.vectors;
 import java.awt.Shape;
 import java.util.Map;
 
+import javax.xml.namespace.QName;
+
 import ui.engine.Point;
 
 public interface Vector extends Cloneable {
@@ -20,6 +22,7 @@ public interface Vector extends Cloneable {
 	void transform(double offset);
 	void normalize(long screenSize, int screenWidth, int minSize);
 	void setStyle(Map<String, String> s);
+	void assingParamerters(Map<QName, Object> p);
 	
 	default long convert(double value, double fromRefrence, double toRefrence) {
 		return Math.round(((value/fromRefrence)*toRefrence));

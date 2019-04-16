@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.namespace.QName;
 
 import math.Other;
 import ui.engine.Point;
@@ -36,6 +37,7 @@ public class Rectangle implements Vector {
 	private String styleString;
 	
 	private Map<String, String> style;
+	private Map<QName, Object> parameters;
 	
 	public Rectangle() {
 	}
@@ -119,6 +121,11 @@ public class Rectangle implements Vector {
 		renderWidth = w;
 		renderHeight = h;
 		
+	}
+
+	@Override
+	public void assingParamerters(Map<QName, Object> p) {
+		parameters = p;
 	}
 	
 	@Override

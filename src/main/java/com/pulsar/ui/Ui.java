@@ -88,7 +88,13 @@ public class Ui {
 					Circle.class, Rectangle.class, LinkVector.class, Text.class
 					};
 			
-			VectorGroup vg = (VectorGroup) XmlParser.getXml(file.getPath(), classList);
+			Object o = XmlParser.getXml(file.getPath(), classList);
+			
+			if(o == null)
+				return;
+			
+			VectorGroup vg = (VectorGroup) o;
+			vg.propegateParameters();
 			
 			if(vg != null && !vg.getVectors().isEmpty()) {
 				try {

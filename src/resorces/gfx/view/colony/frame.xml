@@ -1,8 +1,14 @@
-<vector_layer>
+<vector_layer planet="0">
 	<rect
 		style="stroke:#000000;stroke-opacity:1;stroke-width:4"
 		width="820"
 		height="720"
+		x="0"
+		y="0"
+	/>
+	<link_vector
+		link="view.tab.static"
+		give="planet.getName"
 		x="0"
 		y="0"
 	/>

@@ -22,6 +22,7 @@ public class Body {
 	private boolean colonizable;
 	
 	private String bodyType;
+	private String name;
 	
 	private Body parent;
 	private StarSystem starSystem;
@@ -148,6 +149,13 @@ public class Body {
 		
 		return d * Math.pow(10, e);
 		
+	}
+
+	public String getName() {
+		if(name != null) {
+			return name;
+		}
+		return getType();
 	}
 
 	public String getType() {

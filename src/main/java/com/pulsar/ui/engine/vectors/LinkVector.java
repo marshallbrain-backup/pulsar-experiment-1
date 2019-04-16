@@ -1,6 +1,8 @@
 package ui.engine.vectors;
 
 import java.awt.Shape;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,11 +38,33 @@ public class LinkVector implements Vector {
 		e.add(location);
 		
 		for(String s: par.split(";")) {
+			
 			String v = s;
+			
 			if(s.contains("@")) {
+				
 				v = s.substring(1);
+				Object o = parameters.get(new QName(v.split("\\.")[0]));
+				
+				if(v.contains(".")) {
+					for(String i: v.substring(v.indexOf(".")).split("\\.")) {
+						try {
+							Method m = o.getClass().getMethod(i);
+							o = m.invoke(o);
+						} catch (NoSuchMethodException | SecurityException e1) {
+							e1.printStackTrace();
+						} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e1) {
+							e1.printStackTrace();
+						}
+					}
+				}
+				
+				e.add(o);
+				
+			} else {
+				e.add(v);
 			}
-			e.add(parameters.get(new QName(v.split("\\.")[0])));
+			
 		}
 		
 		return e.toArray();

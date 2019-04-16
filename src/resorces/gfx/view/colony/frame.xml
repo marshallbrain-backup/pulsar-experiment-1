@@ -8,7 +8,7 @@
 	/>
 	<link_vector
 		link="view.tab.static"
-		give="planet.getName"
+		give="@planet.getName"
 		x="0"
 		y="0"
 	/>

@@ -47,7 +47,7 @@ public class LinkVector implements Vector {
 				Object o = parameters.get(new QName(v.split("\\.")[0]));
 				
 				if(v.contains(".")) {
-					for(String i: v.substring(v.indexOf(".")).split("\\.")) {
+					for(String i: v.substring(v.indexOf(".")+1).split("\\.")) {
 						try {
 							Method m = o.getClass().getMethod(i);
 							o = m.invoke(o);

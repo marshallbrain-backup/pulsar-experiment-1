@@ -6,9 +6,9 @@ import javax.xml.namespace.QName;
 
 public interface Effect {
 	
-	public String getEffect();
-	public String getType();
-	
+	String getType();
+
+	Object[] getEffect();
 	Object[] getParamerters();
 	
 	void assingParamerters(Map<QName, Object> p);

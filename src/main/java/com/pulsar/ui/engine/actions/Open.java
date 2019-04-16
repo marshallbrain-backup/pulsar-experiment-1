@@ -1,5 +1,8 @@
 package ui.engine.actions;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -20,8 +23,26 @@ public class Open implements Effect {
 	private Map<QName, Object> parameters;
 	
 	@Override
-	public String getEffect() {
-		return location + ";;" + par;
+	public Object[] getEffect() {
+		
+		location = location.replaceAll("\\s+","");
+		par = par.replaceAll("\\s+","");
+		List<Object> e = new ArrayList<Object>();
+		
+		e.add(location);
+		
+		if(par.contains("@")) {
+			for(int i = par.indexOf("@", 0); i != -1; i = par.indexOf("@", 0)) {
+				String v = par.substring(i+1, par.indexOf(";", i));
+				e.add(parameters.get(new QName(v)));
+				par = par.replace("@"+v+";", "");
+			}
+		}
+		
+		e.addAll(Arrays.asList(par.split(";")));
+		
+		return e.toArray();
+		
 	}
 	
 	public String getType() {

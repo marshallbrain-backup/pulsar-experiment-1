@@ -53,7 +53,7 @@ public class View {
 				LinkVector link = (LinkVector) activeVectors.get(i);
 				activeVectors.remove(i);
 				i--;
-				initVectors(link.getParamerters());
+				initVectors(link.getLink());
 			}
 		}
 		

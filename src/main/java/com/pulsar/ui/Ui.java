@@ -17,6 +17,7 @@ import ui.engine.actions.ActionGroup;
 import ui.engine.actions.Click;
 import ui.engine.actions.Open;
 import ui.engine.vectors.Circle;
+import ui.engine.vectors.LinkVector;
 import ui.engine.vectors.Rectangle;
 import ui.engine.vectors.Vector;
 import ui.engine.vectors.VectorGroup;
@@ -83,12 +84,12 @@ public class Ui {
 			
 			Class<?>[] classList = {
 					VectorGroup.class, 
-					Circle.class, Rectangle.class
+					Circle.class, Rectangle.class, LinkVector.class
 					};
 			
 			VectorGroup vg = (VectorGroup) XmlParser.getXml(file.getPath(), classList);
 			
-			if(!vg.getVectors().isEmpty() && vg.getVectors().get(0) instanceof Vector) {
+			if(vg != null && !vg.getVectors().isEmpty()) {
 				for(Vector v: vg.getVectors()) {
 					v.setStyle(Other.convertStyle(v.getStyleString()));
 				}

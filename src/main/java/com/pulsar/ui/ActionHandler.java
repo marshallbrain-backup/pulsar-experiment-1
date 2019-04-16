@@ -70,7 +70,6 @@ public class ActionHandler {
 		
 		switch(e.getType()) {
 			case "open":
-				System.out.println(effect);
 				viewList.clear();
 				viewList.add(new View(effect));
 				break;

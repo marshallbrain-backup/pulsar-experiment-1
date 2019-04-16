@@ -8,20 +8,19 @@ import ui.engine.actions.Effect;
 
 @XmlRootElement(name = "open")
 public class Open implements Effect {
-
-	public static final String TYPE = "open";
-	@XmlAttribute
-	private String tab;
+	
+	@XmlAttribute(name = "give")
+	private String par;
 	@XmlValue
 	private String location;
 	
 	@Override
 	public String getEffect() {
-		return location + ";" + tab;
+		return location + ";;" + par;
 	}
 	
 	public String getType() {
-		return TYPE;
+		return "open";
 	}
 	
 }

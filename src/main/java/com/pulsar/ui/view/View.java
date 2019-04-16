@@ -19,20 +19,15 @@ public class View {
 	private List<Vector> activeVectors;
 	private List<Action> activeActions;
 
-	public View(String action) {
+	public View(Object[] action) {
 		
-		int s = action.indexOf(";;");
-		
-		String par = action.substring(s+1);
-		String key = action.substring(0, s);
-		
-		initVectors(key);
+		initVectors(action);
 		
 	}
 	
-	private void initVectors(String key) {
+	private void initVectors(Object[] action) {
 		
-		key = key.replaceAll("\\s+","");
+		String key = (String) action[0];
 		
 		System.out.println("Loading vectors from: " + key);
 		
@@ -59,7 +54,7 @@ public class View {
 				LinkVector link = (LinkVector) activeVectors.get(i);
 				activeVectors.remove(i);
 				i--;
-				initVectors(link.getLink());
+//				initVectors(link.getLink());
 			}
 		}
 		

@@ -68,7 +68,7 @@ public class ActionHandler {
 	
 	private void performEffect(Effect e) {
 		
-		String effect = e.getEffect();
+		Object[] effect = e.getEffect();
 		
 		switch(e.getType()) {
 			case "open":

@@ -21,7 +21,7 @@ public class View {
 
 	public View(String action) {
 		
-		int s = action.indexOf(";");
+		int s = action.indexOf(";;");
 		
 		String par = action.substring(s+1);
 		String key = action.substring(0, s);

@@ -30,6 +30,10 @@ public class Other {
 	
 	public static Map<String, String> convertStyle(String s) {
 		
+		if(s == null) {
+			return null;
+		}
+		
 		Map<String, String> style = new HashMap<String, String>();
 		
 		for(String e: s.split(";")) {

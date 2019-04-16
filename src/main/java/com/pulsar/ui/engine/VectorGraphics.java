@@ -74,6 +74,10 @@ public class VectorGraphics {
 		
 		Area a = getArea(v, Main.WIDTH, Main.HEIGHT);
 		
+		if(a == null) {
+			return;
+		}
+		
 		String fill = v.getStyle().get("fill");
 		if(!(fill == null || fill.equals("none"))) {
 			
@@ -107,6 +111,10 @@ public class VectorGraphics {
 	}
 
 	public Area getArea(Vector v, int width, int height) {
+		
+		if(v.getShape() == null) {
+			return null;
+		}
 		
 		Area a = new Area(v.getShape());
 		Area b = new Area(new Rectangle2D.Double(0, 0, width, height));

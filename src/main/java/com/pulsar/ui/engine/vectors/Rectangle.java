@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.namespace.QName;
 
 import ui.engine.Point;
+import ui.engine.VectorGraphics;
 
 @XmlRootElement(name = "rect")
 public class Rectangle implements Vector {
@@ -58,6 +59,11 @@ public class Rectangle implements Vector {
 	@Override
 	public String getType() {
 		return "rectangle";
+	}
+	
+	@Override
+	public void draw(VectorGraphics vg) {
+		vg.draw(getShape(), getStyle());
 	}
 
 	@Override

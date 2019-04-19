@@ -24,6 +24,8 @@ public class Text {
 	private Map<String, String> style;
 	private Map<QName, Object> parameters;
 	
+	//TODO make font dynamic
+	//https://docs.oracle.com/javase/tutorial/2d/text/fonts.html
 	private static Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 20);
 	private static FontRenderContext frc = new FontRenderContext(null, true, true);
 

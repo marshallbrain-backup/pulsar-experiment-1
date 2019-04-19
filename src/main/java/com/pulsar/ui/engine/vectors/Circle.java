@@ -11,6 +11,7 @@ import javax.xml.namespace.QName;
 
 import math.Other;
 import ui.engine.Point;
+import ui.engine.VectorGraphics;
 
 @XmlRootElement(name = "circle")
 public class Circle implements Vector {
@@ -68,6 +69,11 @@ public class Circle implements Vector {
 	@Override
 	public String getType() {
 		return "circle";
+	}
+	
+	@Override
+	public void draw(VectorGraphics vg) {
+		vg.draw(getShape(), getStyle());
 	}
 
 	@Override

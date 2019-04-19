@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.namespace.QName;
 
 import ui.engine.Point;
+import ui.engine.VectorGraphics;
 
 @XmlRootElement(name = "text_region")
 public class TextRegion implements Vector {
@@ -36,6 +37,16 @@ public class TextRegion implements Vector {
 	
 	
 	public Vector getBound() {
+		return (Vector) bound.clone();
+	}
+	
+	@Override
+	public String getType() {
+		return "text region";
+	}
+	
+	@Override
+	public void draw(VectorGraphics vg) {
 		
 		GeneralPath s = text.getShape();
 		java.awt.Rectangle r = s.getBounds();
@@ -46,12 +57,10 @@ public class TextRegion implements Vector {
 		v.transform(new Point(vx, vy));
 		v.move(new Point(x, y-vy));
 		v.normalize();
-		return v;
-	}
-	
-	@Override
-	public String getType() {
-		return "text region";
+		v.draw(vg);
+		
+		vg.draw(getShape(), getStyle());
+		
 	}
 
 	@Override

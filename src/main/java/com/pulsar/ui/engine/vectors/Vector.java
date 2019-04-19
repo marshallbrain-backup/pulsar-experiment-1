@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.xml.namespace.QName;
 
 import ui.engine.Point;
+import ui.engine.VectorGraphics;
 
 public interface Vector extends Cloneable {
 
@@ -18,6 +19,7 @@ public interface Vector extends Cloneable {
 	
 	Map<String, String> getStyle();
 	
+	void draw(VectorGraphics vg);
 	void move(Point offset);
 	void transform(Point offset);
 	void normalize();

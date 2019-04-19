@@ -11,11 +11,15 @@ import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.namespace.QName;
 
+import ui.engine.Point;
 import ui.engine.VectorGraphics;
 
 @XmlRootElement(name = "vector_layer")
 public class VectorGroup implements Cloneable {
-
+	
+	private int x;
+	private int y;
+	
 	@XmlAnyElement(lax = true)
 	private List<Vector> vectors;
 	
@@ -50,9 +54,17 @@ public class VectorGroup implements Cloneable {
 	}
 	
 	public void draw(VectorGraphics vg) {
+		vg.saveTransform();
+		vg.translationMove(new Point(x, y));
 		for(Vector v: vectors) {
 			v.draw(vg);
 		}
+		vg.revertTransform();
+	}
+	
+	public void setPosition(Point p) {
+		x = p.getXInt();
+		y = p.getYInt();
 	}
 	
 	public void assingParameters(Object... p) {

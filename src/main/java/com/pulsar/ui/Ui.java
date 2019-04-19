@@ -20,6 +20,7 @@ import ui.engine.vectors.Circle;
 import ui.engine.vectors.LinkVector;
 import ui.engine.vectors.Rectangle;
 import ui.engine.vectors.Text;
+import ui.engine.vectors.TextRegion;
 import ui.engine.vectors.Vector;
 import ui.engine.vectors.VectorGroup;
 import ui.map.StarSystemUi;
@@ -85,7 +86,7 @@ public class Ui {
 			
 			Class<?>[] classList = {
 					VectorGroup.class, 
-					Circle.class, Rectangle.class, LinkVector.class, Text.class
+					Circle.class, Rectangle.class, LinkVector.class, TextRegion.class, Text.class
 					};
 			
 			Object o = XmlParser.getXml(file.getPath(), classList);

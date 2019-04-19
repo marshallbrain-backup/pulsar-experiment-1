@@ -45,7 +45,7 @@ public class Circle implements Vector {
 	
 	private void init(String s, long cx, long cy, long r) {
 		
-		style = Other.convertStyle(s);
+		setStyle();
 		
 		centerX = cx;
 		centerY = cy;
@@ -76,13 +76,8 @@ public class Circle implements Vector {
 	}
 
 	@Override
-	public String getStyleString() {
-		return styleString;
-	}
-
-	@Override
-	public void setStyle(Map<String, String> s) {
-		style = new HashMap<String, String>(s);
+	public void setStyle() {
+		style = convertStyle(styleString);
 	}
 	
 	@Override

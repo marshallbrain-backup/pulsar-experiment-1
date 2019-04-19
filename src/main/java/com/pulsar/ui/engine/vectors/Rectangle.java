@@ -1,14 +1,12 @@
 package ui.engine.vectors;
 
 import java.awt.Shape;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.namespace.QName;
 
-import math.Other;
 import ui.engine.Point;
 
 @XmlRootElement(name = "rect")
@@ -48,7 +46,7 @@ public class Rectangle implements Vector {
 	
 	private void init(String s, long x, long y, long w, long h) {
 		
-		style = Other.convertStyle(s);
+		setStyle();
 		
 		cornerX = x;
 		cornerY = y;
@@ -68,13 +66,8 @@ public class Rectangle implements Vector {
 	}
 
 	@Override
-	public String getStyleString() {
-		return styleString;
-	}
-
-	@Override
-	public void setStyle(Map<String, String> s) {
-		style = new HashMap<String, String>(s);
+	public void setStyle() {
+		style = convertStyle(styleString);
 	}
 
 	@Override

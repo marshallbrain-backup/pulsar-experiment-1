@@ -4,7 +4,6 @@ import java.awt.Shape;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -81,8 +80,7 @@ public class LinkVector implements Vector {
 	}
 
 	@Override
-	public String getStyleString() {
-		return null;
+	public void setStyle() {
 	}
 
 	@Override
@@ -109,10 +107,6 @@ public class LinkVector implements Vector {
 
 	@Override
 	public void normalize(long screenSize, int screenWidth, int minSize) {
-	}
-
-	@Override
-	public void setStyle(Map<String, String> s) {
 	}
 
 	@Override

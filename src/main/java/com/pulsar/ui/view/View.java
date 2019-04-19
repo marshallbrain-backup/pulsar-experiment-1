@@ -9,6 +9,7 @@ import ui.engine.VectorGraphics;
 import ui.engine.actions.Action;
 import ui.engine.actions.ActionGroup;
 import ui.engine.vectors.LinkVector;
+import ui.engine.vectors.TextRegion;
 import ui.engine.vectors.Vector;
 import ui.engine.vectors.VectorGroup;
 
@@ -48,12 +49,19 @@ public class View {
 		
 		av.assingParameters(action);
 		
-		for(int i = 0; i < activeVectors.size(); i++) {
-			if(activeVectors.get(i).getType().equals("link vector")) {
-				LinkVector link = (LinkVector) activeVectors.get(i);
-				activeVectors.remove(i);
-				i--;
-				initVectors(link.getLink());
+		List<Vector> v = av.getVectors();
+		
+		for(int i = 0; i < v.size(); i++) {
+			switch(v.get(i).getType()) {
+				case "link vector":
+					LinkVector link = (LinkVector) v.get(i);
+					activeVectors.remove(link);
+					initVectors(link.getLink());
+					break;
+				case "text region":
+					TextRegion reg = (TextRegion) v.get(i);
+					activeVectors.add(reg.getBound());
+					break;
 			}
 		}
 		

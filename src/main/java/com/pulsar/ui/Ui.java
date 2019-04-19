@@ -51,6 +51,10 @@ public class Ui {
 		actionHandler = new ActionHandler(actionList, views);
 		
 		loadVectorFiles(vectorList, new File("gfx"));
+		for(VectorGroup vg: vectorList.values()) {
+			vg.init(vectorList);
+		}
+		
 		loadActionFiles(actionList, new File("action"));
 		
 		Map<String, VectorGroup> systemVectors = Other.getAllMatchingKeys(vectorList, "map\\.system\\..*", 2);
@@ -95,7 +99,6 @@ public class Ui {
 				return;
 			
 			VectorGroup vg = (VectorGroup) o;
-			vg.propegateParameters();
 			
 			if(vg != null && !vg.getVectors().isEmpty()) {
 				try {
@@ -112,6 +115,7 @@ public class Ui {
 			if(vg != null) {
 				vl.put(file.getPath().split("\\.")[0].replace(head, "").replace("\\", "."), vg);
 			}
+			
 		}
 		
 	}

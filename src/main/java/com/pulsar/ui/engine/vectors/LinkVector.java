@@ -117,6 +117,7 @@ public class LinkVector implements Vector {
 		VectorGroup v = vector.clone();
 		
 		v.assingParameters(e.toArray());
+		v.setPosition(new Point(x, y));
 		v.draw(vg);
 		
 	}

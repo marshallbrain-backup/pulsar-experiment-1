@@ -78,7 +78,7 @@ public class Rectangle implements Vector {
 		int x = baseX+renderX;
 		int y = baseY+renderY;
 		
-		return new java.awt.Rectangle.Double(y, x, w, h);
+		return new java.awt.Rectangle.Double(x, y, w, h);
 		
 	}
 

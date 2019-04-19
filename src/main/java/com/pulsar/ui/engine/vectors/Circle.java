@@ -92,8 +92,17 @@ public class Circle implements Vector {
 	}
 
 	@Override
-	public void transform(double offset) {
-		radius += offset;
+	public void transform(Point offset) {
+		radius += offset.getX();
+	}
+
+	@Override
+	public void normalize() {
+		
+		renderX = Math.toIntExact(centerX);
+		renderY = Math.toIntExact(centerY);
+		renderRadius = Math.toIntExact(radius);
+		
 	}
 	
 	@Override

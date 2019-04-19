@@ -85,7 +85,7 @@ public class Rectangle implements Vector {
 		int x = baseX+renderX;
 		int y = baseY+renderY;
 		
-		return new java.awt.Rectangle.Double(x, y, w, h);
+		return new java.awt.Rectangle.Double(y, x, w, h);
 		
 	}
 
@@ -96,9 +96,19 @@ public class Rectangle implements Vector {
 	}
 
 	@Override
-	public void transform(double offset) {
-		width += offset;
-		height += offset;
+	public void transform(Point offset) {
+		width += offset.getXInt();
+		height += offset.getYInt();
+	}
+
+	@Override
+	public void normalize() {
+		
+		renderX = Math.toIntExact(cornerX);
+		renderY = Math.toIntExact(cornerY);
+		renderWidth = Math.toIntExact(width);
+		renderHeight = Math.toIntExact(height);
+		
 	}
 	
 	@Override

@@ -100,7 +100,11 @@ public class LinkVector implements Vector {
 	}
 
 	@Override
-	public void transform(double offset) {
+	public void transform(Point offset) {
+	}
+
+	@Override
+	public void normalize() {
 	}
 
 	@Override

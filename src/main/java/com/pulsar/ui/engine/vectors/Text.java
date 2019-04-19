@@ -1,6 +1,10 @@
 package ui.engine.vectors;
 
-import java.awt.Shape;
+import java.awt.Font;
+import java.awt.font.FontRenderContext;
+import java.awt.font.GlyphVector;
+import java.awt.geom.GeneralPath;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -9,35 +13,21 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlValue;
 import javax.xml.namespace.QName;
 
-import ui.engine.Point;
-
 @XmlRootElement(name = "text")
-public class Text implements Vector {
-
-	@XmlAttribute(name = "pading_x")
-	private int padingX;
-	@XmlAttribute(name = "pading_y")
-	private int padingY;
+public class Text {
 
 	@XmlAttribute(name = "style")
 	private String styleString;
 	@XmlValue
 	private String text;
-	
+
+	private Map<String, String> style;
 	private Map<QName, Object> parameters;
+	
+	private static Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 40);
+	private static FontRenderContext frc = new FontRenderContext(null, true, true);
 
-	@Override
-	public String getType() {
-		return "text";
-	}
-
-	@Override
-	public String getStyleString() {
-		return null;
-	}
-
-	@Override
-	public Shape getShape() {
+	public GeneralPath getShape() {
 		
 		text = text.replaceAll("\\s+","");
 		
@@ -47,49 +37,28 @@ public class Text implements Vector {
 			t = parameters.get(new QName(t.substring(1))).toString();
 		}
 		
-		System.out.println(t);
+		GlyphVector v = font.createGlyphVector(frc, t);
+		GeneralPath p = (GeneralPath) v.getOutline();
 		
-		return null;
+		return p;
+		
+	}
+
+	@XmlTransient
+	public Map<String, String> getStyle() {
+		return style;
 	}
 	
-	@XmlTransient
-	@Override
-	public Map<String, String> getStyle() {
-		return null;
+	public String getStyleString() {
+		return styleString;
 	}
-
-	@Override
-	public void move(Point offset) {
-	}
-
-	@Override
-	public void transform(double offset) {
-	}
-
-	@Override
-	public void normalize(long screenSize, int screenWidth, int minSize) {
-	}
-
-	@Override
+	
 	public void setStyle(Map<String, String> s) {
+		style = new HashMap<String, String>(s);
 	}
 
-	@Override
 	public void assingParamerters(Map<QName, Object> p) {
 		parameters = p;
-	}
-	
-	@Override
-	public Object clone() {
-		
-		try {
-			return super.clone();
-		} catch (CloneNotSupportedException e) {
-			e.printStackTrace();
-		}
-		
-		return null;
-		
 	}
 	
 }

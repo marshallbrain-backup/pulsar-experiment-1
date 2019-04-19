@@ -19,7 +19,8 @@ public interface Vector extends Cloneable {
 	Map<String, String> getStyle();
 	
 	void move(Point offset);
-	void transform(double offset);
+	void transform(Point offset);
+	void normalize();
 	void normalize(long screenSize, int screenWidth, int minSize);
 	void setStyle(Map<String, String> s);
 	void assingParamerters(Map<QName, Object> p);

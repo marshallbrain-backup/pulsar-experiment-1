@@ -24,7 +24,7 @@ public class Text {
 	private Map<String, String> style;
 	private Map<QName, Object> parameters;
 	
-	private static Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 40);
+	private static Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 20);
 	private static FontRenderContext frc = new FontRenderContext(null, true, true);
 
 	public GeneralPath getShape() {

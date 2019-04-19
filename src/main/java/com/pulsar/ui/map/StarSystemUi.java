@@ -103,13 +103,13 @@ public class StarSystemUi implements UiElement {
 	}
 
 	@Override
-	public void render(VectorGraphics g) {
+	public void render(VectorGraphics vg) {
 		
 		Areas.clear();
 		
-		g.translationSet(ScreenPosition.CENTER);
-		g.translationMove(new Point(offsetAmount, getZoom(zoom), Main.WIDTH));
-		g.translationMove(new Point(offsetZoom, getZoom(zoom), Main.WIDTH));
+		vg.translationSet(ScreenPosition.CENTER);
+		vg.translationMove(new Point(offsetAmount, getZoom(zoom), Main.WIDTH));
+		vg.translationMove(new Point(offsetZoom, getZoom(zoom), Main.WIDTH));
 		
 		for(int i = 0; i < bodys.size(); i++) {
 			
@@ -121,18 +121,18 @@ public class StarSystemUi implements UiElement {
 					vt.move(new Point(b.getParent().getX(), b.getParent().getY()));
 					vt.transform(new Point(b.getDistance(), 0));
 					vt.normalize(getZoom(zoom), Main.WIDTH, 8);
-					g.draw(vt);
+					vt.draw(vg);
 				}
 			}
 			
-			g.startLogArea();
+			vg.startLogArea();
 			
 			for(Vector v: bodyVectors.get(b.getType())) {
 				Vector vt = (Vector) v.clone();
 				vt.move(new Point(b.getX(), b.getY()));
 				vt.transform(new Point(b.getRadius(), 0));
 				vt.normalize(getZoom(zoom), Main.WIDTH, 8);
-				g.draw(vt);
+				vt.draw(vg);
 			}
 			
 			if(b.getColony() != null) {
@@ -141,11 +141,11 @@ public class StarSystemUi implements UiElement {
 					vt.move(new Point(b.getX(), b.getY()));
 					vt.transform(new Point(b.getRadius(), 0));
 					vt.normalize(getZoom(zoom), Main.WIDTH, 8);
-					g.draw(vt);
+					vt.draw(vg);
 				}
 			}
 			
-			Area a = g.stopLogArea();
+			Area a = vg.stopLogArea();
 			if(a != null) {
 				Areas.add(new EntrySet<>(a, b));
 			}

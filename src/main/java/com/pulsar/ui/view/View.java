@@ -58,10 +58,6 @@ public class View {
 					activeVectors.remove(link);
 					initVectors(link.getLink());
 					break;
-				case "text region":
-					TextRegion reg = (TextRegion) v.get(i);
-					activeVectors.add(reg.getBound());
-					break;
 			}
 		}
 		
@@ -77,7 +73,15 @@ public class View {
 		vg.translationSet(new Point(150, 100));
 		
 		for(Vector v: activeVectors) {
-			vg.draw(v);
+			switch(v.getType()) {
+				case "text region":
+					vg.draw(v);
+					vg.draw(((TextRegion) v).getBound());
+					break;
+				default:
+					vg.draw(v);
+					break;
+			}
 		}
 		
 	}

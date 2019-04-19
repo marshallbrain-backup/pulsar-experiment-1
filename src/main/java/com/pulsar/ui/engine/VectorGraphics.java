@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Shape;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Rectangle2D;
@@ -21,6 +22,8 @@ public class VectorGraphics {
 	private Graphics2D graphicsOriginal;
 	
 	private Area areaLog;
+	
+	private AffineTransform affineTransform;
 
 	public VectorGraphics(Graphics g) {
 		
@@ -39,6 +42,14 @@ public class VectorGraphics {
 	
 	public Graphics getGraphics() {
 		return graphics;
+	}
+	
+	public void saveTransform() {
+		affineTransform = graphics.getTransform();
+	}
+	
+	public void revertTransform() {
+		graphics.setTransform(affineTransform);
 	}
 
 	public void translationSet(Point o) {

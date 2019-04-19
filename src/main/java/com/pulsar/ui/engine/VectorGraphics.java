@@ -72,22 +72,20 @@ public class VectorGraphics {
 		graphics.translate(o.getX(), o.getY());
 	}
 
-	public void draw(Vector v) {
+	public void draw(Shape s, Map<String, String> m) {
 		
-		Area a = getArea(v, Main.WIDTH, Main.HEIGHT);
+		Area a = getArea(s, Main.WIDTH, Main.HEIGHT);
 		
 		if(a == null) {
 			return;
 		}
 		
-		Map<String, String> style = v.getStyle();
-		
-		if(style != null) {
+		if(m != null) {
 			
-			String fill = style.get("fill");
+			String fill = m.get("fill");
 			if(!(fill == null || fill.equals("none"))) {
 				
-				String alpha = v.getStyle().get("fill-opacity");
+				String alpha = m.get("fill-opacity");
 				if(alpha == null)
 					alpha = "1";
 				
@@ -96,14 +94,14 @@ public class VectorGraphics {
 				
 			}
 			
-			String stroke = v.getStyle().get("stroke");
+			String stroke = m.get("stroke");
 			if(!(stroke == null || stroke.equals("none"))) {
 				
-				String alpha = v.getStyle().get("stroke-opacity");
+				String alpha = m.get("stroke-opacity");
 				if(alpha == null)
 					alpha = "1";
 				
-				String width = v.getStyle().get("stroke-width");
+				String width = m.get("stroke-width");
 				if(width == null)
 					width = "1";
 				BasicStroke bs = new BasicStroke(Integer.parseInt(width));
@@ -118,9 +116,7 @@ public class VectorGraphics {
 		
 	}
 
-	public Area getArea(Vector v, int width, int height) {
-		
-		Shape s = v.getShape();
+	public Area getArea(Shape s, int width, int height) {
 		
 		if(s == null) {
 			return null;

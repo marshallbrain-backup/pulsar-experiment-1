@@ -119,7 +119,7 @@ public class StarSystemUi implements UiElement {
 				for(Vector v: bodyVectors.get("orbit")) {
 					Vector vt = (Vector) v.clone();
 					vt.move(new Point(b.getParent().getX(), b.getParent().getY()));
-					vt.transform(b.getDistance());
+					vt.transform(new Point(b.getDistance(), 0));
 					vt.normalize(getZoom(zoom), Main.WIDTH, 8);
 					g.draw(vt);
 				}
@@ -130,7 +130,7 @@ public class StarSystemUi implements UiElement {
 			for(Vector v: bodyVectors.get(b.getType())) {
 				Vector vt = (Vector) v.clone();
 				vt.move(new Point(b.getX(), b.getY()));
-				vt.transform(b.getRadius());
+				vt.transform(new Point(b.getRadius(), 0));
 				vt.normalize(getZoom(zoom), Main.WIDTH, 8);
 				g.draw(vt);
 			}
@@ -139,7 +139,7 @@ public class StarSystemUi implements UiElement {
 				for(Vector v: modifierVectors.get("colony")) {
 					Vector vt = (Vector) v.clone();
 					vt.move(new Point(b.getX(), b.getY()));
-					vt.transform(b.getRadius());
+					vt.transform(new Point(b.getRadius(), 0));
 					vt.normalize(getZoom(zoom), Main.WIDTH, 8);
 					g.draw(vt);
 				}

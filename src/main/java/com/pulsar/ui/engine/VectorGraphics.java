@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.geom.Area;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Rectangle2D;
@@ -119,11 +120,13 @@ public class VectorGraphics {
 
 	public Area getArea(Vector v, int width, int height) {
 		
-		if(v.getShape() == null) {
+		Shape s = v.getShape();
+		
+		if(s == null) {
 			return null;
 		}
 		
-		Area a = new Area(v.getShape());
+		Area a = new Area(s);
 		Area b = new Area(new Rectangle2D.Double(0, 0, width, height));
 		try {
 			b.transform(graphics.getTransform().createInverse());

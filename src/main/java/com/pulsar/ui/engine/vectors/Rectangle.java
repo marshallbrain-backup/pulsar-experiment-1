@@ -1,6 +1,7 @@
 package ui.engine.vectors;
 
 import java.awt.Shape;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -138,10 +139,13 @@ public class Rectangle implements Vector {
 	}
 	
 	@Override
-	public Object clone() {
+	public Vector clone() {
 		
 		try {
-			return super.clone();
+			Rectangle clone = (Rectangle) super.clone();
+			if(parameters != null)
+				clone.parameters = new HashMap<QName, Object>(parameters);
+			return clone;
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}

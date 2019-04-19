@@ -3,6 +3,7 @@ package ui.engine.vectors;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAnyElement;
@@ -112,10 +113,11 @@ public class TextRegion implements Vector {
 	}
 	
 	@Override
-	public Object clone() {
+	public Vector clone() {
 		
 		try {
-			return super.clone();
+			TextRegion clone = (TextRegion) super.clone();
+			return clone;
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}

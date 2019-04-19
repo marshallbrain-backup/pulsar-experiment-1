@@ -13,7 +13,7 @@ public interface Vector extends Cloneable {
 
 	String getType();
 	
-	Object clone();
+	Vector clone();
 
 	Shape getShape();
 	

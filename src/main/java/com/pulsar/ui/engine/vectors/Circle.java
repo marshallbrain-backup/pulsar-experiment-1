@@ -140,10 +140,13 @@ public class Circle implements Vector {
 	}
 	
 	@Override
-	public Object clone() {
+	public Vector clone() {
 		
 		try {
-			return super.clone();
+			Circle clone = (Circle) super.clone();
+			if(parameters != null)
+				clone.parameters = new HashMap<QName, Object>(parameters);
+			return clone;
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}

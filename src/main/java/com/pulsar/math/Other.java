@@ -28,27 +28,6 @@ public class Other {
 		
 	}
 	
-	public static Map<String, String> convertStyle(String s) {
-		
-		if(s == null) {
-			return null;
-		}
-		
-		Map<String, String> style = new HashMap<String, String>();
-		
-		for(String e: s.split(";")) {
-			
-			String key = e.split(":")[0];
-			String value = e.split(":")[1];
-			
-			style.put(key, value);
-			
-		}
-		
-		return style;
-		
-	}
-	
 	public static Color getColor(String hex, String alpha) {
 		
 		Color c = null;

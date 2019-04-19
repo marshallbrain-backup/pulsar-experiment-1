@@ -100,7 +100,7 @@ public class Ui {
 			if(vg != null && !vg.getVectors().isEmpty()) {
 				try {
 					for(Vector v: vg.getVectors()) {
-						v.setStyle(Other.convertStyle(v.getStyleString()));
+						v.setStyle();
 					}
 				} catch(ClassCastException e) {
 					vg = null;

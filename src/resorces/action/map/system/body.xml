@@ -1,7 +1,0 @@
-<action this="0">
-	<click>
-		<open give="@this;1,1">
-			view.colony.frame
-		</open>
-	</click>
-</action>

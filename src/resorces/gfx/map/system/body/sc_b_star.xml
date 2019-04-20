@@ -1,5 +1,6 @@
 <vector_layer>
 	<circle
+		id="body"
 		style="fill:#ffffff;fill-opacity:1"
 		cx="0"
 		cy="0"

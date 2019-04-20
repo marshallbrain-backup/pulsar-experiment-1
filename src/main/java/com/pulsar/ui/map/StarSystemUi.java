@@ -11,12 +11,10 @@ import input.Keyboard;
 import input.Mouse;
 import pulsar.Main;
 import ui.engine.UiElement;
-import ui.ActionHandler;
 import ui.engine.EntrySet;
 import ui.engine.Point;
 import ui.engine.ScreenPosition;
 import ui.engine.VectorGraphics;
-import ui.engine.actions.ActionGroup;
 import ui.engine.vectors.Vector;
 import ui.engine.vectors.VectorGroup;
 import universe.StarSystem;
@@ -34,11 +32,9 @@ public class StarSystemUi implements UiElement {
 	private Point offsetAmount;
 	private Point offsetZoom;
 	private StarSystem starSystem;
-	private ActionHandler actionHandler;
 	
-	public StarSystemUi(Map<String, VectorGroup> vectorList, Map<String, ActionGroup> actionList, ActionHandler ah, StarSystem ss) {
+	public StarSystemUi(Map<String, VectorGroup> vectorList, StarSystem ss) {
 		
-		actionHandler = ah;
 		starSystem = ss;
 		
 		zoom = 1;
@@ -70,12 +66,6 @@ public class StarSystemUi implements UiElement {
 	public boolean action(Mouse m, Keyboard k) {
 		
 		ArrayList<EntrySet<Area, Body>> cl = new ArrayList<EntrySet<Area, Body>>(Areas);
-		
-		for(EntrySet<Area, Body> e: cl) {
-			if(actionHandler.performAction(m, k, e.getValue().getFullPath(), e.getKey(), e.getValue())) {
-				return true;
-			}
-		}
 		
 		if(m.buttonDown(1)) {
 			Point d = m.getChange();

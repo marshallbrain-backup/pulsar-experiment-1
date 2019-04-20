@@ -12,10 +12,7 @@ import math.Other;
 import ui.engine.UiElement;
 import ui.engine.VectorGraphics;
 import ui.engine.XmlParser;
-import ui.engine.actions.Action;
-import ui.engine.actions.ActionGroup;
-import ui.engine.actions.Click;
-import ui.engine.actions.Open;
+import ui.engine.scripts.ScriptGroup;
 import ui.engine.vectors.Circle;
 import ui.engine.vectors.LinkVector;
 import ui.engine.vectors.Rectangle;
@@ -32,35 +29,26 @@ public class Ui {
 	private List<View> views;
 	
 	private Map<String, VectorGroup> vectorList;
-	private Map<String, ActionGroup> actionList;
+	private Map<String, ScriptGroup> scriptList;
 	
 	private UiElement currentUiChart;
 	
 	private Universe universe;
-	private ActionHandler actionHandler;
 	
 	public Ui(Universe u) {
 		
 		universe = u;
 		
 		vectorList = new HashMap<String, VectorGroup>();
-		actionList = new HashMap<String, ActionGroup>();
 		views = new ArrayList<View>();
 		
-		View.initGroups(vectorList, actionList);
-		actionHandler = new ActionHandler(actionList, views);
+//		View.initGroups(vectorList, actionList);
 		
-		loadVectorFiles(vectorList, new File("gfx"));
-		for(VectorGroup vg: vectorList.values()) {
-			vg.init(vectorList);
-		}
-		
-		loadActionFiles(actionList, new File("action"));
+		loadFiles(vectorList, scriptList, new File("gfx"));
 		
 		Map<String, VectorGroup> systemVectors = Other.getAllMatchingKeys(vectorList, "map\\.system\\..*", 2);
-		Map<String, ActionGroup> systemActions = Other.getAllMatchingKeys(actionList, "map\\.system\\..*", 2);
 		
-		currentUiChart = new StarSystemUi(systemVectors, systemActions, actionHandler, universe.getGalaxy().getStarSystem());
+		currentUiChart = new StarSystemUi(systemVectors, universe.getGalaxy().getStarSystem());
 		
 	}
 	
@@ -80,75 +68,47 @@ public class Ui {
 		
 	}
 	
-	private void loadVectorFiles(Map<String, VectorGroup> vl, File file) {
+	private void loadFiles(Map<String, VectorGroup> vl, Map<String, ScriptGroup> sl, File file) {
 		if(file.isDirectory()) {
 			for(File f: file.listFiles()) {
-				loadVectorFiles(vl, f);
+				loadFiles(vl, sl, f);
 			}
 		} else if(Other.getExtension(file).equals("xml")){
-			String head = file.getPath().split("\\\\")[0]+"\\";
-			
-			Class<?>[] classList = {
-					VectorGroup.class, 
-					Circle.class, Rectangle.class, LinkVector.class, TextRegion.class, Text.class
-					};
-			
-			Object o = XmlParser.getXml(file.getPath(), classList);
-			
-			if(o == null)
-				return;
-			
-			VectorGroup vg = (VectorGroup) o;
-			
-			if(vg != null && !vg.getVectors().isEmpty()) {
-				try {
-					for(Vector v: vg.getVectors()) {
-						v.setStyle();
-					}
-				} catch(ClassCastException e) {
-					vg = null;
-				}
-			} else {
-				vg = null;
-			}
-			
-			if(vg != null) {
-				vl.put(file.getPath().split("\\.")[0].replace(head, "").replace("\\", "."), vg);
-			}
-			
+			loadVectors(vl, file);
 		}
 		
 	}
 	
-	private void loadActionFiles(Map<String, ActionGroup> al, File file) {
+	private void loadVectors(Map<String, VectorGroup> vl, File file) {
 		
-		if(file.isDirectory()) {
-			for(File f: file.listFiles()) {
-				loadActionFiles(al, f);
+		String head = file.getPath().split("\\\\")[0]+"\\";
+		
+		Class<?>[] classList = {
+				VectorGroup.class, 
+				Circle.class, Rectangle.class, LinkVector.class, TextRegion.class, Text.class
+				};
+		
+		Object o = XmlParser.getXml(file.getPath(), classList);
+		
+		if(o == null)
+			return;
+		
+		VectorGroup vg = (VectorGroup) o;
+		
+		if(vg != null && !vg.getVectors().isEmpty()) {
+			try {
+				for(Vector v: vg.getVectors()) {
+					v.setStyle();
+				}
+			} catch(ClassCastException e) {
+				vg = null;
 			}
-		} else if(Other.getExtension(file).equals("xml")){
-			
-			String head = file.getPath().split("\\\\")[0]+"\\";
-			
-			Class<?>[] classList = {ActionGroup.class, Click.class, Open.class};
-			
-			Object o = XmlParser.getXml(file.getPath(), classList);
-			
-			if(o == null)
-				return;
-						
-			ActionGroup ag = (ActionGroup) o;
-			ag.propegateParameters();
-			
-			if(!ag.getActions().isEmpty() && ag.getActions().get(0) instanceof Action) {
-			} else {
-				ag = null;
-			}
-			
-			if(ag != null) {
-				al.put(file.getPath().split("\\.")[0].replace(head, "").replace("\\", "."), ag);
-			}
-			
+		} else {
+			vg = null;
+		}
+		
+		if(vg != null) {
+			vl.put(file.getPath().split("\\.")[0].replace(head, "").replace("\\", "."), vg);
 		}
 		
 	}

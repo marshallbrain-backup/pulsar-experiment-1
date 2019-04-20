@@ -7,8 +7,6 @@ import java.util.Map;
 
 import ui.engine.Point;
 import ui.engine.VectorGraphics;
-import ui.engine.actions.Action;
-import ui.engine.actions.ActionGroup;
 import ui.engine.vectors.LinkVector;
 import ui.engine.vectors.TextRegion;
 import ui.engine.vectors.Vector;
@@ -17,10 +15,8 @@ import ui.engine.vectors.VectorGroup;
 public class View {
 	
 	private static Map<String, VectorGroup> vectorList;
-	private static Map<String, ActionGroup> actionList;
 	
 	private VectorGroup activeVectors;
-	private ActionGroup activeActions;
 
 	public View(Object[] action) {
 		
@@ -36,7 +32,6 @@ public class View {
 
 		try {
 			activeVectors = vectorList.get(key).clone();
-			activeActions = actionList.get(key);
 		} catch (NullPointerException e) {
 		}
 		
@@ -44,9 +39,8 @@ public class View {
 		
 	}
 
-	public static void initGroups(Map<String, VectorGroup> vl, Map<String, ActionGroup> al) {
+	public static void initGroups(Map<String, VectorGroup> vl) {
 		vectorList = vl;
-		actionList = al;
 	}
 
 	public void render(VectorGraphics vg) {

@@ -15,6 +15,7 @@ import ui.engine.EntrySet;
 import ui.engine.Point;
 import ui.engine.ScreenPosition;
 import ui.engine.VectorGraphics;
+import ui.engine.scripts.ScriptGroup;
 import ui.engine.vectors.Vector;
 import ui.engine.vectors.VectorGroup;
 import universe.StarSystem;
@@ -24,10 +25,8 @@ public class StarSystemUi implements UiElement {
 	private int zoom;
 	
 	private List<Body> bodys;
+	private List<BodyUi> bodyUis;
 	private List<EntrySet<Area, Body>> Areas;
-	
-	private Map<String, List<Vector>> bodyVectors;
-	private Map<String, List<Vector>> modifierVectors;
 	
 	private Point offsetAmount;
 	private Point offsetZoom;
@@ -39,25 +38,18 @@ public class StarSystemUi implements UiElement {
 		
 		zoom = 1;
 		
-		bodyVectors = new HashMap<String, List<Vector>>();
-		modifierVectors = new HashMap<String, List<Vector>>();
 		bodys = new ArrayList<Body>();
+		bodyUis = new ArrayList<BodyUi>();
 		Areas = new ArrayList<EntrySet<Area, Body>>();
 		offsetAmount = new Point(0, 0);
 		offsetZoom = new Point(0, 0);
 		
-		bodyVectors.put("orbit", vectorList.get("orbit").getVectors());
-		modifierVectors.putIfAbsent("colony", vectorList.get("modifiers.colony").getVectors());
+		Map<String, VectorGroup> mv = new HashMap<String, VectorGroup>();
+		mv.put("orbit", vectorList.get("orbit"));
+		mv.put("colony", vectorList.get("modifiers.colony"));
 		
 		for(Body b: starSystem.getBodys()) {
-			List<Vector> v = vectorList.get(b.getPath()).getVectors();
-			if(v != null) {
-				bodys.add(b);
-				bodyVectors.putIfAbsent(b.getType(), v);
-			} else {
-				bodys.add(b);
-				bodyVectors.putIfAbsent(b.getPath(), vectorList.get("body").getVectors());
-			}
+			bodyUis.add(new BodyUi(b, vectorList, mv, null));
 		}
 		
 	}
@@ -101,45 +93,8 @@ public class StarSystemUi implements UiElement {
 		vg.translationMove(new Point(offsetAmount, getZoom(zoom), Main.WIDTH));
 		vg.translationMove(new Point(offsetZoom, getZoom(zoom), Main.WIDTH));
 		
-		for(int i = 0; i < bodys.size(); i++) {
-			
-			Body b = bodys.get(i);
-			
-			if(b.getParent() != null) {
-				for(Vector v: bodyVectors.get("orbit")) {
-					Vector vt = (Vector) v.clone();
-					vt.move(new Point(b.getParent().getX(), b.getParent().getY()));
-					vt.transform(new Point(b.getDistance(), 0));
-					vt.normalize(getZoom(zoom), Main.WIDTH, 8);
-					vt.draw(vg);
-				}
-			}
-			
-			vg.startLogArea();
-			
-			for(Vector v: bodyVectors.get(b.getType())) {
-				Vector vt = (Vector) v.clone();
-				vt.move(new Point(b.getX(), b.getY()));
-				vt.transform(new Point(b.getRadius(), 0));
-				vt.normalize(getZoom(zoom), Main.WIDTH, 8);
-				vt.draw(vg);
-			}
-			
-			if(b.getColony() != null) {
-				for(Vector v: modifierVectors.get("colony")) {
-					Vector vt = (Vector) v.clone();
-					vt.move(new Point(b.getX(), b.getY()));
-					vt.transform(new Point(b.getRadius(), 0));
-					vt.normalize(getZoom(zoom), Main.WIDTH, 8);
-					vt.draw(vg);
-				}
-			}
-			
-			Area a = vg.stopLogArea();
-			if(a != null) {
-				Areas.add(new EntrySet<>(a, b));
-			}
-			
+		for(BodyUi b: bodyUis) {
+			b.render(vg, getZoom(zoom));
 		}
 		
 	}

@@ -1,0 +1,3 @@
+def onClick(this){
+	openView(view.colony.frame, this.body)
+}

@@ -21,6 +21,7 @@ public interface Vector extends Cloneable {
 	
 	Map<String, String> getStyle();
 	
+	void inherit(Vector v);
 	void draw(VectorGraphics vg);
 	void move(Point offset);
 	void transform(Point offset);

@@ -168,5 +168,12 @@ public class Rectangle implements Vector {
 		return null;
 		
 	}
+
+	@Override
+	public void inherit(Vector v) {
+		
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

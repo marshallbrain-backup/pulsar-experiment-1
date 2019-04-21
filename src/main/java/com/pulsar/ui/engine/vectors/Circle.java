@@ -154,6 +154,10 @@ public class Circle implements Vector {
 	}
 
 	@Override
+	public void inherit(Vector v) {
+	}
+
+	@Override
 	public void assingParamerters(Map<QName, Object> p) {
 	}
 	

@@ -40,6 +40,7 @@ public class Ui {
 		universe = u;
 		
 		vectorList = new HashMap<String, VectorGroup>();
+		scriptList = new HashMap<String, ScriptGroup>();
 		views = new ArrayList<View>();
 		
 //		View.initGroups(vectorList, actionList);

@@ -9,6 +9,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Rectangle2D;
+import java.util.HashMap;
 import java.util.Map;
 
 import math.Other;
@@ -21,7 +22,7 @@ public class VectorGraphics {
 	private Graphics2D graphics;
 	private Graphics2D graphicsOriginal;
 	
-	private Area areaLog;
+	private Map<String, Area> areaLog;
 	
 	private AffineTransform affineTransform;
 
@@ -83,12 +84,16 @@ public class VectorGraphics {
 		graphics.translate(o.getX(), o.getY());
 	}
 
-	public void draw(Shape s, Map<String, String> m) {
+	public void draw(String id, Shape s, Map<String, String> m) {
 		
 		Area a = getArea(s, Main.WIDTH, Main.HEIGHT);
 		
 		if(a == null) {
 			return;
+		}
+		
+		if(areaLog != null && !a.isEmpty()) {
+			areaLog.put(id, a.createTransformedArea(graphics.getTransform()));
 		}
 		
 		if(m != null) {
@@ -142,22 +147,18 @@ public class VectorGraphics {
 		}
 		
 		a.intersect(b);
-		if(areaLog != null && !a.isEmpty()) {
-			areaLog.add(a);
-		}
 		
 		return a;
 		
 	}
 	
 	public void startLogArea() {
-		areaLog = new Area();
+		areaLog = new HashMap<String, Area>();
 	}
 	
-	public Area stopLogArea() {
-		Area a = (Area) areaLog.clone();
-		a.transform(graphics.getTransform());
-		areaLog.reset();
+	public Map<String, Area> stopLogArea() {
+		Map<String, Area> a = new HashMap<String, Area>(areaLog);
+		areaLog.clear();
 		if(!a.isEmpty()) {
 			return a;
 		}

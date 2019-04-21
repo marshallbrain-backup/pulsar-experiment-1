@@ -45,7 +45,7 @@ public class Ui {
 		
 //		View.initGroups(vectorList, actionList);
 		
-		loadFiles(vectorList, scriptList, new File("gfx"));
+		loadFolder(vectorList, scriptList, new File("gfx"));
 		
 		Map<String, VectorGroup> systemVectors = Other.getAllMatchingKeys(vectorList, "map\\.system\\..*", 2);
 		
@@ -69,17 +69,41 @@ public class Ui {
 		
 	}
 	
-	private void loadFiles(Map<String, VectorGroup> vl, Map<String, ScriptGroup> sl, File file) {
+	private void loadFolder(Map<String, VectorGroup> vl, Map<String, ScriptGroup> sl, File file) {
+		
+		List<File> files = new ArrayList<File>();
+		List<File> folders = new ArrayList<File>();
+		
 		if(file.isDirectory()) {
 			for(File f: file.listFiles()) {
-				loadFiles(vl, sl, f);
+				if(f.isDirectory()) {
+					folders.add(f);
+				} else if(f.isFile()) {
+					files.add(f);
+				}
 			}
-		} else if(Other.getExtension(file).equals("xml")){
-			loadVectors(vl, file);
-		} else if(Other.getExtension(file).equals("txt")){
-			loadScripts(sl, file);
+		} else {
+			return;
 		}
 		
+		for(File f: files) {
+			loadFile(vl, sl, f);
+		}
+		
+		for(File f: folders) {
+			loadFolder(vl, sl, f);
+		}
+		
+	}
+	
+	private void loadFile(Map<String, VectorGroup> vl, Map<String, ScriptGroup> sl, File file) {
+		if(file.isFile()) {
+			if(Other.getExtension(file).equals("xml")){
+				loadVectors(vl, file);
+			} else if(Other.getExtension(file).equals("txt")){
+				loadScripts(sl, file);
+			}
+		}
 	}
 	
 	private void loadScripts(Map<String, ScriptGroup> sl, File file) {
@@ -108,13 +132,22 @@ public class Ui {
 		VectorGroup vg = (VectorGroup) o;
 		
 		if(vg != null && !vg.getVectors().isEmpty()) {
-			try {
-				for(Vector v: vg.getVectors()) {
-					v.setStyle();
-				}
-			} catch(ClassCastException e) {
-				vg = null;
+			
+			vg.init();
+			
+			String key = file.getPath().split("\\\\")[0]+"\\";
+			key = file.getPath().split("\\.")[0].replace(key, "").replace("\\", ".");
+			key = key.substring(0, key.lastIndexOf("."));
+			VectorGroup p = vl.get(key);
+			
+			if(p != null) {
+				vg.inherit(p);
 			}
+			
+			for(Vector v: vg.getVectors()) {
+				v.setStyle();
+			}
+			
 		} else {
 			vg = null;
 		}

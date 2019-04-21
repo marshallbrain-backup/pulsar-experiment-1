@@ -1,5 +1,6 @@
 package ui.engine.vectors;
 
+import java.awt.geom.Area;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,8 @@ import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.namespace.QName;
 
+import input.Keyboard;
+import input.Mouse;
 import ui.engine.Point;
 import ui.engine.VectorGraphics;
 
@@ -25,6 +28,7 @@ public class VectorGroup implements Cloneable {
 	
 	@XmlAnyAttribute
 	private Map<QName, Object> parameters;
+	private Map<String, Vector> mappedVectors;
 	
 	public List<Vector> getVectors(){
 		return vectors;
@@ -48,9 +52,34 @@ public class VectorGroup implements Cloneable {
 	}
 	
 	public void init() {
+		
 		for(Vector a: vectors) {
 			a.assingParamerters(parameters);
 		}
+	}
+	
+	public String getAction(Mouse m, Keyboard k, Map<String, Area> a) {
+		
+		if(mappedVectors == null) {
+			mappedVectors = new HashMap<String, Vector>();
+			for(Vector v: vectors) {
+				mappedVectors.put(v.getId(), v);
+			}
+		}
+		
+		Point p = m.getPosition();
+		if(a != null) {
+			for(Entry<String, Area> e: a.entrySet()) {
+				if(e.getValue().contains(p.getX(), p.getY())) {
+					if(m.buttonClicked(1)) {
+						String s = mappedVectors.get(e.getKey()).getAction("right click");
+						System.out.println(s);
+					}
+				}
+			}
+		}
+		
+		return null;
 	}
 	
 	public void draw(VectorGraphics vg) {

@@ -83,6 +83,26 @@ public class BodyUi {
 		} catch(IndexOutOfBoundsException e) {
 			return null;
 		}
+		
+//		try {
+//			
+//			VectorGroup vg = v.get(id).clone();
+//			VectorGroup p = getVectors(id.substring(0, id.lastIndexOf(".")), v).clone();
+//			
+//			if(p != null) {
+//				if(vg == null) {
+//					vg = p;
+//				} else {
+//					vg.inherit(p);
+//				}
+//			}
+//			
+//			return vg;
+//			
+//		} catch(IndexOutOfBoundsException e) {
+//			return null;
+//		}
+		
 	}
 	
 }

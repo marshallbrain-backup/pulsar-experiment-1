@@ -7,18 +7,4 @@
 		x="0"
 		y="0"
 	/>
-	<tab_group id="top_tabs">
-		<link_vector
-			id="body"
-			link="view.tab.static"
-			x="0"
-			y="0"
-		/>
-		<link_vector
-			id="station1"
-			link="view.tab.static"
-			x="0"
-			y="0"
-		/>
-	</tab_group>
 </vector_layer>

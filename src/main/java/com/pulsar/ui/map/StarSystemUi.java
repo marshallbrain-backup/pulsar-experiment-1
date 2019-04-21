@@ -57,7 +57,9 @@ public class StarSystemUi implements UiElement {
 	@Override
 	public boolean action(Mouse m, Keyboard k) {
 		
-		ArrayList<EntrySet<Area, Body>> cl = new ArrayList<EntrySet<Area, Body>>(Areas);
+		for(BodyUi b: bodyUis) {
+			b.action(m, k);
+		}
 		
 		if(m.buttonDown(1)) {
 			Point d = m.getChange();

@@ -53,19 +53,20 @@ public class VectorGroup implements Cloneable {
 	
 	public void init() {
 		
-		for(Vector a: vectors) {
-			a.assingParamerters(parameters);
-		}
-	}
-	
-	public String getAction(Mouse m, Keyboard k, Map<String, Area> a) {
-		
 		if(mappedVectors == null) {
 			mappedVectors = new HashMap<String, Vector>();
 			for(Vector v: vectors) {
 				mappedVectors.put(v.getId(), v);
 			}
 		}
+		
+		for(Vector a: vectors) {
+			a.assingParamerters(parameters);
+		}
+		
+	}
+	
+	public String getAction(Mouse m, Keyboard k, Map<String, Area> a) {
 		
 		Point p = m.getPosition();
 		if(a != null) {
@@ -101,19 +102,30 @@ public class VectorGroup implements Cloneable {
 			parameters.put(e.getKey(), p[Integer.parseInt(e.getValue().toString())]);
 		}
 	}
+
+	public void inherit(VectorGroup p) {
+		for(Entry<String, Vector> e: mappedVectors.entrySet()) {
+			e.getValue().inherit(p.mappedVectors.get(e.getKey()));
+		}
+	}
 	
 	@Override
 	public VectorGroup clone() {
 		
 		try {
+			
 			VectorGroup clone = (VectorGroup) super.clone();
 			clone.vectors = new ArrayList<Vector>();
+			
 			for(Vector v: vectors) {
 				clone.vectors.add(v.clone());
 			}
+			
 			clone.parameters = new HashMap<QName, Object>(parameters);
 			clone.init();
+			
 			return clone;
+			
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}

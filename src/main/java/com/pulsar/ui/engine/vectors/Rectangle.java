@@ -35,6 +35,8 @@ public class Rectangle implements Vector {
 	
 	@XmlAttribute(name = "style")
 	private String styleString;
+	@XmlAttribute(name = "id")
+	private String id;
 	
 	private Map<String, String> style;
 	private Map<QName, Object> parameters;
@@ -63,8 +65,21 @@ public class Rectangle implements Vector {
 	}
 	
 	@Override
+	public String getId() {
+		return id;
+	}
+
+	@Override
+	public String getAction(String action) {
+		switch(action) {
+			default:
+				return null;
+		}
+	}
+	
+	@Override
 	public void draw(VectorGraphics vg) {
-		vg.draw(getShape(), getStyle());
+		vg.draw(id, getShape(), getStyle());
 	}
 
 	@Override

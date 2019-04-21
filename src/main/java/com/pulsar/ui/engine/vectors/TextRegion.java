@@ -32,6 +32,8 @@ public class TextRegion implements Vector {
 	
 	@XmlElement(name = "text")
 	private Text text;
+	@XmlAttribute(name = "id")
+	private String id;
 	
 	@XmlAnyElement(lax = true)
 	private Vector bound;
@@ -47,6 +49,19 @@ public class TextRegion implements Vector {
 	}
 	
 	@Override
+	public String getId() {
+		return id;
+	}
+
+	@Override
+	public String getAction(String action) {
+		switch(action) {
+			default:
+				return null;
+		}
+	}
+	
+	@Override
 	public void draw(VectorGraphics vg) {
 		
 		GeneralPath s = text.getShape();
@@ -59,8 +74,8 @@ public class TextRegion implements Vector {
 		v.move(new Point(x, y-vy));
 		v.normalize();
 		v.draw(vg);
-		
-		vg.draw(getShape(), getStyle());
+
+		vg.draw(id, getShape(), getStyle());
 		
 	}
 

@@ -25,6 +25,8 @@ public class LinkVector implements Vector {
 	
 	@XmlAttribute(name = "link")
 	private String location;
+	@XmlAttribute(name = "id")
+	private String id;
 	@XmlAttribute(name = "give")
 	private String par;
 	
@@ -76,6 +78,19 @@ public class LinkVector implements Vector {
 	@Override
 	public String getType() {
 		return "link vector";
+	}
+	
+	@Override
+	public String getId() {
+		return id;
+	}
+
+	@Override
+	public String getAction(String action) {
+		switch(action) {
+			default:
+				return null;
+		}
 	}
 	
 	@Override

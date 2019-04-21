@@ -5,6 +5,7 @@ import java.awt.geom.Ellipse2D;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlAnyAttribute;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.namespace.QName;
@@ -33,6 +34,10 @@ public class Circle implements Vector {
 
 	@XmlAttribute(name = "style")
 	private String styleString;
+	@XmlAttribute(name = "id")
+	private String id;
+	@XmlAttribute(name = "on_click")
+	private String onClick;
 	
 	private Map<String, String> style;
 
@@ -71,8 +76,23 @@ public class Circle implements Vector {
 	}
 	
 	@Override
+	public String getId() {
+		return id;
+	}
+
+	@Override
+	public String getAction(String action) {
+		switch(action) {
+			case "right click":
+				return onClick;
+			default:
+				return null;
+		}
+	}
+	
+	@Override
 	public void draw(VectorGraphics vg) {
-		vg.draw(getShape(), getStyle());
+		vg.draw(id, getShape(), getStyle());
 	}
 
 	@Override

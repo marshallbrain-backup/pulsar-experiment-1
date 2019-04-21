@@ -12,6 +12,8 @@ import ui.engine.VectorGraphics;
 public interface Vector extends Cloneable {
 
 	String getType();
+	String getId();
+	String getAction(String string);
 	
 	Vector clone();
 

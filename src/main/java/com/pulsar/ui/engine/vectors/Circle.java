@@ -35,7 +35,6 @@ public class Circle implements Vector {
 	private String styleString;
 	
 	private Map<String, String> style;
-	private Map<QName, Object> parameters;
 
 	public Circle() {
 	}
@@ -136,7 +135,6 @@ public class Circle implements Vector {
 
 	@Override
 	public void assingParamerters(Map<QName, Object> p) {
-		parameters = p;
 	}
 	
 	@Override
@@ -144,8 +142,6 @@ public class Circle implements Vector {
 		
 		try {
 			Circle clone = (Circle) super.clone();
-			if(parameters != null)
-				clone.parameters = new HashMap<QName, Object>(parameters);
 			return clone;
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();

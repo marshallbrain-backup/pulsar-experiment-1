@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import bodys.Body;
+import input.Keyboard;
+import input.Mouse;
 import pulsar.Main;
 import ui.engine.EntrySet;
 import ui.engine.Point;
@@ -16,7 +18,7 @@ import ui.engine.vectors.VectorGroup;
 public class BodyUi {
 	
 	private Body body;
-	private Area visibleArea;
+	private Map<String, Area> visibleArea;
 	private VectorGroup vectors;
 	private ScriptGroup scrip;
 	
@@ -31,7 +33,8 @@ public class BodyUi {
 		body = b;
 	}
 	
-	public boolean action() {
+	public boolean action(Mouse m, Keyboard k) {
+		vectors.getAction(m, k, visibleArea);
 		return false;
 	}
 	
@@ -67,7 +70,7 @@ public class BodyUi {
 			}
 		}
 		
-		Area a = vg.stopLogArea();
+		Map<String, Area> a = vg.stopLogArea();
 		if(a != null) {
 			visibleArea = a;
 		}

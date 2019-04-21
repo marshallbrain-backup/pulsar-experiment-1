@@ -53,11 +53,9 @@ public class VectorGroup implements Cloneable {
 	
 	public void init() {
 		
-		if(mappedVectors == null) {
-			mappedVectors = new HashMap<String, Vector>();
-			for(Vector v: vectors) {
-				mappedVectors.put(v.getId(), v);
-			}
+		mappedVectors = new HashMap<String, Vector>();
+		for(Vector v: vectors) {
+			mappedVectors.put(v.getId(), v);
 		}
 		
 		for(Vector a: vectors) {

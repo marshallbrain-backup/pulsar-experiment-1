@@ -156,12 +156,18 @@ public class Circle implements Vector {
 	@Override
 	public void inherit(Vector i) {
 		Circle v = (Circle) i;
-		baseX = v.baseX;
-		baseY = v.baseY;
-		baseR = v.baseR;
-		styleString = v.styleString;
-		id = v.id;
-		onClick = v.onClick;
+		if(baseX == 0)
+			baseX = v.baseX;
+		if(baseY == 0)
+			baseY = v.baseY;
+		if(baseR == 0)
+			baseR = v.baseR;
+		if(styleString == null)
+			styleString = v.styleString;
+		if(id == null)
+			id = v.id;
+		if(onClick == null)
+			onClick = v.onClick;
 	}
 
 	@Override

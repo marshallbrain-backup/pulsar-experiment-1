@@ -75,13 +75,24 @@ public class Ui {
 			}
 		} else if(Other.getExtension(file).equals("xml")){
 			loadVectors(vl, file);
+		} else if(Other.getExtension(file).equals("txt")){
+			loadScripts(sl, file);
 		}
 		
 	}
 	
-	private void loadVectors(Map<String, VectorGroup> vl, File file) {
+	private void loadScripts(Map<String, ScriptGroup> sl, File file) {
 		
-		String head = file.getPath().split("\\\\")[0]+"\\";
+		ScriptGroup sg = new ScriptGroup(file);
+		
+		if(!sg.isEmpty()) {
+			String head = file.getPath().split("\\\\")[0]+"\\";
+			sl.put(file.getPath().split("\\.")[0].replace(head, "").replace("\\", "."), sg);
+		}
+		
+	}
+
+	private void loadVectors(Map<String, VectorGroup> vl, File file) {
 		
 		Class<?>[] classList = {
 				VectorGroup.class, 
@@ -108,6 +119,7 @@ public class Ui {
 		}
 		
 		if(vg != null) {
+			String head = file.getPath().split("\\\\")[0]+"\\";
 			vl.put(file.getPath().split("\\.")[0].replace(head, "").replace("\\", "."), vg);
 		}
 		

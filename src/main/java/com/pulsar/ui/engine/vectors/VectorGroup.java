@@ -72,7 +72,7 @@ public class VectorGroup implements Cloneable {
 				if(e.getValue().contains(p.getX(), p.getY())) {
 					if(m.buttonClicked(1)) {
 						String s = mappedVectors.get(e.getKey()).getAction("right click");
-						System.out.println(s);
+						return s;
 					}
 				}
 			}

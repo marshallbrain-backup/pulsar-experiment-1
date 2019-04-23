@@ -20,21 +20,25 @@ public class BodyUi {
 	private Body body;
 	private Map<String, Area> visibleArea;
 	private VectorGroup vectors;
-	private ScriptGroup scrip;
+	private ScriptGroup script;
 	
 	private Map<String, VectorGroup> modifierVectors;
 	
-	public BodyUi(Body b, Map<String, VectorGroup> v, Map<String, VectorGroup> m, ScriptGroup s) {
+	public BodyUi(Body b, Map<String, VectorGroup> v, Map<String, ScriptGroup> s, Map<String, VectorGroup> m) {
 		
-		vectors = getVectors(b.getPath(), v);
+		vectors = getGroup(b.getPath(), v);
+		script = getGroup(b.getPath(), s);
 		
 		modifierVectors = m;
-		scrip = s;
 		body = b;
 	}
 	
 	public boolean action(Mouse m, Keyboard k) {
-		vectors.getAction(m, k, visibleArea);
+		String a = vectors.getAction(m, k, visibleArea);
+		if(a != null) {
+			System.out.println(a);
+			script.callFunction(a, body);
+		}
 		return false;
 	}
 	
@@ -77,9 +81,15 @@ public class BodyUi {
 		
 	}
 	
-	private VectorGroup getVectors(String id, Map<String, VectorGroup> v){
+	private <T> T getGroup(String id, Map<String, T> v){
 		try {
-			return v.getOrDefault(id, getVectors(id.substring(0, id.lastIndexOf(".")), v));
+			T r = v.get(id);
+			if(r != null) {
+				return r;
+			}
+			String p = id.substring(0, id.lastIndexOf("."));
+			T pg = getGroup(p, v);
+			return pg;
 		} catch(IndexOutOfBoundsException e) {
 			return null;
 		}

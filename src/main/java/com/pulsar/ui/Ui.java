@@ -48,8 +48,9 @@ public class Ui {
 		loadFolder(vectorList, scriptList, new File("gfx"));
 		
 		Map<String, VectorGroup> systemVectors = Other.getAllMatchingKeys(vectorList, "map\\.system\\..*", 2);
+		Map<String, ScriptGroup> systemScripts = Other.getAllMatchingKeys(scriptList, "map\\.system\\..*", 2);
 		
-		currentUiChart = new StarSystemUi(systemVectors, universe.getGalaxy().getStarSystem());
+		currentUiChart = new StarSystemUi(systemVectors, systemScripts, universe.getGalaxy().getStarSystem());
 		
 	}
 	

@@ -32,7 +32,7 @@ public class StarSystemUi implements UiElement {
 	private Point offsetZoom;
 	private StarSystem starSystem;
 	
-	public StarSystemUi(Map<String, VectorGroup> vectorList, StarSystem ss) {
+	public StarSystemUi(Map<String, VectorGroup> vectorList, Map<String, ScriptGroup> scriptsList, StarSystem ss) {
 		
 		starSystem = ss;
 		
@@ -49,7 +49,7 @@ public class StarSystemUi implements UiElement {
 		mv.put("colony", vectorList.get("modifiers.colony"));
 		
 		for(Body b: starSystem.getBodys()) {
-			bodyUis.add(new BodyUi(b, vectorList, mv, null));
+			bodyUis.add(new BodyUi(b, vectorList, scriptsList, mv));
 		}
 		
 	}

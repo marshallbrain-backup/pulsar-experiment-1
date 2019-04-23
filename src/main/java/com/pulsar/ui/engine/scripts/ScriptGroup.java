@@ -195,7 +195,7 @@ public class ScriptGroup {
 	}
 
 	public boolean isEmpty() {
-		return true;
+		return false;
 	}
 	
 }

@@ -4,11 +4,33 @@ package ui.engine.scripts.token;
 public enum TokenType implements TokenGroup {
 	
 	NONE,
-	NEWLINE;
+	NEWLINE,
+	ID,
+	FUN,
+	VAR,
+	OTHER;
 	
-	public enum ID implements TokenGroup {
+	public enum KEY implements TokenGroup {
 		
-		FUNCTION
+		FUN
+		
+	}
+	
+	public enum OP implements TokenGroup {
+		
+		OPAR,
+		CPAR,
+		OBRACE,
+		CBRACE,
+		COMA,
+		DOT
+		
+	}
+	
+	public enum LIT implements TokenGroup {
+		
+		STRING,
+		INT
 		
 	}
 	

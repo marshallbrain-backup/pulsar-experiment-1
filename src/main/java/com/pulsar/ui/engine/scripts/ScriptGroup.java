@@ -12,6 +12,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
+import ui.engine.scripts.token.Token;
+import ui.engine.scripts.token.TokenGroup;
+import ui.engine.scripts.token.TokenType;
+
 public class ScriptGroup {
 
 	public ScriptGroup(File file) {
@@ -26,15 +30,16 @@ public class ScriptGroup {
 		
 		String code = br.lines().collect(Collectors.joining(System.lineSeparator()));
 		
-		Lexer.getTokens(code, getExprs());
+		Token[] tokens = Lexer.getTokens(code, getExprs());
 		
 	}
 	
-	private String[][] getExprs() {
-		return new String[][]{
-			{"[ \\t\\x0B\\f]", "NONE"},
-			{"[#]", "NONE"},
-			{System.lineSeparator().replace("\n", "\\n").replace("\r", "\\r"), "NEWLINE"},
+	private Token[] getExprs() {
+		return new Token[]{
+				new Token("\\p{Space}", TokenType.NONE),
+				new Token("[#]", TokenType.NONE),
+				new Token("[;]", TokenType.NEWLINE),
+				new Token("fun", TokenType.ID.FUNCTION)
 		};
 	}
 

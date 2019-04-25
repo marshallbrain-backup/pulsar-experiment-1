@@ -5,28 +5,32 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import ui.engine.scripts.token.Token;
+import ui.engine.scripts.token.TokenGroup;
+import ui.engine.scripts.token.TokenType;
+
 public class Lexer {
 	
-	public static String[][] getTokens(String code, String[][] tokenExprs) {
+	public static Token[] getTokens(String code, Token[] tokenExprs) {
 		
 		int pos = 0;
-		List<String[]> tokens = new ArrayList<String[]>();
+		List<Token> tokens = new ArrayList<Token>();
 		
 		while(pos < code.length()) {
 			
 			boolean matches = false;
 			Matcher m = null;
 			
-			for(String[] e: tokenExprs) {
+			for(Token e: tokenExprs) {
 				
-				Pattern r = Pattern.compile(e[0]);
+				Pattern r = Pattern.compile(e.ex);
 				m = r.matcher(code.substring(0, pos+1));
 				
 				if(m.find()) {
 					matches = true;
 					String t = m.group(0);
-					if(!e[1].equals("NONE")) {
-						tokens.add(new String[] {t, e[1]});
+					if(e.type != TokenType.NONE) {
+						tokens.add(new Token(t, e.type));
 					}
 					break;
 				}
@@ -37,14 +41,16 @@ public class Lexer {
 				pos++;
 			} else {
 				String e = code.substring(0, m.start(0));
-				System.out.println("Unknown charactor: " + e);
+				if(!e.isEmpty()) { 
+					System.out.println("Unknown charactor: " + e);
+				}
 				code = code.substring(m.end(0));
 				pos = 0;
 			}
 			
 		}
 		
-		String[][] t = new String[tokens.size()][2];
+		Token[] t = new Token[tokens.size()];
 		t = tokens.toArray(t);
 		return t;
 		

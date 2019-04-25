@@ -10,4 +10,8 @@ public class Token {
 		type = t;
 	}
 	
+	public String toString() {
+		return ex + "=" + type;
+	}
+	
 }

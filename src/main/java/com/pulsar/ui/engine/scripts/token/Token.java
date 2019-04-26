@@ -3,9 +3,9 @@ package ui.engine.scripts.token;
 public class Token {
 	
 	public final String ex;
-	public final TokenGroup type;
+	public final TokenType type;
 	
-	public Token(String n, TokenGroup t) {
+	public Token(String n, TokenType t) {
 		ex = n;
 		type = t;
 	}

@@ -10,13 +10,20 @@ import java.io.InputStreamReader;
 import java.nio.CharBuffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
+import bodys.Body;
 import ui.engine.scripts.token.Token;
 import ui.engine.scripts.token.TokenGroup;
 import ui.engine.scripts.token.TokenType;
 
 public class ScriptGroup {
+	
+	private Map<String, Object[]> functions = new HashMap<String, Object[]>();
 
 	public ScriptGroup(File file) {
 		
@@ -32,6 +39,63 @@ public class ScriptGroup {
 		
 		Token[] tokens = Lexer.getTokens(code, getExprs());
 		
+		for(int i = 0; i < tokens.length; i++) {
+			if(tokens[i].type == TokenType.KEY.FUN) {
+				
+				String name = tokens[i+1].ex;;
+				List<String> par = new ArrayList<String>();
+				List<Token> body = new ArrayList<Token>();
+				
+				boolean gotVar = false;
+				if(tokens[i+2].type == TokenType.OP.OPAR) {
+					for(int j = i+3; tokens[j].type != TokenType.OP.CPAR; j++, i=j+1) {
+						
+						if(!gotVar && tokens[j].type == TokenType.VAR) {
+							par.add(tokens[j].ex);
+							gotVar = true;
+						} else if(gotVar && tokens[j].type == TokenType.OP.COMA) {
+							gotVar = false;
+						} else {
+							System.out.println("error");
+						}
+						
+					}
+				}
+				
+				int braceCount = 0;
+				if(tokens[i].type == TokenType.OP.OBRACE) {
+					for(int j = i+1; !(braceCount == 0 && tokens[j].type == TokenType.OP.CBRACE); j++, i=j) {
+						
+						if(tokens[j].type == TokenType.OP.OBRACE) {
+							braceCount++;
+						} else if(tokens[j].type == TokenType.OP.CBRACE) {
+							braceCount--;
+						}
+						
+						body.add(tokens[j]);
+					}
+				}
+				
+				Object[] fun = new Object[2];
+				String[] s = new String[par.size()];
+				Token[] t = new Token[body.size()];
+				
+				fun[0] = par.toArray(s);
+				fun[1] = body.toArray(t);
+				
+				functions.put(name, fun);
+				
+			}
+		}
+		
+	}
+
+	public void callFunction(String functionName, Object body) {
+		
+	}
+
+	public boolean isEmpty() {
+		return false;
 	}
 	
 	private Token[] getExprs() {
@@ -52,13 +116,6 @@ public class ScriptGroup {
 				new Token("^[0-9]", TokenType.LIT.INT),
 				new Token("^\\.", TokenType.OP.DOT),
 		};
-	}
-
-	public void callFunction(String name, Object... objects) {
-	}
-
-	public boolean isEmpty() {
-		return false;
 	}
 	
 }

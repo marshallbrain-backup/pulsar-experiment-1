@@ -6,7 +6,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import ui.engine.scripts.token.Token;
-import ui.engine.scripts.token.TokenGroup;
 import ui.engine.scripts.token.TokenType;
 
 public class Lexer {

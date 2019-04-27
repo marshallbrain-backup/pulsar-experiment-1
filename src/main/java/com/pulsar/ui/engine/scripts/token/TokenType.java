@@ -9,6 +9,7 @@ public enum TokenType {
 	OP,
 	NUM,
 	STRING,
-	KEY
+	KEY,
+	END
 	
 }

@@ -25,121 +25,114 @@ public class ActionTree {
 	
 	private static List<Node> createAST(Token[] tokenArray) {
 		
-		Iterator<Token> tokens = Arrays.asList(tokenArray).iterator();
-		NodeList list = getNodeList(tokens);
+		List<Token> tokenList = new ArrayList<Token>(Arrays.asList(tokenArray));
+		tokenList.add(new Token("", TokenType.END));
+		Node list = getNodeList(tokenList, 0);
 		System.out.println(list);
 		
-		return list.nodeList;
+		return ((NodeList) list).nodeList;
 		
 	}
 	
-	private static NodeList getNodeList(Iterator<Token> tokens) {
+	private static Node getNodeList(List<Token> tokens, int start) {
 		
 		List<Node> body = new ArrayList<Node>();
-		Token name = null;
+		Node id = null;
+		Token lastToken = null;
 		
-		while(tokens.hasNext()) {
-			Token t = tokens.next();
-			if(t.type == TokenType.KEY) {
-				if(t.ex.equals("fun")) {
-					body.add(createFunction(tokens));
-				}
-			}
-		}
-		
-		return new NodeList(body);
-		
-	}
-	
-	private static Node readLine(Iterator<Token> tokens) {
-		
-		List<Node> body = new ArrayList<Node>();
-		Token current = null;
-//		body.add(new NodeBasic(current, ));
-		
-		while(tokens.hasNext()) {
-			Token t = tokens.next();
-			if(t.ex.equals("this")) {
-				System.out.print("");
-			}
-			if(t.type == TokenType.OP) {
-				if(t.ex.equals("{")) {
-					return readLine(tokens);
-				} else if(t.ex.equals("}")) {
-					return new NodeList(body);
-				} else if(t.ex.equals(".")) {
-					body.add(new NodeBasic(current, readLine(tokens)));
-					current = null;
-				} else if(t.ex.equals("(")) {
-					return new NodeBasic(current, readLine(tokens));
-				} else if(t.ex.equals(",")) {
-					body.add(new NodeBasic(current));
-					current = null;
-				} else if(t.ex.equals(")")) {
-					return new NodeList(body);
-				}
-			} else if(t.type == TokenType.ID || t.type == TokenType.STRING || t.type == TokenType.NUM) {
-				if(current != null) {
-					System.out.println("Function initializing error: " + t.ex);
+		for(int i = start; i < tokens.size(); i++) {
+			
+			Token t = tokens.get(i);
+			
+			if(t.type == TokenType.NEWLINE) {
+				if(tokens.get(i-1).type == TokenType.OP && tokens.get(i-1).ex.equals("{")) {
+					body.add(id);
 				} else {
-					current = t;
+					return id;
 				}
+			} else if(t.type == TokenType.KEY) {
+				if(t.ex.equals("fun")) {
+					Node funTitle = getNodeList(tokens, i+1);
+					Node funBody = getNodeList(tokens, i+2);
+					body.add(new NodeExp(new NodeBasic(t), funTitle, funBody));
+				}
+			} else if(t.type == TokenType.OP) {
+				if(t.ex.equals(",")) {
+					body.add(id);
+				} else if(t.ex.equals(".")) {
+					id = new NodeExp(id, getNodeList(tokens, i+1));
+				} else if(t.ex.equals("(")) {
+					id = new NodeExp(id, getNodeList(tokens, i+1));
+				} else if(t.ex.equals(")")) {
+						
+					if(tokens.get(i-1).type == TokenType.OP && tokens.get(i-1).ex.equals("(")) {
+						body.add(id);
+						id = new NodeExp(new NodeList(body), new NodeBasic(tokens.get(i-1)), new NodeBasic(tokens.get(i)));
+					}
+					if(lastToken.type == TokenType.OP && lastToken.ex.equals("(")) {
+						tokens.remove(i);
+					}
+						
+					return id;
+					
+				} else if(t.ex.equals("{")) {
+					id = new NodeExp(id, getNodeList(tokens, i+1));
+				} else if(t.ex.equals("}")) {
+					
+					if(!body.isEmpty()) {
+						
+						if(tokens.get(i-1).type == TokenType.OP && tokens.get(i).type == TokenType.OP) {
+							if(tokens.get(i-1).ex.equals("{") && tokens.get(i).ex.equals("}")) {
+								id = new NodeExp(new NodeList(body), new NodeBasic(tokens.get(i-1)), new NodeBasic(tokens.get(i)));
+								tokens.remove(i);
+							}
+						}
+						
+					}
+						
+					return id;
+					
+				}
+			} else if(t.type == TokenType.ID) {
+				id = new NodeBasic(t);
+			} else if(t.type == TokenType.STRING) {
+				id = new NodeBasic(t);
+			} else if(t.type == TokenType.NUM) {
+				id = new NodeBasic(t);
 			}
-		}
-		
-		return new NodeList(body);
-		
-	}
-
-	private static Node createFunction(Iterator<Token> tokens) {
-		
-		Node par = null;
-		
-		Token name = null;
-		
-		while(tokens.hasNext()) {
-			Token t = tokens.next();
-			if(name == null && t.type == TokenType.ID) {
-				name = t;
-			} else if(t.type == TokenType.OP && t.ex.equals("(")) {
-				par = getParamaters(tokens);
-				break;
-			}
+			
+			lastToken = t;
+			tokens.remove(i);
+			i--;
 			
 		}
 		
-		Node fun = new NodeBasic(name, par);
+		return new NodeList(body);
 		
-		Node body = readLine(tokens);
-		Node node = new NodeBasic(new Token("fun", TokenType.KEY), fun, body);
-		
-		return node;
 	}
-	
-	private static Node getParamaters(Iterator<Token> tokens) {
 
-		List<Node> paramaters = new ArrayList<Node>();
-		Node currentPar = null;
+	private static Node creatFunction(List<Token> tokens) {
+
+		Node name = null;
+		Node body = null;
 		
-		while(tokens.hasNext()) {
-			Token t = tokens.next();
-			if(t.type == TokenType.OP && t.ex.equals(")")) {
-				return new NodeList(paramaters);
-			} else if(t.type == TokenType.OP && t.ex.equals(",")) {
-				currentPar = null;
-			} else if(t.type == TokenType.ID) {
-				if(currentPar != null) {
-					System.out.println("Function initializing error: " + t.ex);
-				} else {
-					currentPar = new NodeBasic(t);
-					paramaters.add(currentPar);
+		for(int i = 0; i < tokens.size(); i++) {
+			Token t = tokens.get(i);
+			
+			if(t.type == TokenType.ID) {
+				name = getNodeList(tokens, i);
+			} else if(t.type == TokenType.OP) {
+				if(t.ex.equals("{")) {
+					body = getNodeList(tokens, i+1);
+					break;
 				}
-			} else {
-				System.out.println("Function initializing error: " + t.ex);
 			}
+			
+			tokens.remove(i);
+			i--;
 		}
 		
-		return new NodeList(paramaters);
+		return new NodeExp(new NodeBasic(new Token("fun", TokenType.KEY)), name, body);
 		
 	}
 	

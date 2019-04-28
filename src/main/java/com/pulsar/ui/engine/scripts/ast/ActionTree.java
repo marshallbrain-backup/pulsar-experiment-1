@@ -38,23 +38,81 @@ public class ActionTree {
 	
 	private static Node parseNode(Node n) {
 		
-		if(n instanceof NodeExp) {
-			if(((NodeBasic) n.getType()).type.equals("fun", TokenType.KEY)) {
-				
-				Node title = n.getPar1();
-				
-				NodeBasic name = (NodeBasic) title.getType();
-				NodeList par = (NodeList) title.getPar1().getType();
-				NodeList body = (NodeList) n.getPar2().getType();
-				
-				Node function = new NodeCreateFun(name.type.ex, par, body);
-				return function;
-				
+		Node type = n.getType();
+		Node r = null;
+		
+		if(type.equals(new Token(null, TokenType.KEY), null, null)) {
+			if(type.equals(new Token("fun", TokenType.KEY), null, null)) {
+				r = parseFunction(n);
+			}
+		} else if(type.equals(new Token(null, TokenType.ID), null, null)) {
+			r = parseVariable(n);
+		} else if(type.equals(new Token(null, TokenType.LITERAL), null, null)) {
+			
+			Token t = (Token) ((NodeBasic) type).type;
+			
+			if(t.ex.matches("^\"\\p{ASCII}*\"")) {
+				r = new NodeLitteralString(t.ex.substring(1, t.ex.length()-1));
 			}
 		}
 		
-		return null;
+		return r;
 		
+	}
+	
+	private static Node parseVariable(Node n) {
+		
+		List<Node> varChain = new ArrayList<Node>();
+		Node var = null;
+		Node p = n;
+		
+		while(p.getPar1() != null && p.getPar1().getType().equals(new Token(null, TokenType.ID), null, null)) {
+			varChain.add(p.getType());
+			p = p.getPar1();
+		}
+		
+		for(Node v: varChain) {
+			var = new NodeCallVar(v, var);
+		}
+		
+		if(p.getPar1() != null) {
+			NodeList par = (NodeList) parseFunction(p);
+			Node[] l = new Node[par.nodeList.size()];
+			var = new NodeCallFun(p.getType(), par.nodeList.toArray(l), var);
+		} else {
+			var = new NodeCallVar(p, var);
+		}
+		
+		
+		return var;
+	}
+	
+	private static Node parseFunction(Node n) {
+		
+		Node r = null;
+		
+		if(n.getType().equals(new Token("fun", TokenType.KEY), null, null)) {
+			NodeBasic name = (NodeBasic) n.getPar1().getType();
+			NodeList par = parseList(n.getPar1().getPar1().getType());
+			NodeList body = parseList(n.getPar2().getType());
+			r = new NodeCreateFun(name.type.ex, par, body);
+		} else {
+			r = parseList(n.getPar1().getType());
+		}
+		
+		return r;
+	}
+	
+	private static NodeList parseList(Node list) {
+		
+		List<Node> nodeList = new ArrayList<Node>();
+		NodeList node = (NodeList) list;
+		
+		for(Node n: node.nodeList) {
+			nodeList.add(parseNode(n));
+		}
+		
+		return new NodeList(nodeList);
 	}
 
 	private static List<Node> createAST(Token[] tokenArray) {
@@ -128,9 +186,7 @@ public class ActionTree {
 				}
 			} else if(t.type == TokenType.ID) {
 				id = new NodeBasic(t);
-			} else if(t.type == TokenType.STRING) {
-				id = new NodeBasic(t);
-			} else if(t.type == TokenType.NUM) {
+			} else if(t.type == TokenType.LITERAL) {
 				id = new NodeBasic(t);
 			}
 			

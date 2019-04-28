@@ -12,6 +12,8 @@ import math.Other;
 import ui.engine.UiElement;
 import ui.engine.VectorGraphics;
 import ui.engine.XmlParser;
+import ui.engine.scripts.Engine;
+import ui.engine.scripts.Interpreter;
 import ui.engine.scripts.ScriptGroup;
 import ui.engine.vectors.Circle;
 import ui.engine.vectors.LinkVector;
@@ -42,6 +44,9 @@ public class Ui {
 		vectorList = new HashMap<String, VectorGroup>();
 		scriptList = new HashMap<String, ScriptGroup>();
 		views = new ArrayList<View>();
+		
+		Engine e = new Engine();
+		Interpreter.initiateInterpreter(e);
 		
 //		View.initGroups(vectorList, actionList);
 		

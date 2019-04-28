@@ -13,5 +13,15 @@ public class Token {
 	public String toString() {
 		return ex + "=" + type;
 	}
+
+	public boolean equals(String e, TokenType k) {
+		
+		if(type == k && ex.equals(e)) {
+			return true;
+		}
+		
+		return false;
+		
+	}
 	
 }

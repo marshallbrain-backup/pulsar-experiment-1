@@ -18,17 +18,50 @@ public class ActionTree {
 	public static List<Node> createActionTree(Token[] tokens) {
 		
 		List<Node> ast = createAST(tokens);
+		List<Node> at = createAT(ast);
 		
 		return null;
 		
 	}
 	
+	private static List<Node> createAT(List<Node> ast) {
+		
+		List<Node> at = new ArrayList<Node>();
+		
+		for(Node n: ast) {
+			at.add(parseNode(n));
+		}
+		
+		return at;
+		
+	}
+	
+	private static Node parseNode(Node n) {
+		
+		if(n instanceof NodeExp) {
+			if(((NodeBasic) n.getType()).type.equals("fun", TokenType.KEY)) {
+				
+				Node title = n.getPar1();
+				
+				NodeBasic name = (NodeBasic) title.getType();
+				NodeList par = (NodeList) title.getPar1().getType();
+				NodeList body = (NodeList) n.getPar2().getType();
+				
+				Node function = new NodeCreateFun(name.type.ex, par, body);
+				return function;
+				
+			}
+		}
+		
+		return null;
+		
+	}
+
 	private static List<Node> createAST(Token[] tokenArray) {
 		
 		List<Token> tokenList = new ArrayList<Token>(Arrays.asList(tokenArray));
 		tokenList.add(new Token("", TokenType.END));
 		Node list = getNodeList(tokenList, 0);
-		System.out.println(list);
 		
 		return ((NodeList) list).nodeList;
 		

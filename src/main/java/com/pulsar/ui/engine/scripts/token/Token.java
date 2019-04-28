@@ -14,9 +14,13 @@ public class Token {
 		return ex + "=" + type;
 	}
 
+	public boolean equals(Token t) {
+		return equals(t.ex, t.type);
+	}
+
 	public boolean equals(String e, TokenType k) {
 		
-		if((k == type || k == null) && (e.equals(ex) || e == null)) {
+		if((k == null || k == type) && (e == null || e.equals(ex))) {
 			return true;
 		}
 		

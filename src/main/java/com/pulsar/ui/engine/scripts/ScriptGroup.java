@@ -60,9 +60,9 @@ public class ScriptGroup {
 				new Token("^\\{", TokenType.OP),
 				new Token("^\\}", TokenType.OP),
 				new Token("^,", TokenType.OP),
-				new Token("^\"\\p{ASCII}*\"", TokenType.STRING),
+				new Token("^\"\\p{ASCII}*\"", TokenType.LITERAL),
 				new Token("^[a-zA-Z][a-zA-Z_0-9]*", TokenType.ID),
-				new Token("^[0-9][a-zA-Z_0-9]*", TokenType.NUM),
+				new Token("^[0-9][a-zA-Z_0-9]*", TokenType.LITERAL),
 				new Token("^\\.", TokenType.OP),
 		};
 	}

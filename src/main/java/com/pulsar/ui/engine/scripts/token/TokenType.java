@@ -7,9 +7,8 @@ public enum TokenType {
 	NEWLINE,
 	ID,
 	OP,
-	NUM,
-	STRING,
 	KEY,
-	END
+	END,
+	LITERAL
 	
 }

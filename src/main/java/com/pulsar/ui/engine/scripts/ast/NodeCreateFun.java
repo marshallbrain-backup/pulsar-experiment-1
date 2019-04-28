@@ -7,10 +7,15 @@ public class NodeCreateFun implements NodeCreate {
 	public final Node[] paramaters;
 	public final Node[] body;
 	
-	public NodeCreateFun(String n, Node[] p, Node[] b) {
+	public NodeCreateFun(String n, NodeList p, NodeList b) {
 		name = n;
-		paramaters = p;
-		body = b;
+		
+		paramaters = new Node[p.nodeList.size()];
+		p.nodeList.toArray(paramaters);
+		
+		body = new Node[b.nodeList.size()];
+		b.nodeList.toArray(body);
+		
 	}
 	
 }

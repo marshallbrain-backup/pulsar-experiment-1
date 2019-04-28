@@ -16,7 +16,7 @@ public class Token {
 
 	public boolean equals(String e, TokenType k) {
 		
-		if(type == k && ex.equals(e)) {
+		if((k == type || k == null) && (e.equals(ex) || e == null)) {
 			return true;
 		}
 		

@@ -20,7 +20,7 @@ public class ActionTree {
 		List<Node> ast = createAST(tokens);
 		List<Node> at = createAT(ast);
 		
-		return null;
+		return at;
 		
 	}
 	

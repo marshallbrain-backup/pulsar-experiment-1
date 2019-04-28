@@ -16,5 +16,9 @@ public interface Node {
 	default Node getPar2() {
 		return null;
 	}
+
+	default boolean equals(Token a, Token b, Token c) {
+		return false;
+	}
 	
 }

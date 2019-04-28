@@ -54,5 +54,21 @@ public class NodeExp implements Node {
 	public Node getPar2() {
 		return paramater2;
 	}
+
+	@Override
+	public boolean equals(Token a, Token b, Token c) {
+		
+		if(a != null) {
+			return type.equals(a, null, null);
+		}
+		if(b != null) {
+			return paramater1.equals(b, null, null);
+		}
+		if(c != null) {
+			return paramater2.equals(c, null, null);
+		}
+		
+		return false;
+	}
 	
 }

@@ -1,5 +1,10 @@
 package ui.engine.scripts.ast;
 
+import java.util.Arrays;
+
+import ui.engine.scripts.token.Token;
+import ui.engine.scripts.token.TokenType;
+
 public class NodeExp implements Node {
 	
 	public final Node type;
@@ -33,6 +38,21 @@ public class NodeExp implements Node {
 			s += ", " + paramater2;
 		}
 		return s + ")";
+	}
+	
+	@Override
+	public Node getType() {
+		return type;
+	}
+
+	@Override
+	public Node getPar1() {
+		return paramater1;
+	}
+
+	@Override
+	public Node getPar2() {
+		return paramater2;
 	}
 	
 }

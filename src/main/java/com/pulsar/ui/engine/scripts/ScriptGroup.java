@@ -18,14 +18,19 @@ import java.util.stream.Collectors;
 
 import bodys.Body;
 import ui.engine.scripts.ast.ActionTree;
+import ui.engine.scripts.ast.Node;
+import ui.engine.scripts.ast.NodeCreateFun;
 import ui.engine.scripts.token.Token;
 import ui.engine.scripts.token.TokenType;
 
 public class ScriptGroup {
+	
+	private Map<String, NodeCreateFun> functionList;
 
 	public ScriptGroup(File file) {
 		
 		BufferedReader br = null;
+		functionList = new HashMap<String, NodeCreateFun>();
 		
 		try {
 			br = Files.newBufferedReader(file.toPath());
@@ -37,12 +42,18 @@ public class ScriptGroup {
 		
 		Token[] tokens = Lexer.getTokens(code, getExprs());
 		
-		ActionTree.createActionTree(tokens);
+		List<Node> at = ActionTree.createActionTree(tokens);
+		for(Node n: at) {
+			if(n instanceof NodeCreateFun) {
+				NodeCreateFun f = (NodeCreateFun) n;
+				functionList.put(f.name, f);
+			}
+		}
 		
 	}
 
-	public void callFunction(String functionName, Object body) {
-		
+	public void callFunction(String functionName, Object... objects) {
+		Interpreter.runFunction(functionList.get(functionName), objects);
 	}
 
 	public boolean isEmpty() {

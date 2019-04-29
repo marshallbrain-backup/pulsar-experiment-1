@@ -1,3 +1,3 @@
 fun clickBody(this){
-	engine.openView("view.colony.frame", this.colony);
+	engine.openView("view.colony.frame", this);
 }

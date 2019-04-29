@@ -8,5 +8,10 @@ public class NodeLitteralString implements NodeLitteral {
 	public NodeLitteralString(String v) {
 		value = v;
 	}
+
+	@Override
+	public Object getValue() {
+		return value;
+	}
 	
 }

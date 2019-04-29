@@ -109,7 +109,9 @@ public class ActionTree {
 		NodeList node = (NodeList) list;
 		
 		for(Node n: node.nodeList) {
-			nodeList.add(parseNode(n));
+			if(n != null) {
+				nodeList.add(parseNode(n));
+			}
 		}
 		
 		return new NodeList(nodeList);
@@ -160,7 +162,7 @@ public class ActionTree {
 						body.add(id);
 						id = new NodeExp(new NodeList(body), new NodeBasic(tokens.get(i-1)), new NodeBasic(tokens.get(i)));
 					}
-					if(lastToken.type == TokenType.OP && lastToken.ex.equals("(")) {
+					if(lastToken != null && lastToken.type == TokenType.OP && lastToken.ex.equals("(")) {
 						tokens.remove(i);
 					}
 						

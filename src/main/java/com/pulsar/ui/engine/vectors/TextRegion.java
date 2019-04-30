@@ -37,10 +37,26 @@ public class TextRegion implements Vector {
 	
 	@XmlAnyElement(lax = true)
 	private Vector bound;
+	private Vector calcBound;
 	
 	
 	public Vector getBound() {
-		return (Vector) bound.clone();
+		
+		if(calcBound == null) {
+			GeneralPath s = text.getShape();
+			java.awt.Rectangle r = s.getBounds();
+			double vx = r.getWidth()+padingX*2;
+			double vy = r.getHeight()+padingY*2;
+			
+			Vector v = (Vector) bound.clone();
+			v.transform(new Point(vx, vy));
+			v.move(new Point(x, y-vy));
+			v.normalize();
+			calcBound = v.clone();
+		}
+		
+		return calcBound;
+		
 	}
 	
 	@Override
@@ -63,20 +79,9 @@ public class TextRegion implements Vector {
 	
 	@Override
 	public void draw(VectorGraphics vg) {
-		
-		GeneralPath s = text.getShape();
-		java.awt.Rectangle r = s.getBounds();
-		double vx = r.getWidth()+padingX*2;
-		double vy = r.getHeight()+padingY*2;
-		
-		Vector v = (Vector) bound.clone();
-		v.transform(new Point(vx, vy));
-		v.move(new Point(x, y-vy));
-		v.normalize();
-		v.draw(vg);
-
+		getBound().draw(vg);
 		vg.draw(id, getShape(), getStyle());
-		
+		calcBound = null;
 	}
 
 	@Override

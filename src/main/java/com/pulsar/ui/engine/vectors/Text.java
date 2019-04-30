@@ -45,6 +45,15 @@ public class Text {
 		return p;
 		
 	}
+	
+	@XmlTransient
+	public void setText(String t) {
+		text = t;
+	}
+	
+	public String getText() {
+		return text;
+	}
 
 	@XmlTransient
 	public Map<String, String> getStyle() {

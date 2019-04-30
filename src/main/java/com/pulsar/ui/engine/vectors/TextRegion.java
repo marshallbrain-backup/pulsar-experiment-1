@@ -27,8 +27,6 @@ public class TextRegion implements Vector {
 	private int padingX;
 	@XmlAttribute(name = "pading_y")
 	private int padingY;
-	@XmlAttribute(name = "anchor")
-	private int anchor;
 	
 	@XmlElement(name = "text")
 	private Text text;
@@ -57,6 +55,15 @@ public class TextRegion implements Vector {
 		
 		return calcBound;
 		
+	}
+
+	@XmlTransient
+	public String getText() {
+		return text.getText();
+	}
+
+	public void setText(String t) {
+		text.setText(t);
 	}
 	
 	@Override

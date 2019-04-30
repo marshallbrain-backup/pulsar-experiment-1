@@ -30,6 +30,9 @@ public interface Vector extends Cloneable {
 	void setStyle();
 	void assingParamerters(Map<QName, Object> p);
 	
+	default void setVectors(Map<String, VectorGroup> vectorList) {
+	}
+	
 	default long convert(double value, double fromRefrence, double toRefrence) {
 		return Math.round(((value/fromRefrence)*toRefrence));
 	}

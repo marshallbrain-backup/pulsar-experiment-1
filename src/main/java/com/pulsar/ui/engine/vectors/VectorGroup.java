@@ -36,15 +36,8 @@ public class VectorGroup implements Cloneable {
 	
 	public void init(Map<String, VectorGroup> vectorList) {
 		
-		for(int i = 0; i < vectors.size(); i++) {
-			Vector v = vectors.get(i);
-			switch(v.getType()) {
-				case "link vector":
-					LinkVector link = (LinkVector) v;
-					link.assingParamerters(parameters);
-					link.setLink(vectorList);
-					break;
-			}
+		for(Vector v: vectors) {
+			v.setVectors(vectorList);
 		}
 		
 		init();
@@ -58,8 +51,9 @@ public class VectorGroup implements Cloneable {
 			mappedVectors.put(v.getId(), v);
 		}
 		
-		for(Vector a: vectors) {
-			a.assingParamerters(parameters);
+		for(Vector v: vectors) {
+			v.assingParamerters(parameters);
+			v.setStyle();
 		}
 		
 	}

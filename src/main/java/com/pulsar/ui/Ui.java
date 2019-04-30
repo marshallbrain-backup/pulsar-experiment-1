@@ -20,6 +20,7 @@ import ui.engine.scripts.ScriptGroup;
 import ui.engine.vectors.Circle;
 import ui.engine.vectors.LinkVector;
 import ui.engine.vectors.Rectangle;
+import ui.engine.vectors.TabItem;
 import ui.engine.vectors.TabLayout;
 import ui.engine.vectors.Text;
 import ui.engine.vectors.TextRegion;
@@ -86,6 +87,13 @@ public class Ui {
 		if(currentUiChart.action(m, k)) {
 			return;
 		}
+		
+		for(View v: views) {
+			if(v.action(m, k)) {
+				return;
+			}
+		}
+		
 	}
 
 	public void render(VectorGraphics vg) {
@@ -150,7 +158,7 @@ public class Ui {
 		
 		Class<?>[] classList = {
 				VectorGroup.class, 
-				Circle.class, Rectangle.class, LinkVector.class, TextRegion.class, TabLayout.class
+				Circle.class, Rectangle.class, LinkVector.class, TextRegion.class, TabLayout.class, TabItem.class
 				};
 		
 		Object o = XmlParser.getXml(file.getPath(), classList);

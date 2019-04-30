@@ -53,7 +53,11 @@ public class ScriptGroup {
 	}
 
 	public void callFunction(String functionName, Object... objects) {
-		Interpreter.runFunction(functionList.get(functionName), objects);
+		
+		NodeCreateFun fun = functionList.get(functionName);
+		if(fun != null) {
+			Interpreter.runFunction(fun, objects, functionList);
+		}
 	}
 
 	public boolean isEmpty() {

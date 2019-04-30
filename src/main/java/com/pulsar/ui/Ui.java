@@ -45,7 +45,7 @@ public class Ui {
 		scriptList = new HashMap<String, ScriptGroup>();
 		views = new ArrayList<View>();
 		
-		Engine e = new Engine();
+		Engine e = new Engine(views, vectorList, scriptList);
 		Interpreter.initiateInterpreter(e);
 		
 //		View.initGroups(vectorList, actionList);

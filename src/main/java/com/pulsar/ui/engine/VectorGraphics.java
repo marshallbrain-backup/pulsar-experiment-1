@@ -41,7 +41,7 @@ public class VectorGraphics {
 				RenderingHints.VALUE_ANTIALIAS_ON);
 	}
 	
-	public Graphics getGraphics() {
+	public Graphics2D getGraphics() {
 		return graphics;
 	}
 	
@@ -93,7 +93,12 @@ public class VectorGraphics {
 		}
 		
 		if(areaLog != null && !a.isEmpty()) {
-			areaLog.put(id, a.createTransformedArea(graphics.getTransform()));
+			Area t = a.createTransformedArea(graphics.getTransform());
+			Area p = areaLog.putIfAbsent(id, t);
+			if(p != null) {
+				t.add(p);
+				areaLog.put(id, t);
+			}
 		}
 		
 		if(m != null) {

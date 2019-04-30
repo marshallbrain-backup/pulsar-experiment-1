@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import input.Keyboard;
 import input.Mouse;
@@ -18,6 +20,7 @@ import ui.engine.scripts.ScriptGroup;
 import ui.engine.vectors.Circle;
 import ui.engine.vectors.LinkVector;
 import ui.engine.vectors.Rectangle;
+import ui.engine.vectors.TabLayout;
 import ui.engine.vectors.Text;
 import ui.engine.vectors.TextRegion;
 import ui.engine.vectors.Vector;
@@ -45,12 +48,32 @@ public class Ui {
 		scriptList = new HashMap<String, ScriptGroup>();
 		views = new ArrayList<View>();
 		
-		Engine e = new Engine(views, vectorList, scriptList);
-		Interpreter.initiateInterpreter(e);
+		Engine engine = new Engine(views, vectorList, scriptList);
+		Interpreter.initiateInterpreter(engine);
 		
 //		View.initGroups(vectorList, actionList);
 		
 		loadFolder(vectorList, scriptList, new File("gfx"));
+		
+        TreeMap<String, VectorGroup> sortedVL = new TreeMap<>(); 
+        
+        sortedVL.putAll(vectorList); 
+		
+		for(Entry<String, VectorGroup> e: sortedVL.entrySet()) {
+			
+			VectorGroup vg = e.getValue();
+			
+			vg.init(vectorList);
+			
+			String key = e.getKey().substring(0, e.getKey().lastIndexOf("."));
+			VectorGroup p = vectorList.get(key);
+			
+			if(p != null) {
+				vg.inherit(p);
+			}
+			
+			
+		}
 		
 		Map<String, VectorGroup> systemVectors = Other.getAllMatchingKeys(vectorList, "map\\.system\\..*", 2);
 		Map<String, ScriptGroup> systemScripts = Other.getAllMatchingKeys(scriptList, "map\\.system\\..*", 2);
@@ -106,7 +129,7 @@ public class Ui {
 		if(file.isFile()) {
 			if(Other.getExtension(file).equals("xml")){
 				loadVectors(vl, file);
-			} else if(Other.getExtension(file).equals("txt")){
+			} else if(Other.getExtension(file).equals("ion")){
 				loadScripts(sl, file);
 			}
 		}
@@ -127,7 +150,7 @@ public class Ui {
 		
 		Class<?>[] classList = {
 				VectorGroup.class, 
-				Circle.class, Rectangle.class, LinkVector.class, TextRegion.class, Text.class
+				Circle.class, Rectangle.class, LinkVector.class, TextRegion.class, TabLayout.class
 				};
 		
 		Object o = XmlParser.getXml(file.getPath(), classList);
@@ -139,28 +162,9 @@ public class Ui {
 		
 		if(vg != null && !vg.getVectors().isEmpty()) {
 			
-			vg.init();
-			
-			String key = file.getPath().split("\\\\")[0]+"\\";
-			key = file.getPath().split("\\.")[0].replace(key, "").replace("\\", ".");
-			key = key.substring(0, key.lastIndexOf("."));
-			VectorGroup p = vl.get(key);
-			
-			if(p != null) {
-				vg.inherit(p);
-			}
-			
-			for(Vector v: vg.getVectors()) {
-				v.setStyle();
-			}
-			
-		} else {
-			vg = null;
-		}
-		
-		if(vg != null) {
 			String head = file.getPath().split("\\\\")[0]+"\\";
 			vl.put(file.getPath().split("\\.")[0].replace(head, "").replace("\\", "."), vg);
+			
 		}
 		
 	}

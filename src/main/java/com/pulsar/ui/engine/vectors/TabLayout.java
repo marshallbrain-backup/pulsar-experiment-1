@@ -39,7 +39,11 @@ public class TabLayout implements Vector {
 			t.setVectors(s);
 		}
 	}
-
+	
+	public List<TabItem> getTabs() {
+		return tabs;
+	}
+	
 	@Override
 	public String getType() {
 		return "tab_layout";
@@ -51,9 +55,13 @@ public class TabLayout implements Vector {
 	}
 
 	@Override
-	public String getAction(String s) {
-		System.out.println(s);
-		return null;
+	public String getAction(String action) {
+		switch(action) {
+			case "right click":
+				return "";
+			default:
+				return null;
+		}
 	}
 
 	@Override
@@ -73,7 +81,7 @@ public class TabLayout implements Vector {
 	@Override
 	public void draw(VectorGraphics vg) {
 		for(int i = 0; i < tabs.size(); i++) {
-			tabs.get(i).draw(id + String.valueOf(i), vg);
+			tabs.get(i).draw(id, vg);
 		}
 	}
 

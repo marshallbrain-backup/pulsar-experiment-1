@@ -7,4 +7,17 @@
 		x="0"
 		y="0"
 	/>
+	<tab_layout
+		id="tabs"
+		anchor="3"
+		x="0"
+		y="0"
+	>
+		<tab_item
+			text="test1"
+		/>
+		<tab_item
+			text="test2"
+		/>
+	</tab_layout>
 </vector_layer>

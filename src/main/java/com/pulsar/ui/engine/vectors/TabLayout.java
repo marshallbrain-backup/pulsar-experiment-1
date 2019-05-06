@@ -55,10 +55,10 @@ public class TabLayout implements Vector {
 	}
 
 	@Override
-	public String getAction(String action) {
+	public String getAction(String id, String action) {
 		switch(action) {
 			case "right click":
-				return "";
+				return "key ";
 			default:
 				return null;
 		}
@@ -81,7 +81,7 @@ public class TabLayout implements Vector {
 	@Override
 	public void draw(VectorGraphics vg) {
 		for(int i = 0; i < tabs.size(); i++) {
-			tabs.get(i).draw(id, vg);
+			tabs.get(i).draw(id + " " + String.valueOf(i), vg);
 		}
 	}
 

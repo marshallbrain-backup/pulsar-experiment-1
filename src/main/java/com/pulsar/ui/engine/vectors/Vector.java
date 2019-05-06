@@ -13,7 +13,7 @@ public interface Vector extends Cloneable {
 
 	String getType();
 	String getId();
-	String getAction(String string);
+	String getAction(String id, String action);
 	
 	Vector clone();
 

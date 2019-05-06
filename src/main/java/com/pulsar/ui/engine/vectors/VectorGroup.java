@@ -65,7 +65,7 @@ public class VectorGroup implements Cloneable {
 			for(Entry<String, Area> e: a.entrySet()) {
 				if(e.getValue().contains(p.getX(), p.getY())) {
 					if(m.buttonClicked(1)) {
-						String s = mappedVectors.get(e.getKey()).getAction("right click");
+						String s = mappedVectors.get(e.getKey().split(" ")[0]).getAction(e.getKey(), "right click");
 						return s;
 					}
 				}

@@ -70,7 +70,7 @@ public class Rectangle implements Vector {
 	}
 
 	@Override
-	public String getAction(String action) {
+	public String getAction(String id, String action) {
 		switch(action) {
 			default:
 				return null;

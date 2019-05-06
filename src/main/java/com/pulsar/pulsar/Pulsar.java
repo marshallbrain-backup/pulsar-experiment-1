@@ -1,8 +1,11 @@
 package pulsar;
 
+import java.awt.BasicStroke;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 
@@ -217,13 +220,21 @@ public class Pulsar extends Canvas implements Runnable {
 		
 		BufferStrategy bs = this.getBufferStrategy();
 		
-		Graphics g = bs.getDrawGraphics();
+		Graphics2D g = (Graphics2D) bs.getDrawGraphics();
 		VectorGraphics vg = new VectorGraphics(g);
-		
-		//RENDER HERE
-		
+//		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+//				RenderingHints.VALUE_ANTIALIAS_ON);
+//		
+//		//RENDER HERE
+//		
 		g.setColor(Color.DARK_GRAY);
-		g.fillRect(0, 0, Main.WIDTH, Main.HEIGHT);
+		g.fillRect(-5, -5, Main.WIDTH+10, Main.HEIGHT+10);
+//		
+//		g.setStroke(new BasicStroke(3));
+//		g.setColor(Color.BLACK);
+//		g.drawRect(100, 100, 100, 100);
+//		g.setColor(Color.WHITE);
+//		g.drawString("Test2", 100, 100);
 		
 		if(universeLoaded)
 			ui.render(vg);

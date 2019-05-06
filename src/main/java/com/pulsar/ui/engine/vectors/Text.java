@@ -1,6 +1,7 @@
 package ui.engine.vectors;
 
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
 import java.awt.geom.GeneralPath;
@@ -26,8 +27,8 @@ public class Text {
 	
 	//TODO make font dynamic
 	//https://docs.oracle.com/javase/tutorial/2d/text/fonts.html
-	private static Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 20);
-	private static FontRenderContext frc = new FontRenderContext(null, true, true);
+	private static Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 30);
+	private Graphics2D g2d;
 
 	public GeneralPath getShape() {
 		
@@ -39,8 +40,8 @@ public class Text {
 			t = parameters.get(new QName(t.substring(1))).toString();
 		}
 		
-		GlyphVector v = font.createGlyphVector(frc, t);
-		GeneralPath p = (GeneralPath) v.getOutline();
+		GlyphVector v = font.createGlyphVector(g2d.getFontMetrics(font).getFontRenderContext(), t);
+		GeneralPath p = (GeneralPath) v.getOutline(0, 0);
 		
 		return p;
 		
@@ -53,6 +54,10 @@ public class Text {
 	
 	public String getText() {
 		return text;
+	}
+	
+	public Font getFont() {
+		return font;
 	}
 
 	@XmlTransient
@@ -70,6 +75,10 @@ public class Text {
 
 	public void assingParamerters(Map<QName, Object> p) {
 		parameters = p;
+	}
+
+	public void setCurrentGraphics(Graphics2D g) {
+		g2d = g;
 	}
 	
 }

@@ -1,8 +1,11 @@
 package ui.engine.vectors;
 
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
+import java.awt.geom.Point2D;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,25 +39,36 @@ public class TextRegion implements Vector {
 	@XmlAnyElement(lax = true)
 	private Vector bound;
 	private Vector calcBound;
-	
+	private Graphics2D g2d;
 	
 	public Vector getBound() {
 		
 		if(calcBound == null) {
 			GeneralPath s = text.getShape();
 			java.awt.Rectangle r = s.getBounds();
-			double vx = r.getWidth()+padingX*2;
+			FontMetrics f = g2d.getFontMetrics(text.getFont());
+			double vx = f.stringWidth(text.getText())+padingX*2;
 			double vy = r.getHeight()+padingY*2;
 			
 			Vector v = (Vector) bound.clone();
+			String sw = v.getStyle().get("stroke-width");
+			if(sw != null) {
+				int strokeWidth = Integer.parseInt(sw);
+				v.transform(new Point(strokeWidth, strokeWidth));
+			}
 			v.transform(new Point(vx, vy));
-			v.move(new Point(x, y-vy));
+			v.move(new Point(x, y));
 			v.normalize();
 			calcBound = v.clone();
 		}
 		
 		return calcBound;
 		
+	}
+	
+	public void setCurrentGraphics(Graphics2D g) {
+		g2d = g;
+		text.setCurrentGraphics(g2d);
 	}
 
 	@XmlTransient
@@ -109,9 +123,14 @@ public class TextRegion implements Vector {
 		GeneralPath s = text.getShape();
 		AffineTransform at = new AffineTransform();
 		java.awt.Rectangle r = s.getBounds();
-		at.translate(-r.getMinX(), -r.getMinY());
-		at.translate(0, -r.getHeight());
-		at.translate(padingX, -padingY);
+		String sw = getBound().getStyle().get("stroke-width");
+		if(sw != null) {
+			int strokeWidth = Integer.parseInt(sw);
+			at.translate(strokeWidth/2, 0);
+		}
+		at.translate(0, r.getMaxY());
+		at.translate(0, r.getHeight());
+		at.translate(padingX, padingY);
 		s.transform(at);
 		
 		return s;

@@ -23,6 +23,7 @@ public class TabItem {
 	@XmlAttribute(name = "text")
 	private String text;
 	private String id;
+	private String view;
 	
 	private VectorGroup vector;
 
@@ -41,19 +42,31 @@ public class TabItem {
 		style = convertStyle(styleString);
 	}
 
-	public void draw(String i, VectorGraphics vg) {
+	public int draw(String i, int pos, int anchor, VectorGraphics vg) {
+		
 		id = i;
+		vg.translationMove(new Point(pos, 0));
 		for(Vector v: vector.getVectors()) {
 
 			if(v instanceof TextRegion) {
+				
 				TextRegion tr = (TextRegion) v;
 				tr.setText(text);
+				//TODO change the draw method to have id parameter and remove setCurrentGraphics
 				tr.setCurrentGraphics(vg.getGraphics());
-				vg.draw(id, tr.getBound().getShape(), tr.getBound().getStyle());
+				tr.setAnchor(anchor);
+				Shape b = tr.getBound().getShape();
+				vg.draw(id, b, tr.getBound().getStyle());
+				pos += b.getBounds().getWidth();
+				
 			}
+			
 			vg.draw(id, v.getShape(), v.getStyle());
 			
 		}
+		
+		return pos;
+		
 	}
 	
 	public Shape getShape() {
@@ -83,6 +96,15 @@ public class TabItem {
 		
 		return style;
 		
+	}
+
+	@XmlAttribute(name = "view")
+	public String getView() {
+		return view;
+	}
+
+	public void setView(String v) {
+		view = v;
 	}
 	
 }

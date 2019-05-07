@@ -29,7 +29,7 @@ public class Lexer {
 					matches = true;
 					String t = m.group(0);
 					if(e.type != TokenType.NONE) {
-						tokens.add(new Token(t, e.type));
+						tokens.add(new Token(tokens.size(), t, e.type));
 					}
 					break;
 				}

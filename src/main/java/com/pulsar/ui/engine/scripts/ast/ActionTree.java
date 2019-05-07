@@ -44,6 +44,14 @@ public class ActionTree {
 		if(type.equals(new Token(null, TokenType.KEY), null, null)) {
 			if(type.equals(new Token("fun", TokenType.KEY), null, null)) {
 				r = parseFunction(n);
+			} else if(type.equals(new Token("var", TokenType.KEY), null, null)) {
+				r = parseCreateVariable(n);
+			} else if(type.equals(new Token("if", TokenType.KEY), null, null)) {
+				r = parseIfStatement(n);
+			} else if(type.equals(new Token("else", TokenType.KEY), null, null)) {
+				r = parseIfStatement(n);
+			} else if(type.equals(new Token("new", TokenType.KEY), null, null)) {
+				r = parseNewInstance(n);
 			}
 		} else if(type.equals(new Token(null, TokenType.ID), null, null)) {
 			r = parseVariable(n);
@@ -60,6 +68,47 @@ public class ActionTree {
 		
 	}
 	
+	private static Node parseNewInstance(Node n) {
+		
+		Node instance = parseNode(n.getPar1());
+		Node var = new NodeCreateInstance(instance);
+		
+		return var;
+		
+	}
+
+	private static Node parseIfStatement(Node n) {
+		
+		Node statement = null;
+		
+		if(n.equals(new Token("if", TokenType.KEY), null, null)) {
+			
+			Node condition = parseList(n.getPar1().getPar1().getType()).nodeList.get(0);
+			Node code = parseList(n.getPar2().getType());
+			statement = new NodeStatementIf(condition, code);
+			
+		} else if(n.equals(new Token("else", TokenType.KEY), null, null)) {
+
+			Node code = parseList(n.getPar1().getType());
+			statement = new NodeStatementElse(code);
+			
+		}
+		
+		return statement;
+		
+	}
+
+	private static Node parseCreateVariable(Node n) {
+		
+		NodeBasic name = (NodeBasic) n.getPar1().getType();
+		Node value = parseNode(n.getPar1().getPar1());
+		Node var = new NodeCreateVar(name.type.ex);
+		Node varCall = new NodeAssignVar(var, value);
+		
+		return varCall;
+		
+	}
+
 	private static Node parseVariable(Node n) {
 		
 		List<Node> varChain = new ArrayList<Node>();

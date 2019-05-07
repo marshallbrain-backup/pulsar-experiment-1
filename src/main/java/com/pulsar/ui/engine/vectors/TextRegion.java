@@ -30,6 +30,7 @@ public class TextRegion implements Vector {
 	private int padingX;
 	@XmlAttribute(name = "pading_y")
 	private int padingY;
+	private int anchor;
 	
 	@XmlElement(name = "text")
 	private Text text;
@@ -52,18 +53,39 @@ public class TextRegion implements Vector {
 			
 			Vector v = (Vector) bound.clone();
 			String sw = v.getStyle().get("stroke-width");
+			int strokeWidth = 0;
 			if(sw != null) {
-				int strokeWidth = Integer.parseInt(sw);
+				strokeWidth = Integer.parseInt(sw);
 				v.transform(new Point(strokeWidth, strokeWidth));
 			}
+			
+			int xOffset = 0;
+			int yOffset = 0;
+			switch(anchor) {
+				case 1:
+					break;
+				case 2:
+					break;
+				case 3:
+					yOffset = -Math.toIntExact(Math.round(vy)) - strokeWidth;
+					break;
+				case 4:
+					break;
+			}
+			
 			v.transform(new Point(vx, vy));
 			v.move(new Point(x, y));
+			v.move(new Point(xOffset, yOffset));
 			v.normalize();
 			calcBound = v.clone();
 		}
 		
 		return calcBound;
 		
+	}
+
+	public void setAnchor(int a) {
+		anchor = a;
 	}
 	
 	public void setCurrentGraphics(Graphics2D g) {
@@ -123,14 +145,30 @@ public class TextRegion implements Vector {
 		GeneralPath s = text.getShape();
 		AffineTransform at = new AffineTransform();
 		java.awt.Rectangle r = s.getBounds();
-		String sw = getBound().getStyle().get("stroke-width");
+		String sw = calcBound.getStyle().get("stroke-width");
+		int strokeWidth = 0;
 		if(sw != null) {
-			int strokeWidth = Integer.parseInt(sw);
+			strokeWidth = Integer.parseInt(sw);
 			at.translate(strokeWidth/2, 0);
 		}
-		at.translate(0, r.getMaxY());
+		
+		int xOffset = 0;
+		int yOffset = 0;
+		switch(anchor) {
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				yOffset = -Math.toIntExact(Math.round(calcBound.getShape().getBounds().getHeight()));
+				break;
+			case 4:
+				break;
+		}
+		
 		at.translate(0, r.getHeight());
 		at.translate(padingX, padingY);
+		at.translate(xOffset, yOffset);
 		s.transform(at);
 		
 		return s;

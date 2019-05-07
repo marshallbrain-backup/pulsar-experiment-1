@@ -1,0 +1,16 @@
+fun onCreate(b) {
+
+	var tabs = vectorLayer.getElementById("tabs");
+	var bodyTab = new TabItem();
+	bodyTab.setName(b.getName());
+	
+	if(b.getColony()) {
+		bodyTab.setView("view.colony.colony");
+	} else {
+		bodyTab.setView("view.colony.body");
+	}
+	
+	tabs.add(bodyTab);
+	tabs.setActive(0);
+	
+}

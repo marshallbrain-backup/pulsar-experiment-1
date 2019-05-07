@@ -128,7 +128,7 @@ public class ActionTree {
 	}
 	
 	private static Node getNodeList(List<Token> tokens, int start) {
-		
+
 		List<Node> body = new ArrayList<Node>();
 		Node id = null;
 		Token lastToken = null;
@@ -138,20 +138,48 @@ public class ActionTree {
 			Token t = tokens.get(i);
 			
 			if(t.type == TokenType.NEWLINE) {
+				
 				if(tokens.get(i-1).type == TokenType.OP && tokens.get(i-1).ex.equals("{")) {
 					body.add(id);
 				} else {
 					return id;
 				}
+				
 			} else if(t.type == TokenType.KEY) {
+				
 				if(t.ex.equals("fun")) {
 					Node funTitle = getNodeList(tokens, i+1);
-					Node funBody = getNodeList(tokens, i+2);
+					Node funBody = getNodeList(tokens, i+1);
 					body.add(new NodeExp(new NodeBasic(t), funTitle, funBody));
+				} else if(t.ex.equals("var")) {
+					Node var = getNodeList(tokens, i+1);
+					id = new NodeExp(new NodeBasic(t), var);
+				} else if(t.ex.equals("new")) {
+					Node object = getNodeList(tokens, i+1);
+					id = new NodeExp(new NodeBasic(t), object);
+				} else if(t.ex.equals("if")) {
+					Node condition = getNodeList(tokens, i+1);
+					Node code = getNodeList(tokens, i+1);
+					id = new NodeExp(new NodeBasic(t), condition, code);
+					body.add(id);
+				} else if(t.ex.equals("else")) {
+					Node code = getNodeList(tokens, i+1);
+					id = new NodeExp(new NodeBasic(t), code);
+					body.add(id);
+				} else if(t.ex.equals("new")) {
+					Node object = getNodeList(tokens, i+1);
+					id = new NodeExp(new NodeBasic(t), object);
+				} else {
+					System.out.println(t);
 				}
+				
 			} else if(t.type == TokenType.OP) {
+				
 				if(t.ex.equals(",")) {
 					body.add(id);
+				} else if(t.ex.equals("=")) {
+					Node assign = getNodeList(tokens, i+1);
+					id = new NodeExp(id, assign);
 				} else if(t.ex.equals(".")) {
 					id = new NodeExp(id, getNodeList(tokens, i+1));
 				} else if(t.ex.equals("(")) {
@@ -169,27 +197,25 @@ public class ActionTree {
 					return id;
 					
 				} else if(t.ex.equals("{")) {
-					id = new NodeExp(id, getNodeList(tokens, i+1));
-				} else if(t.ex.equals("}")) {
 					
-					if(!body.isEmpty()) {
-						
-						if(tokens.get(i-1).type == TokenType.OP && tokens.get(i).type == TokenType.OP) {
-							if(tokens.get(i-1).ex.equals("{") && tokens.get(i).ex.equals("}")) {
-								id = new NodeExp(new NodeList(body), new NodeBasic(tokens.get(i-1)), new NodeBasic(tokens.get(i)));
-								tokens.remove(i);
-							}
-						}
-						
-					}
-						
+					id = getNodeList(tokens, i+1);
+					id = new NodeExp(id, new NodeBasic(tokens.get(i)), new NodeBasic(tokens.get(i+1)));
+					tokens.remove(i);
+					tokens.remove(i);
 					return id;
 					
+				} else if(t.ex.equals("}")) {
+					return new NodeList(body);
+				} else {
+					System.out.println(t);
 				}
+				
 			} else if(t.type == TokenType.ID) {
 				id = new NodeBasic(t);
 			} else if(t.type == TokenType.LITERAL) {
 				id = new NodeBasic(t);
+			} else {
+				System.out.println(t);
 			}
 			
 			lastToken = t;

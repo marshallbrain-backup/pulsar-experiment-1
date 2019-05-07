@@ -166,9 +166,6 @@ public class ActionTree {
 					Node code = getNodeList(tokens, i+1);
 					id = new NodeExp(new NodeBasic(t), code);
 					body.add(id);
-				} else if(t.ex.equals("new")) {
-					Node object = getNodeList(tokens, i+1);
-					id = new NodeExp(new NodeBasic(t), object);
 				} else {
 					System.out.println(t);
 				}

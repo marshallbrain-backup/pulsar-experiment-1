@@ -4,14 +4,22 @@ public class Token {
 	
 	public final String ex;
 	public final TokenType type;
+	private final int index;
 	
 	public Token(String n, TokenType t) {
 		ex = n;
 		type = t;
+		index = 0;
+	}
+	
+	public Token(int i, String n, TokenType t) {
+		ex = n;
+		type = t;
+		index = i;
 	}
 	
 	public String toString() {
-		return ex + "=" + type;
+		return index + " -- " + ex + " = " + type;
 	}
 
 	public boolean equals(Token t) {

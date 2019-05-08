@@ -29,10 +29,6 @@ public class TabItem {
 	private List<Integer> offset;
 	private Map<String, String> style;
 	
-	public TabItem() {
-		vector = staticVector.clone();
-	}
-	
 	public static void setVectors(VectorGroup v) {
 		staticVector = v;
 	}
@@ -46,6 +42,10 @@ public class TabItem {
 	}
 
 	public int draw(String i, int pos, int anchor, VectorGraphics vg) {
+		
+		if(vector == null) {
+			vector = staticVector.clone();
+		}
 		
 		id = i;
 		vg.translationMove(new Point(pos, 0));

@@ -18,28 +18,31 @@ import ui.engine.VectorGraphics;
 @XmlRootElement(name = "tab_item")
 public class TabItem {
 	
-	@XmlAttribute(name = "style")
-	private String styleString;
 	@XmlAttribute(name = "text")
 	private String text;
 	private String id;
 	private String view;
 	
+	private static VectorGroup staticVector;
 	private VectorGroup vector;
 
 	private List<Integer> offset;
 	private Map<String, String> style;
-
-	public void setVectors(VectorGroup v) {
-		vector = v;
+	
+	public TabItem() {
+		vector = staticVector.clone();
+	}
+	
+	public static void setVectors(VectorGroup v) {
+		staticVector = v;
 	}
 	
 	public String getId() {
 		return id;
 	}
 	
-	public void setStyle() {
-		style = convertStyle(styleString);
+	public void setName(String t) {
+		text = t;
 	}
 
 	public int draw(String i, int pos, int anchor, VectorGraphics vg) {

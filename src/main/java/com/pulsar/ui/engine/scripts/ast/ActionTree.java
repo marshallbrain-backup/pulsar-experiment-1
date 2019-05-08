@@ -81,11 +81,12 @@ public class ActionTree {
 		
 		Node statement = null;
 		
-		if(n.equals(new Token("if", TokenType.KEY), null, null)) {
+		if(n.getType().equals(new Token("if", TokenType.KEY), null, null)) {
 			
-			Node condition = parseList(n.getPar1().getPar1().getType()).nodeList.get(0);
-			Node code = parseList(n.getPar2().getType());
-			statement = new NodeStatementIf(condition, code);
+			Node condition = parseList(n.getType().getPar1().getPar1().getType()).nodeList.get(0);
+			Node code = parseList(n.getPar1().getType());
+			Node elseCode = parseIfStatement(n.getPar2());
+			statement = new NodeStatementIf(condition, code, elseCode);
 			
 		} else if(n.equals(new Token("else", TokenType.KEY), null, null)) {
 
@@ -209,12 +210,15 @@ public class ActionTree {
 				} else if(t.ex.equals("if")) {
 					Node condition = getNodeList(tokens, i+1);
 					Node code = getNodeList(tokens, i+1);
-					id = new NodeExp(new NodeBasic(t), condition, code);
+					Node ifState = new NodeExp(new NodeBasic(t), condition);
+					Node elseState = getNodeList(tokens, i+1);
+					id = new NodeExp(ifState, code, elseState);
 					body.add(id);
 				} else if(t.ex.equals("else")) {
 					Node code = getNodeList(tokens, i+1);
 					id = new NodeExp(new NodeBasic(t), code);
-					body.add(id);
+					tokens.remove(i);
+					return id;
 				} else {
 					System.out.println(t);
 				}

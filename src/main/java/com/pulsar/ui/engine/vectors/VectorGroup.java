@@ -107,7 +107,7 @@ public class VectorGroup implements Cloneable {
 				clone.vectors.add(v.clone());
 			}
 			
-			clone.parameters = new HashMap<QName, Object>(parameters);
+//			clone.parameters = new HashMap<QName, Object>(parameters);
 			clone.init();
 			
 			return clone;

@@ -59,12 +59,13 @@ public class Ui {
         TreeMap<String, VectorGroup> sortedVL = new TreeMap<>(); 
         
         sortedVL.putAll(vectorList); 
+        TabLayout.setVectors(vectorList);
 		
 		for(Entry<String, VectorGroup> e: sortedVL.entrySet()) {
 			
 			VectorGroup vg = e.getValue();
 			
-			vg.init(vectorList);
+			vg.init();
 			
 			String key = e.getKey().substring(0, e.getKey().lastIndexOf("."));
 			VectorGroup p = vectorList.get(key);

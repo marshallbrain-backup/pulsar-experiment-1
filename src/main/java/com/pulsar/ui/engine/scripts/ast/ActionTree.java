@@ -59,8 +59,10 @@ public class ActionTree {
 			
 			Token t = (Token) ((NodeBasic) type).type;
 			
-			if(t.ex.matches("^\"\\p{ASCII}*\"")) {
+			if(t.ex.matches("^\"[\\p{ASCII}&&[^\"]]*\"")) {
 				r = new NodeLitteralString(t.ex.substring(1, t.ex.length()-1));
+			} else if(t.ex.matches("^[0-9]*")) {
+				r = new NodeLitteralInt(t.ex.substring(0, t.ex.length()));
 			}
 		}
 		

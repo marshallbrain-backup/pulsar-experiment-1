@@ -1,5 +1,6 @@
 package ui.engine.scripts;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -9,11 +10,19 @@ import java.util.List;
 import java.util.Map;
 
 import ui.engine.scripts.ast.Node;
+import ui.engine.scripts.ast.NodeAssignVar;
 import ui.engine.scripts.ast.NodeCall;
 import ui.engine.scripts.ast.NodeCallFun;
 import ui.engine.scripts.ast.NodeCallVar;
+import ui.engine.scripts.ast.NodeCreate;
 import ui.engine.scripts.ast.NodeCreateFun;
+import ui.engine.scripts.ast.NodeCreateInstance;
+import ui.engine.scripts.ast.NodeCreateVar;
 import ui.engine.scripts.ast.NodeLitteral;
+import ui.engine.scripts.ast.NodeStatement;
+import ui.engine.scripts.ast.NodeStatementElse;
+import ui.engine.scripts.ast.NodeStatementIf;
+import ui.engine.vectors.VectorGroup;
 
 public class Interpreter {
 	
@@ -23,30 +32,94 @@ public class Interpreter {
 		engine = e;
 	}
 	
-	public static void runFunction(NodeCreateFun f, Object[] objects, Map<String, NodeCreateFun> functions) {
+	public static void runFunction(NodeCreateFun f, VectorGroup vg, Object[] objects, Map<String, NodeCreateFun> functions) {
 		
 		Map<String, Object> variables = new HashMap<String, Object>();
 		variables.put("engine", engine);
+		variables.put("vectorLayer", vg);
 		
 		for(int i = 0; i < f.paramaters.length; i++) {
 			variables.put(f.paramaters[i].name, objects[i]);
 		}
 		
 		for(Node l: f.body) {
-			runLine(l, new HashMap<String, Object>(variables), functions);
+			runLine(l, variables, functions);
 		}
 		
 	}
 	
 	private static Object runLine(Node l, Map<String, Object> v, Map<String, NodeCreateFun> f) {
 		
-		if(l instanceof NodeCall) {
+		if(l instanceof NodeAssignVar) {
+			runAssignVar((NodeAssignVar) l, v, f);
+		} else if(l instanceof NodeCall) {
 			return runCall((NodeCall) l, v, f);
 		} else if(l instanceof NodeLitteral) {
 			return getLitteral((NodeLitteral) l);
+		} else if(l instanceof NodeStatement) {
+			runStatement((NodeStatement) l, v, f);
+		} else if(l instanceof NodeCreateInstance) {
+			return runCreateInstance((NodeCreateInstance) l);
 		}
 		
 		return null;
+		
+	}
+	
+	private static void runStatement(NodeStatement l, Map<String, Object> v, Map<String, NodeCreateFun> f) {
+		
+		if(l instanceof NodeStatementIf) {
+			
+		} else if(l instanceof NodeStatementElse) {
+			
+		}
+		
+	}
+
+	private static Object runCreateInstance(NodeCreateInstance l) {
+		
+		NodeCallFun f = (NodeCallFun) l.name;
+		NodeCallVar n = (NodeCallVar) f.parent;
+		String path = f.name;
+		
+		while(n != null) {
+			path = n.name + "." + path;
+			n = (NodeCallVar) n.parent;
+		}
+		
+		try {
+			Class<?> clazz = Class.forName("ui.engine." + path);
+			Constructor<?> ctor = clazz.getConstructor();
+			return ctor.newInstance();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+		
+	}
+
+	private static void runAssignVar(NodeAssignVar l, Map<String, Object> v, Map<String, NodeCreateFun> f) {
+		
+		if(l.target instanceof NodeCreate) {
+			runCreate((NodeCreate) l.target, v);
+		}
+		
+		Object var = runLine(l.value, v, f);
+		v.put(l.name, var);
+		
+	}
+	
+	private static void runCreate(NodeCreate l, Map<String, Object> v) {
+		
+		if(l instanceof NodeCreateVar) {
+			
+		}
 		
 	}
 	
@@ -84,7 +157,7 @@ public class Interpreter {
 			
 			if(p == null) {
 			} else {
-				runCallFun(c, p, parList);
+				return runCallFun(c, p, parList);
 			}
 			
 //			Object[] parList = new Object[c.paramaters.length];
@@ -143,7 +216,8 @@ public class Interpreter {
 		
 		try {
 			Method method = p.getClass().getMethod(l.name, classList);
-			return method.invoke(p, par);
+			Object o = method.invoke(p, par);
+			return o;
 		} catch (NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {

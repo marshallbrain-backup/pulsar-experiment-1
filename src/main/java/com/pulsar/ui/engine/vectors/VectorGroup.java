@@ -34,16 +34,6 @@ public class VectorGroup implements Cloneable {
 		return vectors;
 	}
 	
-	public void init(Map<String, VectorGroup> vectorList) {
-		
-		for(Vector v: vectors) {
-			v.setVectors(vectorList);
-		}
-		
-		init();
-		
-	}
-	
 	public void init() {
 		
 		mappedVectors = new HashMap<String, Vector>();
@@ -99,6 +89,10 @@ public class VectorGroup implements Cloneable {
 		for(Entry<String, Vector> e: mappedVectors.entrySet()) {
 			e.getValue().inherit(p.mappedVectors.get(e.getKey()));
 		}
+	}
+	
+	public Vector getElementById(String i) {
+		return mappedVectors.get(i);
 	}
 	
 	@Override

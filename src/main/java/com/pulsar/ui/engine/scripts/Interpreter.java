@@ -18,6 +18,7 @@ import ui.engine.scripts.ast.NodeCreate;
 import ui.engine.scripts.ast.NodeCreateFun;
 import ui.engine.scripts.ast.NodeCreateInstance;
 import ui.engine.scripts.ast.NodeCreateVar;
+import ui.engine.scripts.ast.NodeList;
 import ui.engine.scripts.ast.NodeLitteral;
 import ui.engine.scripts.ast.NodeStatement;
 import ui.engine.scripts.ast.NodeStatementElse;
@@ -42,8 +43,15 @@ public class Interpreter {
 			variables.put(f.paramaters[i].name, objects[i]);
 		}
 		
-		for(Node l: f.body) {
-			runLine(l, variables, functions);
+		runList(Arrays.asList(f.body), variables, functions);
+		
+	}
+	
+	private static void runList(List<Node> l, Map<String, Object> v, Map<String, NodeCreateFun> f) {
+		
+		
+		for(Node n: l) {
+			runLine(n, v, f);
 		}
 		
 	}
@@ -70,10 +78,33 @@ public class Interpreter {
 		
 		if(l instanceof NodeStatementIf) {
 			
+			NodeStatementIf ifState = (NodeStatementIf) l;
+			
+			Object condition = runLine(ifState.condition, v, f);
+			
+			if(getBoolean(condition)) {
+				runList(((NodeList) ifState.code).nodeList, v, f);
+			} else {
+				runLine(ifState.elseCode, v, f);
+			}
+			
 		} else if(l instanceof NodeStatementElse) {
+			
+			NodeStatementElse elseState = (NodeStatementElse) l;
+			
+			runList(((NodeList) elseState.code).nodeList, v, f);
 			
 		}
 		
+	}
+
+	private static boolean getBoolean(Object condition) {
+		
+		if(condition == null) {
+			return false;
+		}
+		
+		return false;
 	}
 
 	private static Object runCreateInstance(NodeCreateInstance l) {
@@ -118,7 +149,7 @@ public class Interpreter {
 	private static void runCreate(NodeCreate l, Map<String, Object> v) {
 		
 		if(l instanceof NodeCreateVar) {
-			
+			v.put(((NodeCreateVar) l).name, null);
 		}
 		
 	}

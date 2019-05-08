@@ -47,7 +47,7 @@ public class TabLayout implements Vector {
 		tabs.add(t);
 	}
 	
-	public void setActive(int i) {
+	public void setActive(Integer i) {
 		currentTab = i;
 	}
 	

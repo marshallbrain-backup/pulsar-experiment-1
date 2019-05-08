@@ -32,7 +32,7 @@ public class View {
 		activeScripts = as;
 		
 		if(activeScripts != null) {
-			activeScripts.callFunction("onCreate", action);
+			activeScripts.callFunction("onCreate", activeVectors, action);
 		}
 		
 	}

@@ -23,6 +23,8 @@ public class TabLayout implements Vector {
 	private int x;
 	@XmlAttribute(name = "anchor")
 	private int anchor;
+	private int currentTab;
+	private int renderedTab;
 	
 	@XmlAttribute(name = "id")
 	private String id;
@@ -30,18 +32,23 @@ public class TabLayout implements Vector {
 	@XmlAnyElement(lax = true)
 	private List<TabItem> tabs;
 	
-	@Override
-	public void setVectors(Map<String, VectorGroup> vectorList) {
+	public static void setVectors(Map<String, VectorGroup> vectorList) {
 		
 		VectorGroup s = vectorList.get("view.tab.static");
+		TabItem.setVectors(s);
 		
-		for(TabItem t: tabs) {
-			t.setVectors(s);
-		}
 	}
 	
 	public List<TabItem> getTabs() {
 		return tabs;
+	}
+	
+	public void add(TabItem t) {
+		tabs.add(t);
+	}
+	
+	public void setActive(int i) {
+		currentTab = i;
 	}
 	
 	@Override
@@ -56,13 +63,25 @@ public class TabLayout implements Vector {
 
 	@Override
 	public String getAction(String id, String action) {
+		
+		if(currentTab != renderedTab) {
+			
+			renderedTab = currentTab;
+			TabItem t = tabs.get(renderedTab);
+			return "key setView " + t.getView();
+			
+		}
+		
 		switch(action) {
 			case "right click":
-				TabItem t = tabs.get(Integer.parseInt(id.split(" ")[1]));
+				currentTab = Integer.parseInt(id.split(" ")[1]);
+				renderedTab = currentTab;
+				TabItem t = tabs.get(renderedTab);
 				return "key setView " + t.getView();
 			default:
 				return null;
 		}
+		
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 fun onCreate(b) {
 
 	var tabs = vectorLayer.getElementById("tabs");
-	var bodyTab = new TabItem();
+	var bodyTab = new vectors.TabItem();
 	bodyTab.setName(b.getName());
 	
 	if(b.getColony()) {

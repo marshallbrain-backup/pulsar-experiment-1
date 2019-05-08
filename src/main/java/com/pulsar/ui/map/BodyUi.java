@@ -37,7 +37,7 @@ public class BodyUi {
 		String a = vectors.getAction(m, k, visibleArea);
 		if(a != null) {
 			System.out.println(a);
-			script.callFunction(a, body);
+			script.callFunction(a, vectors, body);
 		}
 		return false;
 	}

@@ -22,6 +22,7 @@ import ui.engine.scripts.ast.Node;
 import ui.engine.scripts.ast.NodeCreateFun;
 import ui.engine.scripts.token.Token;
 import ui.engine.scripts.token.TokenType;
+import ui.engine.vectors.VectorGroup;
 
 public class ScriptGroup {
 	
@@ -52,11 +53,11 @@ public class ScriptGroup {
 		
 	}
 
-	public void callFunction(String functionName, Object... objects) {
+	public void callFunction(String functionName, VectorGroup vg, Object... objects) {
 		
 		NodeCreateFun fun = functionList.get(functionName);
 		if(fun != null) {
-			Interpreter.runFunction(fun, objects, functionList);
+			Interpreter.runFunction(fun, vg, objects, functionList);
 		}
 	}
 

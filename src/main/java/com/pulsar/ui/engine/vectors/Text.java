@@ -27,7 +27,7 @@ public class Text {
 	
 	//TODO make font dynamic
 	//https://docs.oracle.com/javase/tutorial/2d/text/fonts.html
-	private static Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 30);
+	private static Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 18);
 	private Graphics2D g2d;
 
 	public GeneralPath getShape() {

@@ -98,10 +98,11 @@ public class Interpreter {
 		
 	}
 
+	
 	private static boolean getBoolean(Object condition) {
 		
-		if(condition == null) {
-			return false;
+		if(condition != null) {
+			return true;
 		}
 		
 		return false;

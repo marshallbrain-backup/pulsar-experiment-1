@@ -1,7 +1,8 @@
 <vector_layer>
 	<text_region
 		pading_x="5"
-		pading_y="5"
+		pading_y="0"
+		height="25"
 		x="0"
 		y="0"
 	>

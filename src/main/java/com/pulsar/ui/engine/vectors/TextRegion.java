@@ -30,6 +30,8 @@ public class TextRegion implements Vector {
 	private int padingX;
 	@XmlAttribute(name = "pading_y")
 	private int padingY;
+	@XmlAttribute(name = "height")
+	private int height;
 	private int anchor;
 	
 	@XmlElement(name = "text")
@@ -45,11 +47,9 @@ public class TextRegion implements Vector {
 	public Vector getBound() {
 		
 		if(calcBound == null) {
-			GeneralPath s = text.getShape();
-			java.awt.Rectangle r = s.getBounds();
 			FontMetrics f = g2d.getFontMetrics(text.getFont());
 			double vx = f.stringWidth(text.getText())+padingX*2;
-			double vy = r.getHeight()+padingY*2;
+			double vy = height+padingY*2;
 			
 			Vector v = (Vector) bound.clone();
 			String sw = v.getStyle().get("stroke-width");
@@ -144,12 +144,11 @@ public class TextRegion implements Vector {
 		
 		GeneralPath s = text.getShape();
 		AffineTransform at = new AffineTransform();
-		java.awt.Rectangle r = s.getBounds();
-		String sw = calcBound.getStyle().get("stroke-width");
+		String sw = getBound().getStyle().get("stroke-width");
 		int strokeWidth = 0;
 		if(sw != null) {
 			strokeWidth = Integer.parseInt(sw);
-			at.translate(strokeWidth/2, 0);
+			at.translate(strokeWidth/2, -strokeWidth);
 		}
 		
 		int xOffset = 0;
@@ -166,10 +165,12 @@ public class TextRegion implements Vector {
 				break;
 		}
 		
-		at.translate(0, r.getHeight());
+		at.translate(0, height);
 		at.translate(padingX, padingY);
 		at.translate(xOffset, yOffset);
 		s.transform(at);
+		
+		calcBound = null;
 		
 		return s;
 		

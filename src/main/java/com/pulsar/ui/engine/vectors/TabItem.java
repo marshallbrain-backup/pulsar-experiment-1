@@ -60,7 +60,7 @@ public class TabItem {
 				tr.setAnchor(anchor);
 				Shape b = tr.getBound().getShape();
 				vg.draw(id, b, tr.getBound().getStyle());
-				pos += b.getBounds().getWidth();
+				pos = (int) Math.floor(b.getBounds().getWidth());
 				
 			}
 			

@@ -1,8 +1,28 @@
 <vector_layer>
 	<path
 		style="stroke:#000000;stroke-opacity:1;stroke-width:4"
-		p="m 65,10 v 5.3594 l 20,11.5469 v 46.1875 l -20,11.5468 v 10.3594 h -55 v 165 h 595 v -250 Z"
+		p="m 65,10 v 5.3594 l 20,11.5469 v 46.1875 l -20,11.5468 v 10.3594 h -55 v 165 h 595 v -250 z"
 		x="10"
 		y="10"
+	/>
+	<path
+		style="stroke:#000000;stroke-opacity:1;stroke-width:4"
+		p="m 35.6229,85 l -25.6229,-14.7933 v -40.4146 l 35,-20.2072 l 35,20.2072 v 40.4146 l -25.6229,14.7935 z"
+		x="10"
+		y="10"
+	/>	
+	<rect
+		style="stroke:#000000;stroke-opacity:1;stroke-width:4"
+		width="215"
+		height="65"
+		x="390"
+		y="10"
+	/>
+	<rect
+		style="stroke:#000000;stroke-opacity:1;stroke-width:4"
+		width="105"
+		height="65"
+		x="10"
+		y="95"
 	/>
 </vector_layer>

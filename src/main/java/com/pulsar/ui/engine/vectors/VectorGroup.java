@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 
 import javax.xml.bind.annotation.XmlAnyAttribute;
 import javax.xml.bind.annotation.XmlAnyElement;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.namespace.QName;
 
@@ -20,13 +21,14 @@ import ui.engine.VectorGraphics;
 @XmlRootElement(name = "vector_layer")
 public class VectorGroup implements Cloneable {
 	
+	@XmlAttribute(name = "x")
 	private int x;
+	@XmlAttribute(name = "y")
 	private int y;
 	
 	@XmlAnyElement(lax = true)
 	private List<Vector> vectors;
 	
-	@XmlAnyAttribute
 	private Map<QName, Object> parameters;
 	private Map<String, Vector> mappedVectors;
 	
@@ -37,12 +39,11 @@ public class VectorGroup implements Cloneable {
 	public void init() {
 		
 		mappedVectors = new HashMap<String, Vector>();
-		for(Vector v: vectors) {
-			mappedVectors.put(v.getId(), v);
-		}
 		
 		for(Vector v: vectors) {
+			mappedVectors.put(v.getId(), v);
 			v.assingParamerters(parameters);
+			v.init();
 			v.setStyle();
 		}
 		
@@ -53,12 +54,21 @@ public class VectorGroup implements Cloneable {
 		Point p = m.getPosition();
 		if(a != null) {
 			for(Entry<String, Area> e: a.entrySet()) {
+				
+				String s = mappedVectors.get(e.getKey().split(" ")[0]).getAction(e.getKey(), "generic");
+				if(s != null) {
+					return s;
+				}
+				
 				if(mappedVectors.containsKey(e.getKey().split(" ")[0]) && e.getValue().contains(p.getX(), p.getY())) {
+					
 					if(m.buttonClicked(1)) {
-						String s = mappedVectors.get(e.getKey().split(" ")[0]).getAction(e.getKey(), "right click");
+						s = mappedVectors.get(e.getKey().split(" ")[0]).getAction(e.getKey(), "right click");
 						return s;
 					}
+					
 				}
+				
 			}
 		}
 		

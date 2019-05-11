@@ -34,6 +34,22 @@ public class Segment {
 
 	public Segment(Segment s, Segment last) {
 		
+		this(s);
+		
+		if(type.equalsIgnoreCase("z")) {
+			return;
+		}
+		
+		if(type.toLowerCase().equals(type)) {
+			type = type.toUpperCase();
+			x += last.x;
+			y += last.y;
+		}
+		
+	}
+
+	public Segment(Segment s) {
+		
 		type = s.type;
 		x = 0;
 		y = 0;
@@ -44,25 +60,13 @@ public class Segment {
 		
 		if(type.equalsIgnoreCase("v")) {
 			type = "l";
-			x = s.x;
-			if(type.equals("V")) {
-				y = last.y;
-			}
+			y = s.x;
 		} else if(type.equalsIgnoreCase("h")) {
 			type = "l";
-			y = s.x;
-			if(type.equals("H")) {
-				x = last.x;
-			}
+			x = s.x;
 		} else {
 			x = s.x;
 			y = s.y;
-		}
-		
-		if(type.toLowerCase().equals(type)) {
-			type = type.toUpperCase();
-			x += last.x;
-			y += last.y;
 		}
 		
 	}

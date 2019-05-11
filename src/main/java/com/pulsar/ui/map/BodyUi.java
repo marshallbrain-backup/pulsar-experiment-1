@@ -34,12 +34,14 @@ public class BodyUi {
 	}
 	
 	public boolean action(Mouse m, Keyboard k) {
+		
 		String a = vectors.getAction(m, k, visibleArea);
 		if(a != null) {
 			System.out.println(a);
 			script.callFunction(a, vectors, body);
 		}
 		return false;
+		
 	}
 	
 	public void render(VectorGraphics vg, Long zoom) {

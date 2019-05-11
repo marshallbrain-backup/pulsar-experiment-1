@@ -25,11 +25,17 @@ public class View {
 	
 	private VectorGroup activeVectors;
 	private ScriptGroup activeScripts;
+	private View child;
+	
+	private Object[] properties;
 
 	public View(VectorGroup av, ScriptGroup as, Object... action) {
 		
+		properties = action;
 		activeVectors = av;
 		activeScripts = as;
+		
+		child = null;
 		
 		if(activeScripts != null) {
 			activeScripts.callFunction("onCreate", activeVectors, action);
@@ -55,14 +61,30 @@ public class View {
 			
 		}
 		
+		if(child != null) {
+			child.render(vg);
+		}
+		
 	}
 
-	public boolean action(Mouse m, Keyboard k) {
+	public boolean action(Mouse m, Keyboard k, Map<String, VectorGroup> vectorList, Map<String, ScriptGroup> scriptList) {
+		
 		String a = activeVectors.getAction(m, k, visibleArea);
 		if(a != null) {
 			System.out.println(a);
+			
+			if(a.startsWith("key")) {
+				
+				switch(a.split(" ")[1]) {
+					case "setView":
+						child = new View(vectorList.get(a.split(" ")[2]), scriptList.get(a.split(" ")[2]), properties);
+						break;
+				}
+			}
+			
 		}
 		return false;
+		
 	}
 
 }

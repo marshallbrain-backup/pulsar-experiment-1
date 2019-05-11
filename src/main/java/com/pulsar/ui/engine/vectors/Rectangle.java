@@ -14,9 +14,9 @@ import ui.engine.VectorGraphics;
 @XmlRootElement(name = "rect")
 public class Rectangle implements Vector {
 	
-	@XmlAttribute(name = "y")
-	private int baseX;
 	@XmlAttribute(name = "x")
+	private int baseX;
+	@XmlAttribute(name = "y")
 	private int baseY;
 	@XmlAttribute(name = "width")
 	private int baseWidth;

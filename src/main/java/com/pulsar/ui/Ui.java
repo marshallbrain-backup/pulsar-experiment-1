@@ -26,6 +26,7 @@ import ui.engine.vectors.Text;
 import ui.engine.vectors.TextRegion;
 import ui.engine.vectors.Vector;
 import ui.engine.vectors.VectorGroup;
+import ui.engine.vectors.Path;
 import ui.map.StarSystemUi;
 import ui.view.View;
 import universe.Universe;
@@ -90,7 +91,7 @@ public class Ui {
 		}
 		
 		for(View v: views) {
-			if(v.action(m, k)) {
+			if(v.action(m, k, vectorList, scriptList)) {
 				return;
 			}
 		}
@@ -159,7 +160,7 @@ public class Ui {
 		
 		Class<?>[] classList = {
 				VectorGroup.class, 
-				Circle.class, Rectangle.class, LinkVector.class, TextRegion.class, TabLayout.class, TabItem.class
+				Circle.class, Rectangle.class, LinkVector.class, TextRegion.class, TabLayout.class, TabItem.class, Path.class
 				};
 		
 		Object o = XmlParser.getXml(file.getPath(), classList);

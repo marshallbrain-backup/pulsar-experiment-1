@@ -110,12 +110,19 @@ public class Path implements Vector {
 		segList = new ArrayList<Segment>();
 		
 		for(Segment s: segs) {
-			segments.add(new Segment(s, new Segment()));
+			segments.add(new Segment(s));
 		}
+		
+		createSegmentList();
+		
+	}
+	
+	private void createSegmentList() {
 		
 		Segment last = new Segment();
 		for(Segment s: segments) {
-			segList.add(new Segment(s, last));
+			s = new Segment(s, last);
+			segList.add(s);
 			last = s;
 		}
 		
@@ -141,7 +148,36 @@ public class Path implements Vector {
 
 	@Override
 	public Shape getShape() {
-		return null;
+		
+		GeneralPath gp = new GeneralPath();
+		
+		if(segList == null) {
+			createSegmentList();
+		}
+		
+		for(Segment s: segList) {
+			
+			switch (s.getType()) {
+				
+				case "M":
+					gp.moveTo(s.getX(), s.getY());
+					break;
+				case "L":
+					gp.lineTo(s.getX(), s.getY());
+					break;
+				case "Z":
+					gp.closePath();
+					break;
+				
+				default:
+					System.out.println("you broke something");
+					break;
+					
+			}
+			
+		}
+		
+		return gp;
 	}
 
 	@Override

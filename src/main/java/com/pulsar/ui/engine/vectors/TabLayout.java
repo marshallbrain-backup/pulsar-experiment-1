@@ -1,6 +1,7 @@
 package ui.engine.vectors;
 
 import java.awt.Shape;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,11 @@ public class TabLayout implements Vector {
 	@XmlAnyElement(lax = true)
 	private List<TabItem> tabs;
 	
+	public TabLayout() {
+		tabs = new ArrayList<TabItem>();
+		renderedTab = -1;
+	}
+	
 	public static void setVectors(Map<String, VectorGroup> vectorList) {
 		
 		VectorGroup s = vectorList.get("view.tab.static");
@@ -49,6 +55,7 @@ public class TabLayout implements Vector {
 	
 	public void setActive(Integer i) {
 		currentTab = i;
+		renderedTab = -1;
 	}
 	
 	@Override

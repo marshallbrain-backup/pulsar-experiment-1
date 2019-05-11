@@ -5,9 +5,9 @@ fun onCreate(b) {
 	bodyTab.setName(b.getName());
 	
 	if(b.getColony()) {
-		bodyTab.setView("view.colony.colony");
+		bodyTab.setView("view.body.colony.frame");
 	} else {
-		bodyTab.setView("view.colony.body");
+		bodyTab.setView("view.body.overview");
 	}
 	
 	tabs.add(bodyTab);

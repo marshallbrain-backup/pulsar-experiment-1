@@ -13,11 +13,5 @@
 		x="0"
 		y="0"
 	>
-		<tab_item
-			text="test1"
-		/>
-		<tab_item
-			text="test2"
-		/>
 	</tab_layout>
 </vector_layer>

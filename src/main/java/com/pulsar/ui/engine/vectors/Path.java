@@ -59,7 +59,7 @@ public class Path implements Vector {
 		
 		List<Segment> segs = new ArrayList<Segment>();
 		
-		Pattern number = Pattern.compile("^[-]?[0-9]+[\\.]?[0-9]*[\\p{Space}[,]]?[0-9]*[\\.]?[0-9]*");
+		Pattern number = Pattern.compile("^[-]?[0-9]+[\\.]?[0-9]*[\\p{Space}[,]]?[-]?[0-9]*[\\.]?[0-9]*");
 		Pattern letter = Pattern.compile("^[a-zA-Z]");
 		Pattern space = Pattern.compile("^[\\p{Space}]");
 		
@@ -157,7 +157,7 @@ public class Path implements Vector {
 		
 		for(Segment s: segList) {
 			
-			switch (s.getType()) {
+			switch (s.getType().toUpperCase()) {
 				
 				case "M":
 					gp.moveTo(s.getX(), s.getY());

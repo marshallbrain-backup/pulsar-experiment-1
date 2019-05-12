@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.CopyOption;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystemNotFoundException;
 import java.nio.file.FileSystems;
@@ -135,7 +136,9 @@ public class Main {
 				if(!n2.exists() || true)
 					try {
 //						System.out.println(n2.toPath());
-						Files.copy(p, n2.toPath(), StandardCopyOption.REPLACE_EXISTING);
+						//TODO change back to - StandardCopyOption.REPLACE_EXISTING
+						Files.copy(p, n2.toPath());
+					} catch (FileAlreadyExistsException e) {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}

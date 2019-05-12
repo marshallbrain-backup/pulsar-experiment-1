@@ -1,6 +1,7 @@
 package ui.engine;
 
 import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -22,6 +23,8 @@ public class VectorGraphics {
 	private Graphics2D graphics;
 	private Graphics2D graphicsOriginal;
 	
+	private AffineTransform screenTransform;
+	
 	private Map<String, Area> areaLog;
 	
 	private AffineTransform affineTransform;
@@ -29,14 +32,16 @@ public class VectorGraphics {
 	public VectorGraphics(Graphics g) {
 		
 		graphicsOriginal = (Graphics2D) g;
-		
 		graphics = (Graphics2D) graphicsOriginal.create();
+		screenTransform = new AffineTransform();
 		
 		init(graphics);
 		
 	}
 	
 	private void init(Graphics2D g) {
+		
+		g.clipRect(0, 0, Main.WIDTH, Main.HEIGHT);
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 	}
@@ -73,31 +78,31 @@ public class VectorGraphics {
 				return;
 		}
 		
-		graphics = (Graphics2D) graphicsOriginal.create();
-		graphics.translate(p.getX(), p.getY());
-		
-		init(graphics);
+		screenTransform = new AffineTransform();
+		screenTransform.translate(p.getX(), p.getY());
 		
 	}
 
 	public void translationMove(Point o) {
-		graphics.translate(o.getX(), o.getY());
+		screenTransform.translate(o.getX(), o.getY());
 	}
 
 	public void draw(String id, Shape s, Map<String, String> m) {
 		
-		Area a = getArea(s, Main.WIDTH, Main.HEIGHT);
+//		Area a = getArea(s, Main.WIDTH, Main.HEIGHT);
 		
-		if(a == null) {
+		if(s == null) {
 			return;
 		}
 		
-		if(areaLog != null && !a.isEmpty()) {
-			Area t = a.createTransformedArea(graphics.getTransform());
-			Area p = areaLog.putIfAbsent(id, t);
+		s = screenTransform.createTransformedShape(s);
+		
+		if(areaLog != null) {
+			Area a = new Area(s);
+			Area p = areaLog.putIfAbsent(id, a);
 			if(p != null) {
-				t.add(p);
-				areaLog.put(id, t);
+				a.add(p);
+				areaLog.put(id, a);
 			}
 		}
 		
@@ -111,7 +116,7 @@ public class VectorGraphics {
 					alpha = "1";
 				
 				graphics.setColor(Other.getColor(fill, alpha));
-				graphics.fill(a);
+				graphics.fill(s);
 				
 			}
 			
@@ -129,7 +134,7 @@ public class VectorGraphics {
 				
 				graphics.setColor(Other.getColor(stroke, alpha));
 				graphics.setStroke(bs);
-				graphics.draw(a);
+				graphics.draw(s);
 				
 			}
 			

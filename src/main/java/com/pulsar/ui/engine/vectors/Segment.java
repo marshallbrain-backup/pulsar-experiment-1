@@ -40,6 +40,14 @@ public class Segment {
 			return;
 		}
 		
+		if(type.equals("V")) {
+			type = "L";
+			x = last.x;
+		} else if(type.equals("H")) {
+			type = "L";
+			y = last.y;
+		}
+		
 		if(type.toLowerCase().equals(type)) {
 			type = type.toUpperCase();
 			x += last.x;
@@ -59,10 +67,14 @@ public class Segment {
 		}
 		
 		if(type.equalsIgnoreCase("v")) {
-			type = "l";
+			if(type.equals(type.toLowerCase())) {
+				type = "l";
+			}
 			y = s.x;
 		} else if(type.equalsIgnoreCase("h")) {
-			type = "l";
+			if(type.equals(type.toLowerCase())) {
+				type = "l";
+			}
 			x = s.x;
 		} else {
 			x = s.x;

@@ -2,6 +2,9 @@ package ui.engine.vectors;
 
 import java.awt.Shape;
 import java.awt.geom.GeneralPath;
+import java.awt.geom.Line2D;
+import java.awt.geom.Path2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -149,7 +152,7 @@ public class Path implements Vector {
 	@Override
 	public Shape getShape() {
 		
-		GeneralPath gp = new GeneralPath();
+		Path2D gp = new Path2D.Double();
 		
 		if(segList == null) {
 			createSegmentList();

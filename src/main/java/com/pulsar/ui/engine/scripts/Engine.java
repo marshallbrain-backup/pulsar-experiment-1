@@ -25,7 +25,7 @@ public class Engine {
 	public void openView(String s, Object... o) {
 		System.out.println("view opened - " + s);
 		
-		VectorGroup vectors = vectorList.get(s);
+		VectorGroup vectors = vectorList.get(s).clone();
 		ScriptGroup scripts = scriptList.get(s);
 		
 		views.clear();

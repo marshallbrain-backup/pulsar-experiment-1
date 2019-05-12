@@ -26,7 +26,7 @@ public class BodyUi {
 	
 	public BodyUi(Body b, Map<String, VectorGroup> v, Map<String, ScriptGroup> s, Map<String, VectorGroup> m) {
 		
-		vectors = getGroup(b.getPath(), v);
+		vectors = getGroup(b.getPath(), v).clone();
 		script = getGroup(b.getPath(), s);
 		
 		modifierVectors = m;

@@ -23,9 +23,9 @@ import ui.engine.VectorGraphics;
 public class TextRegion implements Vector {
 
 	@XmlAttribute(name = "x")
-	private int y;
-	@XmlAttribute(name = "y")
 	private int x;
+	@XmlAttribute(name = "y")
+	private int y;
 	@XmlAttribute(name = "pading_x")
 	private int padingX;
 	@XmlAttribute(name = "pading_y")
@@ -45,42 +45,46 @@ public class TextRegion implements Vector {
 	private Graphics2D g2d;
 	
 	public Vector getBound() {
+
+		if(bound != null) {
+			if(calcBound == null) {
+				FontMetrics f = g2d.getFontMetrics(text.getFont());
+				double vx = f.stringWidth(text.getText())+padingX*2;
+				double vy = height+padingY*2;
+				
+				Vector v = (Vector) bound.clone();
+				String sw = v.getStyle().get("stroke-width");
+				int strokeWidth = 0;
+				if(sw != null) {
+					strokeWidth = Integer.parseInt(sw);
+					v.transform(new Point(strokeWidth, strokeWidth));
+				}
+				
+				int xOffset = 0;
+				int yOffset = 0;
+				switch(anchor) {
+					case 1:
+						break;
+					case 2:
+						break;
+					case 3:
+						yOffset = -Math.toIntExact(Math.round(vy)) - strokeWidth;
+						break;
+					case 4:
+						break;
+				}
+				
+				v.transform(new Point(vx, vy));
+				v.move(new Point(x, y));
+				v.move(new Point(xOffset, yOffset));
+				v.normalize();
+				calcBound = v.clone();
+			}
 		
-		if(calcBound == null) {
-			FontMetrics f = g2d.getFontMetrics(text.getFont());
-			double vx = f.stringWidth(text.getText())+padingX*2;
-			double vy = height+padingY*2;
-			
-			Vector v = (Vector) bound.clone();
-			String sw = v.getStyle().get("stroke-width");
-			int strokeWidth = 0;
-			if(sw != null) {
-				strokeWidth = Integer.parseInt(sw);
-				v.transform(new Point(strokeWidth, strokeWidth));
-			}
-			
-			int xOffset = 0;
-			int yOffset = 0;
-			switch(anchor) {
-				case 1:
-					break;
-				case 2:
-					break;
-				case 3:
-					yOffset = -Math.toIntExact(Math.round(vy)) - strokeWidth;
-					break;
-				case 4:
-					break;
-			}
-			
-			v.transform(new Point(vx, vy));
-			v.move(new Point(x, y));
-			v.move(new Point(xOffset, yOffset));
-			v.normalize();
-			calcBound = v.clone();
+			return calcBound;
 		}
 		
-		return calcBound;
+		return null;
 		
 	}
 
@@ -122,9 +126,18 @@ public class TextRegion implements Vector {
 	
 	@Override
 	public void draw(VectorGraphics vg) {
-		getBound().draw(vg);
+		
+		setCurrentGraphics(vg.getGraphics());
+		
+		Vector b = getBound();
+		if(b != null) {
+			b.move(new Point(x, y));
+			b.draw(vg);
+		}
+		
 		vg.draw(id, getShape(), getStyle());
 		calcBound = null;
+		
 	}
 
 	@Override
@@ -136,7 +149,10 @@ public class TextRegion implements Vector {
 	@Override
 	public void setStyle() {
 		text.setStyle(convertStyle(text.getStyleString()));
-		bound.setStyle();
+		
+		if(bound != null) {
+			bound.setStyle();
+		}
 	}
 
 	@Override
@@ -144,9 +160,10 @@ public class TextRegion implements Vector {
 		
 		GeneralPath s = text.getShape();
 		AffineTransform at = new AffineTransform();
-		String sw = getBound().getStyle().get("stroke-width");
+		Vector b = getBound();
 		int strokeWidth = 0;
-		if(sw != null) {
+		if(b != null) {
+			String sw = b.getStyle().get("stroke-width");
 			strokeWidth = Integer.parseInt(sw);
 			at.translate(strokeWidth/2, -strokeWidth);
 		}
@@ -167,6 +184,7 @@ public class TextRegion implements Vector {
 		
 		at.translate(0, height);
 		at.translate(padingX, padingY);
+		at.translate(x, y);
 		at.translate(xOffset, yOffset);
 		s.transform(at);
 		

@@ -2,6 +2,7 @@
 	<text_region
 		pading_x="5"
 		pading_y="0"
+		anchor="2"
 		height="25"
 		x="0"
 		y="0"

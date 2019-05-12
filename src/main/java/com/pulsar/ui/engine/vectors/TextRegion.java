@@ -32,6 +32,7 @@ public class TextRegion implements Vector {
 	private int padingY;
 	@XmlAttribute(name = "height")
 	private int height;
+	@XmlAttribute(name = "anchor")
 	private int anchor;
 	
 	@XmlElement(name = "text")
@@ -45,6 +46,10 @@ public class TextRegion implements Vector {
 	private Graphics2D g2d;
 	
 	public Vector getBound() {
+		
+		if(height == 0) {
+			height = (int) Math.ceil(text.getShape().getBounds2D().getHeight());
+		}
 
 		if(bound != null) {
 			if(calcBound == null) {
@@ -63,14 +68,14 @@ public class TextRegion implements Vector {
 				int xOffset = 0;
 				int yOffset = 0;
 				switch(anchor) {
+					case 0:
+						break;
 					case 1:
 						break;
 					case 2:
-						break;
-					case 3:
 						yOffset = -Math.toIntExact(Math.round(vy)) - strokeWidth;
 						break;
-					case 4:
+					case 3:
 						break;
 				}
 				
@@ -86,10 +91,6 @@ public class TextRegion implements Vector {
 		
 		return null;
 		
-	}
-
-	public void setAnchor(int a) {
-		anchor = a;
 	}
 	
 	public void setCurrentGraphics(Graphics2D g) {
@@ -171,14 +172,14 @@ public class TextRegion implements Vector {
 		int xOffset = 0;
 		int yOffset = 0;
 		switch(anchor) {
+			case 0:
+				break;
 			case 1:
 				break;
 			case 2:
+				yOffset = -Math.toIntExact(Math.round(height+padingY*2)) - strokeWidth;
 				break;
 			case 3:
-				yOffset = -Math.toIntExact(Math.round(calcBound.getShape().getBounds().getHeight()));
-				break;
-			case 4:
 				break;
 		}
 		

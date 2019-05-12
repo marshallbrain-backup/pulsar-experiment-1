@@ -22,8 +22,6 @@ public class TabLayout implements Vector {
 	private int y;
 	@XmlAttribute(name = "y")
 	private int x;
-	@XmlAttribute(name = "anchor")
-	private int anchor;
 	private int currentTab;
 	private int renderedTab;
 	
@@ -109,7 +107,7 @@ public class TabLayout implements Vector {
 	public void draw(VectorGraphics vg) {
 		int pos = 0;
 		for(int i = 0; i < tabs.size(); i++) {
-			pos = tabs.get(i).draw(id + " " + String.valueOf(i), pos, anchor, vg);
+			pos = tabs.get(i).draw(id + " " + String.valueOf(i), pos, vg);
 		}
 	}
 

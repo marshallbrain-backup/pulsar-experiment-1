@@ -41,7 +41,7 @@ public class TabItem {
 		text = t;
 	}
 
-	public int draw(String i, int pos, int anchor, VectorGraphics vg) {
+	public int draw(String i, int pos, VectorGraphics vg) {
 		
 		if(vector == null) {
 			vector = staticVector.clone();
@@ -57,7 +57,6 @@ public class TabItem {
 				tr.setText(text);
 				//TODO change the draw method to have id parameter and remove setCurrentGraphics
 				tr.setCurrentGraphics(vg.getGraphics());
-				tr.setAnchor(anchor);
 				Shape b = tr.getBound().getShape();
 				vg.draw(id, b, tr.getBound().getStyle());
 				pos = (int) Math.floor(b.getBounds().getWidth());

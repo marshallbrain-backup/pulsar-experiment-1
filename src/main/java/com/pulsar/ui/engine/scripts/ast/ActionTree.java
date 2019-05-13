@@ -266,6 +266,8 @@ public class ActionTree {
 				id = new NodeBasic(t);
 			} else if(t.type == TokenType.LITERAL) {
 				id = new NodeBasic(t);
+			} else if(t.type == TokenType.END){
+				return new NodeList(body);
 			} else {
 				System.out.println(t);
 			}

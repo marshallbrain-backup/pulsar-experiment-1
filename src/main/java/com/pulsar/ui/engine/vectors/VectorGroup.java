@@ -43,8 +43,8 @@ public class VectorGroup implements Cloneable {
 		for(Vector v: vectors) {
 			mappedVectors.put(v.getId(), v);
 			v.assingParamerters(parameters);
-			v.init();
 			v.setStyle();
+			v.init();
 		}
 		
 	}

@@ -45,6 +45,10 @@ public class TextRegion implements Vector {
 	private Vector calcBound;
 	private Graphics2D g2d;
 	
+	public void init() {
+		text.init();
+	}
+	
 	public Vector getBound() {
 		
 		if(height == 0) {
@@ -149,11 +153,13 @@ public class TextRegion implements Vector {
 
 	@Override
 	public void setStyle() {
+		
 		text.setStyle(convertStyle(text.getStyleString()));
 		
 		if(bound != null) {
 			bound.setStyle();
 		}
+		
 	}
 
 	@Override

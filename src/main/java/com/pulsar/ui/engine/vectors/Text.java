@@ -27,8 +27,17 @@ public class Text {
 	
 	//TODO make font dynamic
 	//https://docs.oracle.com/javase/tutorial/2d/text/fonts.html
-	private static Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 18);
+	private Font font;
 	private Graphics2D g2d;
+	
+	public void init() {
+		
+		String type = style.getOrDefault("font-family", "Open Sans").replace("'", "");
+		String size = style.getOrDefault("font-size", "14");
+		
+		font = new Font(type, Font.PLAIN, Math.toIntExact(Math.round(Double.parseDouble(size))));
+		
+	}
 
 	public GeneralPath getShape() {
 		

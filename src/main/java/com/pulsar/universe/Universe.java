@@ -6,7 +6,7 @@ import java.util.Map;
 import files.GameFile;
 import math.Other;
 import species.Species;
-import species.colony.build.District;
+import species.colony.buildable.District;
 
 public class Universe {
 	

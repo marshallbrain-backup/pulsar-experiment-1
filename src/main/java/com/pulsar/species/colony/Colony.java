@@ -6,7 +6,7 @@ import java.util.Set;
 
 import bodys.Body;
 import species.Species;
-import species.colony.build.District;
+import species.colony.buildable.District;
 
 public class Colony {
 	

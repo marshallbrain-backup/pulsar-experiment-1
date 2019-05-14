@@ -7,7 +7,7 @@ import files.Type;
 import files.type.TypeDistrict;
 import files.type.TypeLoader;
 import species.Species;
-import species.colony.build.District;
+import species.colony.buildable.District;
 
 //TODO make buildable via a planetary project
 public class Station {

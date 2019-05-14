@@ -13,10 +13,10 @@ import files.type.TypeJob;
 import files.type.TypeLoader;
 import files.type.TypePlanetaryProjects;
 import species.Species;
-import species.colony.build.BuildQueue;
-import species.colony.build.BuildQueueEntry;
-import species.colony.build.Building;
-import species.colony.build.District;
+import species.colony.buildable.BuildQueue;
+import species.colony.buildable.BuildQueueEntry;
+import species.colony.buildable.Building;
+import species.colony.buildable.District;
 
 public class ResourceManager {
 	

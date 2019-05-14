@@ -241,14 +241,19 @@ public class ActionTree {
 					if(tokens.get(i-1).type == TokenType.OP && tokens.get(i-1).ex.equals("(")) {
 						body.add(id);
 						id = new NodeExp(new NodeList(body), new NodeBasic(tokens.get(i-1)), new NodeBasic(tokens.get(i)));
-					}
-					if(lastToken != null && lastToken.type == TokenType.OP && lastToken.ex.equals("(")) {
 						tokens.remove(i);
+						return id;
 					}
-						
-					return id;
+					
+//					if(lastToken != null && !(lastToken.type == TokenType.OP && lastToken.ex.equals("("))) {
+						return id;
+//					}
 					
 				} else if(t.ex.equals("{")) {
+					
+					if(lastToken != null && lastToken.type != TokenType.KEY) {
+						return id;
+					}
 					
 					id = getNodeList(tokens, i+1);
 					id = new NodeExp(id, new NodeBasic(tokens.get(i)), new NodeBasic(tokens.get(i+1)));

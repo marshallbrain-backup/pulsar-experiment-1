@@ -1,45 +1,45 @@
 <vector_layer>
 	<path
-		style="stroke:#000000;stroke-opacity:1;stroke-width:4"
-		p="m 65,10 v 5.3594 l 20,11.5469 v 46.1875 l -20,11.5468 v 10.3594 h -55 v 165 h 595 v -250 z"
+		style="stroke:#000000;stroke-opacity:1;stroke-width:2"
+		p="m 65,10 v 5.3594 l 20,11.5469 v 46.1875 l -20,11.5468 v 10.3594 h -55 v 165 h 505 v -65 h 90 v -185 z"
 		x="10"
 		y="10"
 	/>
 	<path
-		style="stroke:#000000;stroke-opacity:1;stroke-width:4"
+		style="stroke:#000000;stroke-opacity:1;stroke-width:2"
 		p="m 35.6229,85 l -25.6229,-14.7933 v -40.4146 l 35,-20.2072 l 35,20.2072 v 40.4146 l -25.6229,14.7935 z"
 		x="10"
 		y="10"
 	/>	
 	<rect
-		style="stroke:#000000;stroke-opacity:1;stroke-width:4"
+		style="stroke:#000000;stroke-opacity:1;stroke-width:2"
 		width="215"
 		height="65"
 		x="390"
 		y="10"
 	/>
 	<rect
-		style="stroke:#000000;stroke-opacity:1;stroke-width:4"
+		style="stroke:#000000;stroke-opacity:1;stroke-width:2"
 		width="105"
 		height="65"
 		x="10"
 		y="95"
 	/>
 	<rect
-		style="stroke:#000000;stroke-opacity:1;stroke-width:4"
+		style="stroke:#000000;stroke-opacity:1;stroke-width:2"
 		width="495"
 		height="135"
 		x="10"
-		y="265"
+		y="270"
 	/>
 	<path
-		style="stroke:#000000;stroke-opacity:1;stroke-width:20"
-		p="M 15,310 H 500"
-		x="15"
-		y="310"
+		style="stroke:#000000;stroke-opacity:1;stroke-width:1"
+		p="m 15,310 H 500 Z"
+		x="0"
+		y="0"
 	/>
 	<rect
-		style="stroke:#000000;stroke-opacity:1;stroke-width:4"
+		style="stroke:#000000;stroke-opacity:1;stroke-width:2"
 		width="55"
 		height="55"
 		x="20"
@@ -48,11 +48,11 @@
 	<text_region
 		pading_x="0"
 		pading_y="0"
-		x="25"
+		x="20"
 		y="280"
 	>
 		<text
-			style="fill:#ffffff;fill-opacity:1;font-size:25;font-family:'Open Sans'"
+			style="fill:#000000;fill-opacity:1;font-size:25;font-family:'Open Sans'"
 		>Districts
 		</text>
 	</text_region>

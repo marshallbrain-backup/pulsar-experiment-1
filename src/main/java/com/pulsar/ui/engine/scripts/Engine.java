@@ -32,5 +32,9 @@ public class Engine {
 		views.add(new View(vectors, scripts, o));
 		
 	}
+
+	public ScriptGroup getScript(String s) {
+		return scriptList.get(s);
+	}
 	
 }

@@ -2,11 +2,14 @@ package bodys;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import files.GameFile;
+import math.Other;
 import math.RanAlg;
 import species.colony.Colony;
 import universe.StarSystem;
@@ -27,6 +30,8 @@ public class Body {
 	private Body parent;
 	private StarSystem starSystem;
 	private Colony colony;
+	
+	private Set<String> tags;
 
 	public Body(String t, Map<String, String> f, StarSystem s, double r) {
 		
@@ -125,12 +130,20 @@ public class Body {
 	
 	private void init(Map<String, String> f) {
 		
+		tags = new HashSet<String>();
+		
 		if(f.containsKey("colonizable")) {
 			if(f.get("colonizable").equals("yes")) {
 				colonizable = true;
 			}
 		} else {
 			colonizable = true;
+		}
+		
+		Map<String, String> t = Other.getAllMatchingKeys(f, "tag[0-9]*", 0);
+		
+		for(String s: t.values()) {
+			tags.add(s);
 		}
 		
 	}
@@ -204,6 +217,10 @@ public class Body {
 
 	public boolean isColonizable() {
 		return colonizable;
+	}
+
+	public Set<String> getTags() {
+		return tags;
 	}
 	
 }

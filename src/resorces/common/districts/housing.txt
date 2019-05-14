@@ -2,7 +2,11 @@ district_city = {
 	base_buildtime = 480
 	
 	potential = {
-		is_planet_catagory = default
+		has_tag = standard_city
+	}
+	
+	starting = {
+		has_tag = standard_city
 	}
 	
 	resources = {

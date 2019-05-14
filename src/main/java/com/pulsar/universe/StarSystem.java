@@ -35,7 +35,7 @@ public class StarSystem {
 		//picks one to colonize
 		int id = RanAlg.randomInt(0, colonize.size());
 		
-		s.createColony(colonize.get(id));
+		s.createColony(colonize.get(0));
 		
 	}
 	

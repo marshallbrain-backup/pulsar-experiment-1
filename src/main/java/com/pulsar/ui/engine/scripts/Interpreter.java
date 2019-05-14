@@ -188,6 +188,11 @@ public class Interpreter {
 			}
 			
 			if(p == null) {
+				
+				if(c.name.equals("run")) {
+					run(parList, v);
+				}
+				
 			} else {
 				return runCallFun(c, p, parList);
 			}
@@ -225,6 +230,13 @@ public class Interpreter {
 		}
 		
 		return null;
+		
+	}
+
+	private static void run(Object[] p, Map<String, Object> v) {
+		
+		ScriptGroup s = engine.getScript((String) p[0]);
+		s.callFunction((String) p[0], (VectorGroup) v.get("vectorLayer"), Arrays.copyOfRange(p, 1, p.length));
 		
 	}
 

@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import files.GameFile;
+import math.Other;
 import species.Species;
+import species.colony.build.District;
 
 public class Universe {
 	
@@ -33,6 +35,10 @@ public class Universe {
 	private void init(GameFile gf) {
 		
 		species = new Species(gf);
+		
+		Map<String, String> districts = Other.getAllMatchingKeys(gf.getFields(), "districts\\..*", 1);
+		
+		District.setDistrictTypeList(districts);
 		
 		List<Map<String, String>> systems = GameFile.convertFiles(gf.getFieldAll("system_classes\\..*", 1));
 		GameFile bodyTypes = new GameFile(gf.getFieldAll("body_classes\\..*", 1));

@@ -13,6 +13,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.namespace.QName;
 
+import bodys.Body;
+import files.VarInterface;
+import files.VarName;
 import input.Keyboard;
 import input.Mouse;
 import ui.engine.Point;
@@ -30,6 +33,7 @@ public class VectorGroup implements Cloneable {
 	private List<Vector> vectors;
 	
 	private Map<QName, Object> parameters;
+	private Map<String, Map<VarName, Object>> vars;
 	private Map<String, Vector> mappedVectors;
 	
 	public List<Vector> getVectors(){
@@ -83,7 +87,7 @@ public class VectorGroup implements Cloneable {
 		vg.saveTransform();
 		vg.translationMove(new Point(x, y));
 		for(Vector v: vectors) {
-			v.draw(vg);
+			v.draw(vg, vars);
 		}
 		vg.revertTransform();
 	}
@@ -109,6 +113,16 @@ public class VectorGroup implements Cloneable {
 		return mappedVectors.get(i);
 	}
 	
+	private void setVars(Map<String, Map<VarName, Object>> v) {
+		vars = v;
+	}
+
+	public VectorGroup clone(VarInterface b) {
+		VectorGroup clone = clone();
+		clone.setVars(b.getVarList());
+		return clone;
+	}
+
 	@Override
 	public VectorGroup clone() {
 		

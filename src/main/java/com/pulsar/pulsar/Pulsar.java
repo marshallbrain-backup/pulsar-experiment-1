@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 
 import files.FileParser;
 import files.GameFile;
+import files.VariableArray;
 import input.Keyboard;
 import input.Mouse;
 import settings.Settings;
@@ -71,6 +72,8 @@ public class Pulsar extends Canvas implements Runnable {
 		this.requestFocusInWindow(); //sets the canvas to be the active window
 		
 		createBufferStrategy(2); //creates the basses for the graphacs for the canvas
+		
+		VariableArray.init();
 		
 		gf = FileParser.readCommon(); //reads in all files in common
 		gf.replaceVars(); //replaces variables

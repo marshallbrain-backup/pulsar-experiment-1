@@ -61,6 +61,13 @@ public class Text {
 		text = t;
 	}
 	
+	@XmlTransient
+	public void setText(Object o) {
+		if(o instanceof String) {
+			text = (String) o;
+		}
+	}
+	
 	public String getText() {
 		return text;
 	}

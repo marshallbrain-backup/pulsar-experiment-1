@@ -16,6 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.namespace.QName;
 
+import files.VarName;
 import ui.engine.Point;
 import ui.engine.VectorGraphics;
 
@@ -130,7 +131,7 @@ public class TextRegion implements Vector {
 	}
 	
 	@Override
-	public void draw(VectorGraphics vg) {
+	public void draw(VectorGraphics vg, Map<String, Map<VarName, Object>> vars) {
 		
 		setCurrentGraphics(vg.getGraphics());
 		
@@ -138,6 +139,22 @@ public class TextRegion implements Vector {
 		if(b != null) {
 			b.move(new Point(x, y));
 			b.draw(vg);
+		}
+		
+		if(vars != null) {
+
+			String t = text.getText();
+			String v = t.split("_")[0];
+			String k = "";
+			if(!vars.containsKey(v)) {
+				v = "";
+				k = t;
+			} else {
+				k = t.substring(t.indexOf("_"));
+			}
+			
+			text.setText(vars.get(v).get(VarName.valueOf(k)));
+			
 		}
 		
 		vg.draw(id, getShape(), getStyle());

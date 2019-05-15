@@ -9,12 +9,14 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import files.GameFile;
+import files.VarInterface;
+import files.VarName;
 import math.Other;
 import math.RanAlg;
 import species.colony.Colony;
 import universe.StarSystem;
 
-public class Body {
+public class Body implements VarInterface {
 	
 	private long temperature;
 	private long radius;
@@ -221,6 +223,11 @@ public class Body {
 
 	public Set<String> getTags() {
 		return tags;
+	}
+
+	@Override
+	public Map<String, Map<VarName, Object>> getVarList() {
+		return null;
 	}
 	
 }

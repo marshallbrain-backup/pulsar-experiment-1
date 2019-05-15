@@ -1,6 +1,7 @@
 package species.colony.buildable;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -9,6 +10,9 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import files.GameFile;
+import files.VarInterface;
+import files.VarName;
+import files.VariableArray;
 import math.Other;
 import species.colony.Colony;
 import species.colony.ResourceManager;
@@ -23,15 +27,27 @@ public class District {
 	private Map<String, String> upkeep;
 	private Map<String, String> production;
 	private Map<String, Map<String, String>> districtAvailableList;
+	private Map<VarName, Object> vars;
 	private static Map<String, String> districtTypeList;
 	
 	public District(String t, Set<String> tags) {
 		init(tags);
 		init(t);
+		init();
 	}
-	
+
 	public District(Set<String> tags) {
 		init(tags);
+		init();
+	}
+	
+	private void init() {
+		
+		vars = new EnumMap<VarName, Object>(VarName.class);
+		
+		vars.put(VarName.NAME, type);
+		vars.put(VarName.ICON, VariableArray.getVar("icons\\district\\" + type));
+		
 	}
 	
 	private void init(Set<String> tags) {
@@ -67,6 +83,10 @@ public class District {
 		upkeep = Other.getAllMatchingKeys(d, "resources\\.upkeep\\..*", 2);
 		production = Other.getAllMatchingKeys(d, "resources\\.production\\..*", 2);
 		
+	}
+	
+	public Map<VarName, Object> getVars() {
+		return vars;
 	}
 	
 	public String toString() {

@@ -32,7 +32,7 @@ public class View {
 	public View(VectorGroup av, ScriptGroup as, Object... action) {
 		
 		properties = action;
-		activeVectors = av;
+		activeVectors = av.clone();
 		activeScripts = as;
 		
 		child = null;

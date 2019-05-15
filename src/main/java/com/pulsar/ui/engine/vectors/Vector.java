@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.xml.namespace.QName;
 
+import files.VarName;
 import ui.engine.Point;
 import ui.engine.VectorGraphics;
 
@@ -22,13 +23,19 @@ public interface Vector extends Cloneable {
 	Map<String, String> getStyle();
 	
 	void inherit(Vector v);
-	void draw(VectorGraphics vg);
 	void move(Point offset);
 	void transform(Point offset);
 	void normalize();
 	void normalize(long screenSize, int screenWidth, int minSize);
 	void setStyle();
 	void assingParamerters(Map<QName, Object> p);
+	
+	default void draw(VectorGraphics vg) {
+	}
+	
+	default void draw(VectorGraphics vg, Map<String, Map<VarName, Object>> vars) {
+		draw(vg);
+	}
 	
 	default void init() {
 	}

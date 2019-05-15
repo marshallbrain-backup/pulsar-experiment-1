@@ -1,0 +1,9 @@
+<vector_layer>
+	<circle
+		id="colony"
+		style="stroke:#ffffff;stroke-opacity:1;stroke-width:1"
+		cx="0"
+		cy="0"
+		r="200"
+	/>
+</vector_layer>

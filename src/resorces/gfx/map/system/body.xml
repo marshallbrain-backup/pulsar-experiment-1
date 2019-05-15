@@ -1,0 +1,10 @@
+<vector_layer>
+	<circle
+		id="body"
+		style="fill:#000000;fill-opacity:1"
+		cx="0"
+		cy="0"
+		r="0"
+		on_click="clickBody"
+	/>
+</vector_layer>

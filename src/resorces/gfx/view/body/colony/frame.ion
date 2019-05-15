@@ -1,0 +1,5 @@
+fun onCreate(b) {
+	
+	run(view.body.colony.district, b);
+	
+}

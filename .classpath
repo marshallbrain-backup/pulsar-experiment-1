@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="src/java/com/pulsar/|src/" kind="src" path=""/>
-	<classpathentry kind="src" path="src/java/com/pulsar"/>
-	<classpathentry excluding="java/com/pulsar/" kind="src" path="src"/>
+	<classpathentry excluding="**" kind="src" path=""/>
+	<classpathentry kind="src" path="src/main/java/com/pulsar"/>
+	<classpathentry kind="src" path="src/resorces"/>
+	<classpathentry kind="src" path="src/test/java/com/pulsar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

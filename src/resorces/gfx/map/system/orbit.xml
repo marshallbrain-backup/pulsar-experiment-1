@@ -1,0 +1,9 @@
+<vector_layer>
+	<circle
+		id="orbit"
+		style="stroke:#000000;stroke-opacity:1;stroke-width:2"
+		cx="0"
+		cy="0"
+		r="1"
+	/>
+</vector_layer>
